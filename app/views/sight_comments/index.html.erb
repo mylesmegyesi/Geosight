@@ -1,0 +1,23 @@
+<h1>Listing sight_comments</h1>
+
+<table>
+  <tr>
+    <th>Body</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @sight_comments.each do |sight_comment| %>
+  <tr>
+    <td><%= sight_comment.body %></td>
+    <td><%= link_to 'Show', sight_comment %></td>
+    <td><%= link_to 'Edit', edit_sight_comment_path(sight_comment) %></td>
+    <td><%= link_to 'Destroy', sight_comment, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Sight comment', new_sight_comment_path %>

@@ -1,0 +1,25 @@
+<%= form_for(@sight_rating) do |f| %>
+  <% if @sight_rating.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@sight_rating.errors.count, "error") %> prohibited this sight_rating from being saved:</h2>
+
+      <ul>
+      <% @sight_rating.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :sight_id %><br />
+    <%= f.text_field :sight_id %>
+  </div>
+  <div class="field">
+    <%= f.label :rating %><br />
+    <%= f.text_field :rating %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,2 @@
+module SightcommentsHelper
+end

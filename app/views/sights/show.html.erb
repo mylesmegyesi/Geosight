@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Latitude:</b>
+  <%= @sight.latitude %>
+</p>
+
+<p>
+  <b>Longitude:</b>
+  <%= @sight.longitude %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @sight.name %>
+</p>
+
+<p>
+  <b>Radius:</b>
+  <%= @sight.radius %>
+</p>
+
+
+<%= link_to 'Edit', edit_sight_path(@sight) %> |
+<%= link_to 'Back', sights_path %>

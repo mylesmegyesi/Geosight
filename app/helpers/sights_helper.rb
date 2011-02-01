@@ -1,0 +1,2 @@
+module SightsHelper
+end

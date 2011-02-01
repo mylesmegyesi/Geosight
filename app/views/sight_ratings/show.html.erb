@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Sight:</b>
+  <%= @sight_rating.sight_id %>
+</p>
+
+<p>
+  <b>Rating:</b>
+  <%= @sight_rating.rating %>
+</p>
+
+
+<%= link_to 'Edit', edit_sight_rating_path(@sight_rating) %> |
+<%= link_to 'Back', sight_ratings_path %>

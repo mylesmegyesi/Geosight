@@ -1,4 +1,16 @@
 Geosight::Application.routes.draw do
+
+  resources :sights do
+    resources :sightcomments
+    resources :sight_ratings
+    resources :photos do
+      resources :photo_comments
+      resources :photo_tags
+    end
+  end
+
+  resources :users
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

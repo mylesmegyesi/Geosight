@@ -1,0 +1,33 @@
+<%= form_for(@sight) do |f| %>
+  <% if @sight.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@sight.errors.count, "error") %> prohibited this sight from being saved:</h2>
+
+      <ul>
+      <% @sight.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :latitude %><br />
+    <%= f.text_field :latitude %>
+  </div>
+  <div class="field">
+    <%= f.label :longitude %><br />
+    <%= f.text_field :longitude %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :radius %><br />
+    <%= f.text_field :radius %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

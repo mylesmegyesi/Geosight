@@ -1,0 +1,21 @@
+<%= form_for(@sight_comment) do |f| %>
+  <% if @sight_comment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@sight_comment.errors.count, "error") %> prohibited this sight_comment from being saved:</h2>
+
+      <ul>
+      <% @sight_comment.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :body %><br />
+    <%= f.text_field :body %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
