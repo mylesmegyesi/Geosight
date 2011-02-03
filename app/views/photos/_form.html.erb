@@ -1,4 +1,4 @@
-<%= form_for(@photo) do |f| %>
+<%= form_for([@sight, @photo], :html => {:multipart => true}) do |f| %>
   <% if @photo.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@photo.errors.count, "error") %> prohibited this photo from being saved:</h2>
@@ -12,20 +12,7 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :pic_filename %><br />
-    <%= f.text_field :pic_filename %>
-  </div>
-  <div class="field">
-    <%= f.label :pic_content_type %><br />
-    <%= f.text_field :pic_content_type %>
-  </div>
-  <div class="field">
-    <%= f.label :pic_file_size %><br />
-    <%= f.text_field :pic_file_size %>
-  </div>
-  <div class="field">
-    <%= f.label :pic_updated_at %><br />
-    <%= f.datetime_select :pic_updated_at %>
+    <%= f.file_field :file %>
   </div>
   <div class="actions">
     <%= f.submit %>

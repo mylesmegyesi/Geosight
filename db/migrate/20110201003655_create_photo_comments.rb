@@ -1,8 +1,9 @@
 class CreatePhotoComments < ActiveRecord::Migration
   def self.up
     create_table :photo_comments do |t|
-      t.string :body
-      t.integer :photo_id, :null => false
+      t.text :comment
+      t.integer :user_id
+      t.integer :photo_id
       t.timestamps
     end
   end

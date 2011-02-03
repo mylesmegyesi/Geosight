@@ -2,7 +2,7 @@
 
 <table>
   <tr>
-    <th>Body</th>
+    <th>Comment</th>
     <th></th>
     <th></th>
     <th></th>
@@ -10,14 +10,15 @@
 
 <% @sight_comments.each do |sight_comment| %>
   <tr>
-    <td><%= sight_comment.body %></td>
-    <td><%= link_to 'Show', sight_comment %></td>
-    <td><%= link_to 'Edit', edit_sight_comment_path(sight_comment) %></td>
-    <td><%= link_to 'Destroy', sight_comment, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= sight_comment.comment %></td>
+    <td><%= link_to 'Show', sight_sight_comment_path(@sight, sight_comment) %></td>
+    <td><%= link_to 'Edit', edit_sight_sight_comment_path(@sight, sight_comment) %></td>
+    <td><%= link_to 'Destroy', sight_sight_comment_path(@sight, sight_comment), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Sight comment', new_sight_comment_path %>
+<%= link_to 'New Sight comment', new_sight_sight_comment_path %>
+<%= link_to 'Back', sight_path(@sight) %>

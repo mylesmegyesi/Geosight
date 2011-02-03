@@ -20,6 +20,8 @@
   <%= @sight.radius %>
 </p>
 
-
+<%= link_to 'Ratings', sight_sight_ratings_path(@sight) %> |
+<%= link_to 'Comments', sight_sight_comments_path(@sight) %> |
+<%= link_to 'Photos', sight_photos_path(@sight) %> |
 <%= link_to 'Edit', edit_sight_path(@sight) %> |
 <%= link_to 'Back', sights_path %>

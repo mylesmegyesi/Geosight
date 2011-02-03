@@ -1,3 +1,0 @@
-(in /Users/mylesmegyesi/Documents/Classes/CS429/Geosight)
-==  AddUserIDtoSights: migrating ==============================================
--- add_column(:sights, :user_id, :integer, {:null=>false})

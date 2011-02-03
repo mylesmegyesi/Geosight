@@ -2,10 +2,7 @@
 
 <table>
   <tr>
-    <th>Pic filename</th>
-    <th>Pic content type</th>
-    <th>Pic file size</th>
-    <th>Pic updated at</th>
+    <th>File</th>
     <th></th>
     <th></th>
     <th></th>
@@ -13,17 +10,15 @@
 
 <% @photos.each do |photo| %>
   <tr>
-    <td><%= photo.pic_filename %></td>
-    <td><%= photo.pic_content_type %></td>
-    <td><%= photo.pic_file_size %></td>
-    <td><%= photo.pic_updated_at %></td>
-    <td><%= link_to 'Show', photo %></td>
-    <td><%= link_to 'Edit', edit_photo_path(photo) %></td>
-    <td><%= link_to 'Destroy', photo, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= image_tag(photo.file.url(:thumb)) %></td>
+    <td><%= link_to 'Show', sight_photo_path(@sight, photo) %></td>
+    <td><%= link_to 'Edit', edit_sight_photo_path(@sight, photo) %></td>
+    <td><%= link_to 'Destroy', sight_photo_path(@sight, photo), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Photo', new_photo_path %>
+<%= link_to 'New Photo', new_sight_photo_path(@sight) %> |
+<%= link_to 'Back', sight_path(@sight) %>

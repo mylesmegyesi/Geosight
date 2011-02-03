@@ -1,25 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Pic filename:</b>
-  <%= @photo.pic_filename %>
-</p>
+<%= image_tag(@photo.file.url) %>
 
-<p>
-  <b>Pic content type:</b>
-  <%= @photo.pic_content_type %>
-</p>
-
-<p>
-  <b>Pic file size:</b>
-  <%= @photo.pic_file_size %>
-</p>
-
-<p>
-  <b>Pic updated at:</b>
-  <%= @photo.pic_updated_at %>
-</p>
-
-
-<%= link_to 'Edit', edit_photo_path(@photo) %> |
-<%= link_to 'Back', photos_path %>
+<%= link_to 'Tags', sight_photo_photo_tags_path(@sight, @photo) %> |
+<%= link_to 'Comments', sight_photo_photo_comments_path(@sight, @photo) %> |
+<%= link_to 'Edit', edit_sight_photo_path(@sight, @photo) %> |
+<%= link_to 'Back', sight_photos_path(@sight) %>

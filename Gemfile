@@ -4,6 +4,7 @@ gem 'rails', '3.0.3'
 gem 'sqlite3'
 gem 'mongrel'
 gem 'paperclip'
+gem 'authlogic', :git => "https://github.com/binarylogic/authlogic.git"
 
 # Use unicorn as the web server
 # gem 'unicorn'

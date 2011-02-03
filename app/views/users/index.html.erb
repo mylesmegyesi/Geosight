@@ -2,7 +2,9 @@
 
 <table>
   <tr>
-    <th>Name</th>
+    <th>First</th>
+	<th>Last</th>
+	<th>Email</th>
     <th></th>
     <th></th>
     <th></th>
@@ -10,7 +12,9 @@
 
 <% @users.each do |user| %>
   <tr>
-    <td><%= user.name %></td>
+    <td><%= user.first_name %></td>
+	<td><%= user.last_name %></td>
+	<td><%= user.email %></td>
     <td><%= link_to 'Show', user %></td>
     <td><%= link_to 'Edit', edit_user_path(user) %></td>
     <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>

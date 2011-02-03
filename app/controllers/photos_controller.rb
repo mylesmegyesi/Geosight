@@ -1,83 +1,53 @@
 class PhotosController < ApplicationController
-  # GET /photos
-  # GET /photos.xml
-  def index
-    @photos = Photo.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @photos }
+    respond_to :html, :json, :xml
+    
+    def index
+        @sight = Sight.find(params[:sight_id])
+        @photos = @sight.photos
+        respond_with([@sight, @photo])
     end
-  end
 
-  # GET /photos/1
-  # GET /photos/1.xml
-  def show
-    @photo = Photo.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @photo }
+    def show
+        @sight = Sight.find(params[:sight_id])
+        @photo = Photo.find(params[:id])
+        respond_with([@sight, @photo])
     end
-  end
 
-  # GET /photos/new
-  # GET /photos/new.xml
-  def new
-    @photo = Photo.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @photo }
+    def new
+        @sight = Sight.find(params[:sight_id])
+        @photo = Photo.new
+        respond_with([@sight, @photo])
     end
-  end
 
-  # GET /photos/1/edit
-  def edit
-    @photo = Photo.find(params[:id])
-  end
-
-  # POST /photos
-  # POST /photos.xml
-  def create
-    @photo = Photo.new(params[:photo])
-
-    respond_to do |format|
-      if @photo.save
-        format.html { redirect_to(@photo, :notice => 'Photo was successfully created.') }
-        format.xml  { render :xml => @photo, :status => :created, :location => @photo }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @photo.errors, :status => :unprocessable_entity }
-      end
+    def edit
+        @sight = Sight.find(params[:sight_id])
+        @photo = Photo.find(params[:id])
     end
-  end
 
-  # PUT /photos/1
-  # PUT /photos/1.xml
-  def update
-    @photo = Photo.find(params[:id])
-
-    respond_to do |format|
-      if @photo.update_attributes(params[:photo])
-        format.html { redirect_to(@photo, :notice => 'Photo was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @photo.errors, :status => :unprocessable_entity }
-      end
+    def create
+        photo = params[:photo]
+        photo[:user_id] = current_user
+        photo[:sight_id] = params[:sight_id]
+        @photo = Photo.new(params[:photo])
+        @sight = Sight.find(@photo.sight_id)
+        @photo.save
+        respond_with([@sight, @photo])
     end
-  end
 
-  # DELETE /photos/1
-  # DELETE /photos/1.xml
-  def destroy
-    @photo = Photo.find(params[:id])
-    @photo.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(photos_url) }
-      format.xml  { head :ok }
+    def update
+        photo = params[:photo]
+        photo[:user_id] = current_user
+        photo[:sight_id] = params[:sight_id]
+        @photo = Photo.find(params[:id])
+        @sight = Sight.find(@photo.sight_id)
+        @photo.update_attributes(photo)
+        respond_with([@sight, @photo])
     end
-  end
+
+    def destroy
+        @photo = Photo.find(params[:id])
+        @sight = Sight.find(@photo.sight_id)
+        @photo.destroy
+        respond_with([@sight, @photo])
+    end
 end

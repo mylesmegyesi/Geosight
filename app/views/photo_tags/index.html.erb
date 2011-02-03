@@ -2,8 +2,7 @@
 
 <table>
   <tr>
-    <th>Photo</th>
-    <th>Body</th>
+    <th>Tag</th>
     <th></th>
     <th></th>
     <th></th>
@@ -11,15 +10,15 @@
 
 <% @photo_tags.each do |photo_tag| %>
   <tr>
-    <td><%= photo_tag.photo_id %></td>
-    <td><%= photo_tag.body %></td>
-    <td><%= link_to 'Show', photo_tag %></td>
-    <td><%= link_to 'Edit', edit_photo_tag_path(photo_tag) %></td>
-    <td><%= link_to 'Destroy', photo_tag, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= photo_tag.tag %></td>
+    <td><%= link_to 'Show', sight_photo_photo_tag_path(@sight, @photo, photo_tag) %></td>
+    <td><%= link_to 'Edit', edit_sight_photo_photo_tag_path(@sight, @photo, photo_tag) %></td>
+    <td><%= link_to 'Destroy', sight_photo_photo_tag_path(@sight, @photo, photo_tag), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Photo tag', new_photo_tag_path %>
+<%= link_to 'New Photo tag', new_sight_photo_photo_tag_path(@sight, @photo) %> | 
+<%= link_to 'Back', sight_photo_path(@sight, @photo) %>

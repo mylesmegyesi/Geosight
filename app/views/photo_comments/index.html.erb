@@ -2,7 +2,7 @@
 
 <table>
   <tr>
-    <th>Body</th>
+    <th>Comment</th>
     <th></th>
     <th></th>
     <th></th>
@@ -10,14 +10,15 @@
 
 <% @photo_comments.each do |photo_comment| %>
   <tr>
-    <td><%= photo_comment.body %></td>
-    <td><%= link_to 'Show', photo_comment %></td>
-    <td><%= link_to 'Edit', edit_photo_comment_path(photo_comment) %></td>
-    <td><%= link_to 'Destroy', photo_comment, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= photo_comment.comment %></td>
+    <td><%= link_to 'Show', sight_photo_photo_comment_path(@sight, @photo, photo_comment) %></td>
+    <td><%= link_to 'Edit', edit_sight_photo_photo_comment_path(@sight, @photo, photo_comment) %></td>
+    <td><%= link_to 'Destroy', sight_photo_photo_comment_path(@sight, @photo, photo_comment), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Photo comment', new_photo_comment_path %>
+<%= link_to 'New Photo comment', new_sight_photo_photo_comment_path(@sight, @photo) %> | 
+<%= link_to 'Back', sight_photo_path(@sight, @photo) %>

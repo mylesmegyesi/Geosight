@@ -2,7 +2,6 @@
 
 <table>
   <tr>
-    <th>Sight</th>
     <th>Rating</th>
     <th></th>
     <th></th>
@@ -11,15 +10,15 @@
 
 <% @sight_ratings.each do |sight_rating| %>
   <tr>
-    <td><%= sight_rating.sight_id %></td>
     <td><%= sight_rating.rating %></td>
-    <td><%= link_to 'Show', sight_rating %></td>
-    <td><%= link_to 'Edit', edit_sight_rating_path(sight_rating) %></td>
-    <td><%= link_to 'Destroy', sight_rating, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Show', sight_sight_rating_path(@sight, sight_rating) %></td>
+    <td><%= link_to 'Edit', edit_sight_sight_rating_path(@sight, sight_rating) %></td>
+    <td><%= link_to 'Destroy', sight_sight_rating_path(@sight, sight_rating), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Sight rating', new_sight_rating_path %>
+<%= link_to 'New Sight rating', new_sight_sight_rating_path %> |
+<%= link_to 'Back', sight_path(@sight) %>

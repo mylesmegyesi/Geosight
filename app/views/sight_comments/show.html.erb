@@ -1,10 +1,10 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Body:</b>
-  <%= @sight_comment.body %>
+  <b>Comment:</b>
+  <%= @sight_comment.comment %>
 </p>
 
 
-<%= link_to 'Edit', edit_sight_comment_path(@sight_comment) %> |
-<%= link_to 'Back', sight_comments_path %>
+<%= link_to 'Edit', edit_sight_sight_comment_path(@sight, @sight_comment) %> |
+<%= link_to 'Back', sight_sight_comments_path(@sight) %>

@@ -1,15 +1,10 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Photo:</b>
-  <%= @photo_tag.photo_id %>
-</p>
-
-<p>
-  <b>Body:</b>
-  <%= @photo_tag.body %>
+  <b>Tag:</b>
+  <%= @photo_tag.tag %>
 </p>
 
 
-<%= link_to 'Edit', edit_photo_tag_path(@photo_tag) %> |
-<%= link_to 'Back', photo_tags_path %>
+<%= link_to 'Edit', edit_sight_photo_photo_tag_path(@sight, @photo, @photo_tag) %> |
+<%= link_to 'Back', sight_photo_photo_tags_path(@sight, @photo) %>

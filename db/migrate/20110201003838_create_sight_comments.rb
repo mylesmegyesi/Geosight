@@ -1,8 +1,9 @@
 class CreateSightComments < ActiveRecord::Migration
   def self.up
     create_table :sight_comments do |t|
-      t.string :body
-      t.integer :sight_id, :null => false
+      t.text :comment
+      t.integer :user_id
+      t.integer :sight_id
       t.timestamps
     end
   end
