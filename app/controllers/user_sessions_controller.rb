@@ -1,6 +1,6 @@
 class UserSessionsController < ApplicationController
     before_filter :require_user, :only => :destroy
-    respond_to :html
+    respond_to :html, :json, :xml
     
     def new
         if current_user

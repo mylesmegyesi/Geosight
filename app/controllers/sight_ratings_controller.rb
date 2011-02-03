@@ -4,19 +4,25 @@ class SightRatingsController < ApplicationController
     def index
         @sight = Sight.find(params[:sight_id])
         @sight_ratings = @sight.sight_ratings
-        respond_with([@sight, @sight_rating])
+        respond_with(@sight_ratings) do |format|
+            format.html { respond_with([@sight, @sight_ratings]) }
+        end
     end
 
     def show
         @sight = Sight.find(params[:sight_id])
         @sight_rating = SightRating.find(params[:id])
-        respond_with([@sight, @sight_rating])
+        respond_with(@sight_rating) do |format|
+            format.html { respond_with([@sight, @sight_rating]) }
+        end
     end
 
     def new
         @sight = Sight.find(params[:sight_id])
         @sight_rating = SightRating.new
-        respond_with([@sight, @sight_rating])
+        respond_with(@sight_rating) do |format|
+            format.html { respond_with([@sight, @sight_rating]) }
+        end
     end
 
     def edit
@@ -30,20 +36,26 @@ class SightRatingsController < ApplicationController
         @sight = Sight.find(params[:sight_id])
         @sight_rating = SightRating.new(params[:sight_rating])
         @sight_rating.save
-        respond_with([@sight, @sight_rating])
+        respond_with(@sight_rating) do |format|
+            format.html { respond_with([@sight, @sight_rating]) }
+        end
     end
 
     def update
         @sight = Sight.find(params[:sight_id])
         @sight_rating = SightRating.find(params[:id])
-        @sight_rating.update_attributes(sight_rating)
-        respond_with([@sight, @sight_rating])
+        @sight_rating.update_attributes(params[:sight_rating])
+        respond_with(@sight_rating) do |format|
+            format.html { respond_with([@sight, @sight_rating]) }
+        end
     end
 
     def destroy
         @sight = Sight.find(params[:sight_id])
         @sight_rating = SightRating.find(params[:id])
         @sight_rating.destroy
-        respond_with([@sight, @sight_rating])
+        respond_with(@sight_rating) do |format|
+            format.html { respond_with([@sight, @sight_rating]) }
+        end
     end
 end
