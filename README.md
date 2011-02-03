@@ -4,10 +4,10 @@ Geosight combines the adventure of geocaching with the art of photography using 
 
 ## Requirements
 
-Ruby 1.8.7
-SQLite 3
-ImageMagick (for converting uploaded images)
-Git
+*Ruby 1.8.7
+*SQLite 3
+*ImageMagick (for converting uploaded images)
+*Git
 
 ## Installation
 
@@ -33,4 +33,4 @@ You should now be able to start the server
 
 In a browser, navigate to
 
-        [http://localhost:3000][http://localhost:3000]
+        [http://localhost:3000](http://localhost:3000 "http://localhost:3000")
