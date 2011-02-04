@@ -1,6 +1,6 @@
 Geosight::Application.routes.draw do
 
-    resources :sights do
+    resources :sights, :belongs_to => :user do
         resources :sight_comments
         resources :sight_ratings
         resources :photos do
@@ -16,6 +16,7 @@ Geosight::Application.routes.draw do
     match 'logout' => 'user_sessions#destroy', :via => "delete"
     match 'account' => 'users#edit', :via => "get"
     match 'register' => 'users#new', :via => "get"
-    root :to => 'users#show', :via => "get"
+    match 'home' => "home#index", :via => "get"
+    root :to => "home#index", :via => "get"
     
 end
