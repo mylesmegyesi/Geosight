@@ -4,18 +4,27 @@ class UserSessionsController < ApplicationController
     
     def new
         if current_user
-            redirect_to user_path(current_user)
+            respond_with(current_user_session) do |format|
+                format.html { redirect_to user_path(current_user) }
+            end
         else
             @user_session = UserSession.new
+        end
+    end
+    
+    def show
+        if current_user
+            redirect_to user_path(current_user)
+        else
+            redirect_to new_user_session_path
         end
     end
 
     def create
         @user_session = UserSession.new(params[:user_session])
-        if @user_session.save
-            redirect_to user_path(current_user)
-        else
-            render :action => :new
+        @user_session.save
+        respond_with(@user_session) do |format|
+            format.html { redirect_to user_path(current_user) }
         end
     end
 

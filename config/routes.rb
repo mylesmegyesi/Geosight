@@ -1,5 +1,9 @@
 Geosight::Application.routes.draw do
 
+    resources :uploads
+    resources :users
+    resources :user_sessions
+
     resources :sights, :belongs_to => :user do
         resources :sight_comments
         resources :sight_ratings
@@ -9,8 +13,6 @@ Geosight::Application.routes.draw do
         end
     end
     
-    resources :users
-
     match 'login' => 'user_sessions#create', :via => "post"
     match 'login' => 'user_sessions#new', :via => "get"
     match 'logout' => 'user_sessions#destroy', :via => "delete"

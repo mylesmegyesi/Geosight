@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110203070113) do
+ActiveRecord::Schema.define(:version => 20110208003503) do
 
   create_table "photo_comments", :force => true do |t|
     t.text     "comment"
@@ -35,6 +35,8 @@ ActiveRecord::Schema.define(:version => 20110203070113) do
     t.string   "file_content_type"
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
+    t.float    "latitude"
+    t.float    "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -61,6 +63,19 @@ ActiveRecord::Schema.define(:version => 20110203070113) do
     t.float    "longitude"
     t.string   "name"
     t.float    "radius"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "temp_photos", :force => true do |t|
+    t.integer  "sight_id"
+    t.integer  "user_id"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+    t.float    "latitude"
+    t.float    "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
