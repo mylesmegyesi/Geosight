@@ -1,6 +1,6 @@
 Geosight::Application.routes.draw do
 
-    resources :uploads
+    resources :uploads, :controller => :temp_photos, :as => :temp_photos
     resources :users
     resources :user_sessions
 

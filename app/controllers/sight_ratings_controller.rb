@@ -1,4 +1,5 @@
 class SightRatingsController < ApplicationController
+    before_filter :require_user, :except => [:index, :show]
     respond_to :html, :json, :xml
     
     def index

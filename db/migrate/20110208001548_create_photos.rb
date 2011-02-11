@@ -16,10 +16,3 @@ class CreatePhotos < ActiveRecord::Migration
   def self.down
   end
 end
-class CreatePhotos < ActiveRecord::Migration
-  def self.up
-  end
-
-  def self.down
-  end
-end

@@ -1,20 +1,18 @@
-<%= form_for(@photo, :html => {:multipart => true}) do |f| %>
-  <% if @photo.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@photo.errors.count, "error") %> prohibited this photo from being saved:</h2>
-
-      <ul>
-      <% @photo.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= form_tag(temp_photo_path(@photo), :method => "put") do |f| %>
 
   <div class="field">
-    <%= f.file_field :file %>
+    <%= label_tag :name %><br />
+    <%= text_field_tag :name %>
   </div>
+  <div class="field">
+    <%= label_tag :radius %><br />
+    <%= text_field_tag :radius %>
+  </div>
+  <div class="field">
+    <%= label_tag :possible_sights %><br />
+    <%= select_tag(:old_sight_id, options_for_select(@possible_sights)) %>
+  </div> 
   <div class="actions">
-    <%= f.submit %>
+    <%= submit_tag "Submit" %>
   </div>
 <% end %>

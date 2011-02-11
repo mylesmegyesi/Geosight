@@ -1,0 +1,18 @@
+<h1>Editing sight</h1>
+
+<%= image_tag(@photo.file.url(:medium)) %>
+
+<p>
+  <b>Latitude:</b>
+  <%= @photo.latitude %>
+</p>
+
+<p>
+  <b>Longitude:</b>
+  <%= @photo.longitude %>
+</p>
+
+<%= render 'form', :locals => {:photo => @photo, :possible_sights => @possible_sights} %>
+
+<%= link_to 'Show', @sight %> |
+<%= link_to 'Back', sights_path %>
