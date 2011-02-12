@@ -20,10 +20,11 @@ class TempPhotosController < ApplicationController
         
         # Here we need to generate a list of possible sights that
         # this picture could be put into. Store the list in @possible_sights
+        # As a temporary solution, every sight is a possibility
         @possible_sights = Sight.all.map { |sight| [sight.name, sight.id] }
         
         # Add an empty sight to the beginning of the array
-        @possible_sights = [["", 0], @possible_sights]
+        @possible_sights.unshift(["          ", 0])
         @sight = Sight.new
     end
 

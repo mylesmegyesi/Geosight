@@ -1,13 +1,16 @@
 Geosight::Application.routes.draw do
 
+    # Eventually we won't want the index of this controller
+    # but it's good to have for testing
     resources :uploads, :controller => :temp_photos, :as => :temp_photos
-    resources :users
-    resources :user_sessions
+    
+    resources :users, :except => [:index]
+    resources :user_sessions, :except => [:index]
 
-    resources :sights, :belongs_to => :user do
+    resources :sights, :except => [:new, :create], :belongs_to => :user do
         resources :sight_comments
         resources :sight_ratings
-        resources :photos do
+        resources :photos, :except => [:new, :create] do
             resources :photo_comments
             resources :photo_tags
         end
