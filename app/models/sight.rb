@@ -9,4 +9,9 @@ class Sight < ActiveRecord::Base
     validates_numericality_of :latitude
     validates_numericality_of :longitude
     validates_numericality_of :radius, :less_than_or_equal_to => 100 # max 100 meter radius
+    
+    def self.possible_sights(latitude, longitude)
+        Sight.where("((latitude - ?)*(latitude - ?))-((longitude - ?)*(longitude - ?)) <= radius",
+            latitude, latitude, longitude, longitude)
+    end
 end
