@@ -109,7 +109,7 @@ GET    /(.:format)
 
 Send a POST request to:
 	
-	http://localhost:3000/login.json?email=test@test.com&password=1234
+	http://localhost:3000/login.json?user_session[email]=test@test.com&user_session[password]=1234
 	
 You will be returned a JSON object such as:  
   
