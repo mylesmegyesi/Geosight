@@ -13,27 +13,27 @@ Geosight combines the adventure of geocaching with the art of photography using 
 
 Install Rails
 
-        sudo gem install rails
+    sudo gem install rails
 
 Checkout the code
 
-        git clone git@github.com:mylesmegyesi/Geosight.git
+    git clone git@github.com:mylesmegyesi/Geosight.git
 
 Install the gems needed by the app
 
-        sudo bundle install
+    sudo bundle install
 
 Migrate the database
 
-        rake db:migrate
+    rake db:migrate
 
 You should now be able to start the server
 
-        rails server
+    rails server
 
 In a browser, navigate to
 
-        http://localhost:3000
+    http://localhost:3000
 
 ## API
 
