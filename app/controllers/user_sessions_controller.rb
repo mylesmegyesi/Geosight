@@ -22,10 +22,14 @@ class UserSessionsController < ApplicationController
 
     def create
         @user_session = UserSession.new(params[:user_session])
-        @user_session.save
-        respond_with(@user_session) do |format|
-            format.html { redirect_to user_path(current_user) }
+        if @user_session.save
+          respond_with(@user_session) do |format|
+              format.html { redirect_to user_path(@user_session.user) }
+          end
+        else
+          redirect_to login_path
         end
+        
     end
 
     def destroy

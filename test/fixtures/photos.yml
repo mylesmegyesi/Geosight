@@ -1,13 +1,19 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  pic_filename: MyString
-  pic_content_type: MyString
-  pic_file_size: 1
-  pic_updated_at: 2011-01-31 18:04:12
+  sight_id: 1
+  user_id: 1
+  file_file_name: MyString
+  file_content_type: MyString
+  file_file_size: 1
+  latitude: 1.5
+  longitude: 1.5
 
 two:
-  pic_filename: MyString
-  pic_content_type: MyString
-  pic_file_size: 1
-  pic_updated_at: 2011-01-31 18:04:12
+  sight_id: 1
+  user_id: 1
+  file_file_name: MyString
+  file_content_type: MyString
+  file_file_size: 1
+  latitude: 1.5
+  longitude: 1.5

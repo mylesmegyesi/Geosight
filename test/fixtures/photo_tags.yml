@@ -2,8 +2,10 @@
 
 one:
   photo_id: 1
-  body: MyString
+  user_id: 1
+  tag: MyString
 
 two:
-  photo_id: 1
-  body: MyString
+  photo_id: 2
+  user_id: 2
+  tag: MyString

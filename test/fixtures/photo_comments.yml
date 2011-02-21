@@ -1,7 +1,11 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  body: MyString
+  comment: MyString
+  user_id: 1
+  photo_id: 1
 
 two:
-  body: MyString
+  comment: MyString
+  user_id: 2
+  photo_id: 2
