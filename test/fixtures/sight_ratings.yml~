@@ -1,9 +1,0 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  sight_id: 1
-  rating: 1
-
-two:
-  sight_id: 1
-  rating: 1

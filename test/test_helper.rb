@@ -5,15 +5,20 @@ require 'rails/test_help'
 require "authlogic/test_case" # include at the top of test_helper.rb
 
 class ActiveSupport::TestCase
-  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
-  #
-  # Note: You'll currently still have to declare fixtures explicitly in integration tests
-  # -- they do not yet inherit this setting
-  fixtures :all
-
-  # Add more helper methods to be used by all tests here...
+    
+    fixtures :all
+    
+    @@fixture_temp_photos = {}
+    @@fixture_temp_photos[:one] = TempPhoto.create({:user_id => 1, 
+        :file => File.open(File.join(Rails.root, "test", "fixtures", "samplegps1.jpg"))})
+    @@fixture_temp_photos[:two] = TempPhoto.create({:user_id => 1, 
+        :file => File.open(File.join(Rails.root, "test", "fixtures", "samplegps2.jpg"))})
+        
+    def temp_photos(index)
+        @@fixture_temp_photos[index]
+    end
 end
 
 class ActionController::TestCase
-  setup :activate_authlogic
+    setup :activate_authlogic
 end

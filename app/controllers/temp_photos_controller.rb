@@ -27,50 +27,10 @@ class TempPhotosController < ApplicationController
     end
 
     def create
-        params[:temp_photo][:user_id] = current_user
-
-	# Extract meta data as a hash
-        exif = EXIFR::JPEG.new(params[:temp_photo][:file].open).to_hash
-
-        unless exif[:gps_longitude].nil? # GPS Data Exists
-		ndeg = exif[:gps_latitude][0].to_f
-		nmin = exif[:gps_latitude][1].to_f
-		nsec = exif[:gps_latitude][2].to_f
-		edeg = exif[:gps_longitude][0].to_f
-		emin = exif[:gps_longitude][1].to_f
-		esec = exif[:gps_longitude][2].to_f
-
-		# Correct references
-		if exif[:gps_latitude_ref] == 'N'
-			lat = 1.0
-		else 
-			lat = -1.0
-		end
-
-		if exif[:gps_longitude_ref] == 'W'
-			lng = -1.0
-		else 
-			lng = 1.0
-		end
-	
-		lat *= (ndeg + (nmin + (nsec/60.0))/60.0)
-		lng *= (edeg + (emin + (esec/60.0))/60.0)
-
-		# Extract GPS data from picture or access coordinates
-		# given to us in params[:latitude] and params[:longitude]
-	
-		params[:temp_photo][:latitude] = lat
-		params[:temp_photo][:longitude] = lng
-        
-	else 	# No GPS data available
-        	# Set dummy coordinates for now
-        	params[:temp_photo][:latitude] = 0
-       		params[:temp_photo][:longitude] = 0
-	end
-        	
+        params[:temp_photo] = {} if params[:temp_photo].nil?
+        params[:temp_photo][:user_id] = current_user        
         @photo = TempPhoto.new(params[:temp_photo])
         @photo.save
-        
         respond_with(@photo) do |format|
             format.json {
                 # Here we need to generate a list of possible sights that
