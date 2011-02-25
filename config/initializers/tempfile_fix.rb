@@ -4,9 +4,9 @@
 # already been closed.  This monkey patch fixes the problem by making it safe to call #close on a File object multiple times.
 #
 
-unless RUBY_VERSION == '1.8.7' && RUBY_PATCHLEVEL == 299
-  raise "ERROR: Invalid ruby version #{RUBY_DESCRIPTION}.  The IOError monkey patch was written against 1.8.7-p299"
-end
+#unless (RUBY_VERSION == '1.8.7' && RUBY_PATCHLEVEL == 299) || (RUBY_VERSION == '1.8.7' && RUBY_PATCHLEVEL == 249)
+#  raise "ERROR: Invalid ruby version #{RUBY_DESCRIPTION}.  The IOError monkey patch was written against 1.8.7-p299"
+#end
 
 require 'tempfile'
 
