@@ -4,12 +4,13 @@ class TempPhoto < ActiveRecord::Base
     before_validation :get_gps_data
     validates_associated :user
     has_attached_file :file, 
+        :storage => :s3,
+        :s3_credentials => "#{RAILS_ROOT}/config/s3.yml", 
+        :path => "/temp_photos/:id/:style.:filename",
         :styles => {
             :medium => "300x300>",
             :thumb => "100x100>"
-        },
-        :url => "/system/temp_photos/:id/:style.:filename",
-        :path => ":rails_root/public/system/temp_photos/:id/:style.:filename"
+        }
     
     protected
     def get_gps_data

@@ -1,0 +1,14 @@
+development:
+  bucket: geosightdevelopment
+  access_key_id: AKIAIUY7SE4L3JFBCXUQ
+  secret_access_key: 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
+
+test:
+  bucket: geosighttest
+  access_key_id: AKIAIUY7SE4L3JFBCXUQ
+  secret_access_key: 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
+
+production:
+  bucket: geosight
+  access_key_id: AKIAIUY7SE4L3JFBCXUQ
+  secret_access_key: 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
