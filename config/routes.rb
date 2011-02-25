@@ -10,7 +10,7 @@ Geosight::Application.routes.draw do
     resources :sights do
         resources :sight_comments
         resources :sight_ratings
-        resources :photos, :except => [:new, :create] do
+        resources :photos, :only => [:index, :show, :destroy] do
             resources :photo_comments
             resources :photo_tags
         end

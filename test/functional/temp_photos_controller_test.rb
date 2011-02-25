@@ -20,18 +20,18 @@ class TempPhotosControllerTest < ActionController::TestCase
     test "should create temp_photo" do
         assert_difference('TempPhoto.count') do
             post :create, :temp_photo => {:user_id => @user.id,
-                :file => File.open(File.join(Rails.root, "test", "fixtures", "samplegps1.jpg"))
+                :file => File.open(File.join(Rails.root, "test", "fixtures", "IMAG0089.jpg"))
             }
         end
     end
     
     test "should show temp_photo" do
-        get :show, :id => @temp_photo.to_param
-        assert_response :found
+        get :show, :id => @temp_photo.id
+        assert_redirected_to(:controller => "temp_photos", :action=>"edit")
     end
     
     test "should get edit" do
-        get :edit, :id => @temp_photo.to_param
+        get :edit, :id => @temp_photo.id
         assert_response :success
     end
     
@@ -41,9 +41,9 @@ class TempPhotosControllerTest < ActionController::TestCase
     end
     
     test "should destroy temp_photo" do
-        assert_difference('TempPhoto.count', -2) do
+        
+        assert_difference('TempPhoto.count', -1) do
             delete :destroy, :id => @temp_photo.id, :user_id => @user.id
-            delete :destroy, :id => temp_photos(:two).id, :user_id => @user.id
         end
         
         assert_redirected_to temp_photos_path

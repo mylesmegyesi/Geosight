@@ -18,43 +18,6 @@ class PhotosController < ApplicationController
         end
     end
 
-    def new
-        @sight = Sight.find(params[:sight_id])
-        @photo = Photo.new
-        respond_with(@photo) do |format|
-            format.html { respond_with([@sight, @photo]) }
-        end
-    end
-
-    def edit
-        @sight = Sight.find(params[:sight_id])
-        @photo = Photo.find(params[:id])
-    end
-
-    def create
-        photo = params[:photo]
-        photo[:user_id] = current_user
-        photo[:sight_id] = params[:sight_id]
-        @photo = Photo.new(params[:photo])
-        @sight = Sight.find(@photo.sight_id)
-        @photo.save
-        respond_with(@photo) do |format|
-            format.html { respond_with([@sight, @photo]) }
-        end
-    end
-
-    def update
-        photo = params[:photo]
-        photo[:user_id] = current_user
-        photo[:sight_id] = params[:sight_id]
-        @photo = Photo.find(params[:id])
-        @sight = Sight.find(@photo.sight_id)
-        @photo.update_attributes(photo)
-        respond_with(@photo) do |format|
-            format.html { respond_with([@sight, @photo]) }
-        end
-    end
-
     def destroy
         @photo = Photo.find(params[:id])
         @sight = Sight.find(@photo.sight_id)
