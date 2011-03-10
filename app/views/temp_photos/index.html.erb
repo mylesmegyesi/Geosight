@@ -9,9 +9,9 @@
 
 <% @photos.each do |temp_photo| %>
   <tr>
-    <td><%= link_to 'Show', temp_photo %></td>
+    <td><%= link_to 'Show', temp_photo_path(temp_photo) %></td>
     <td><%= link_to 'Edit', edit_temp_photo_path(temp_photo) %></td>
-    <td><%= link_to 'Destroy', temp_photo, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', temp_photo_path(temp_photo), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

@@ -10,6 +10,7 @@ class Photo < ActiveRecord::Base
         :medium => "300x300>",
         :thumb => "100x100>"
         },
-    :url => "/system/sight_photos/:id/:style.:filename",
-    :path => ":rails_root/public/system/sight_photos/:id/:style.:filename"
+    :storage => :s3,
+    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
+    :path => "/photos/:id/:style.:filename"
 end

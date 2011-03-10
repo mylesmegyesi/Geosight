@@ -7,6 +7,7 @@ gem 'paperclip'
 gem 'authlogic'
 gem 'ruby-debug'
 gem 'exifr'
+gem 'aws-s3'
 
 # group :test, :development do
 #   gem "rspec-rails", "~> 2.4"

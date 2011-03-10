@@ -1,25 +1,26 @@
 class TempPhoto < ActiveRecord::Base
     belongs_to :user
-    validates_presence_of :user_id, :file, :latitude, :longitude
-    before_validation :get_gps_data
+    validates_presence_of :user_id, :file
+    validate :gps_data
     validates_associated :user
     has_attached_file :file, 
         :styles => {
             :medium => "300x300>",
             :thumb => "100x100>"
         },
-        :url => "/system/temp_photos/:id/:style.:filename",
-        :path => ":rails_root/public/system/temp_photos/:id/:style.:filename"
+        :storage => :s3,
+        :s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
+        :path => "/temp_photos/:id/:style.:filename"
     
     protected
-    def get_gps_data
-        if file.queued_for_write[:original].nil?
-            errors.add(:file, "not present")
-            return
-        end
+    def gps_data
         if (latitude.nil? or longitude.nil?)
+            if file.queued_for_write[:original].nil?
+                errors.add(:file, "not present")
+                return
+            end
             # Extract meta data as a hash
-            exif = EXIFR::JPEG.new(file.queued_for_write[:original]).to_hash
+            exif = EXIFR::JPEG.new(file.queued_for_write[:original].path).to_hash
             if not exif[:gps_longitude].nil? # GPS Data Exists
         		ndeg = exif[:gps_latitude][0].to_f
                 nmin = exif[:gps_latitude][1].to_f
@@ -48,7 +49,7 @@ class TempPhoto < ActiveRecord::Base
         		# given to us in params[:latitude] and params[:longitude]
                 
         		self.latitude = lat
-        		self.longitude = lng
+                self.longitude = lng
             else
                 errors.add(:latitude, "not present in file")
                 errors.add(:longitude, "not present in file")

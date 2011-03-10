@@ -30,7 +30,7 @@ class TempPhotosController < ApplicationController
         params[:temp_photo] = {} if params[:temp_photo].nil?
         params[:temp_photo][:user_id] = current_user        
         @photo = TempPhoto.new(params[:temp_photo])
-        @photo.save
+        @photo.save!
         respond_with(@photo) do |format|
             format.json {
                 # Here we need to generate a list of possible sights that
