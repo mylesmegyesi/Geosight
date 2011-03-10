@@ -13,5 +13,6 @@ class CreateTempPhotos < ActiveRecord::Migration
   end
 
   def self.down
+    drop_table :temp_photos
   end
 end

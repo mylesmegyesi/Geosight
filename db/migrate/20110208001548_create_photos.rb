@@ -14,5 +14,6 @@ class CreatePhotos < ActiveRecord::Migration
   end
 
   def self.down
+    drop_table :photos
   end
 end

@@ -11,5 +11,6 @@ class CreateSights < ActiveRecord::Migration
   end
 
   def self.down
+    drop_table :sights
   end
 end
