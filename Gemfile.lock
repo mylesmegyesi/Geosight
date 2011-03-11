@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/jjb/authlogic.git
+  revision: e5adbafa25c9bb14c0fd6ef80b8a649549c79be1
+  specs:
+    authlogic (2.1.6)
+      activesupport
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -29,8 +36,6 @@ GEM
       activesupport (= 3.0.4)
     activesupport (3.0.4)
     arel (2.0.8)
-    authlogic (2.1.6)
-      activesupport
     aws-s3 (0.6.2)
       builder
       mime-types
@@ -96,7 +101,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  authlogic
+  authlogic!
   aws-s3
   exifr
   mongrel

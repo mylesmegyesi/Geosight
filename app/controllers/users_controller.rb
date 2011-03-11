@@ -36,6 +36,6 @@ class UsersController < ApplicationController
     def destroy
         @user = current_user
         @user.destroy
-        redirect_to root_url #go to the login page
+        redirect_to root_url #go to the root_url
     end
 end
