@@ -9,7 +9,7 @@ class SightsController < ApplicationController
 
     def show
         @sight = Sight.find(params[:id])
-        respond_with(@sight) do
+        respond_with(@sight) do |format|
             format.html { render :layout => 'map' }
         end
     end
