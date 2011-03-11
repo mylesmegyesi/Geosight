@@ -11,14 +11,6 @@ class UserSessionsController < ApplicationController
             @user_session = UserSession.new
         end
     end
-    
-    def show
-        if current_user
-            redirect_to user_path(current_user)
-        else
-            redirect_to new_user_session_path
-        end
-    end
 
     def create
         @user_session = UserSession.new(params[:user_session])

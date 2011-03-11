@@ -5,7 +5,7 @@ Geosight::Application.routes.draw do
     resources :uploads, :controller => :temp_photos, :as => :temp_photos
     
     resources :users, :except => [:index]
-    resources :user_sessions, :except => [:index]
+    resources :user_sessions, :only => [:new, :create, :destroy]
 
     resources :sights do
         resources :sight_comments

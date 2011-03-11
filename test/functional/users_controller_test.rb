@@ -7,6 +7,12 @@ class UsersControllerTest < ActionController::TestCase
         UserSession.create(@user)
     end
     
+    test "should get index" do
+        assert_raises(ActionController::RoutingError) do
+            get :index
+        end
+    end
+    
     test "should get new" do
         get :new
         assert_response :success
@@ -34,5 +40,11 @@ class UsersControllerTest < ActionController::TestCase
     test "should update user" do
         put :update, :id => @user.id, :user => { }
         assert_response :found
+    end
+    
+    test "should destroy user" do
+        assert_difference('User.count', -1) do
+            delete :destroy, :id => @user.id
+        end
     end
 end

@@ -3,7 +3,7 @@ class Sight < ActiveRecord::Base
     has_many :photos, :dependent => :destroy
     has_many :sight_comments, :dependent => :destroy
     has_many :sight_ratings, :dependent => :destroy
-    validates_presence_of :user_id, :name
+    validates_presence_of :user_id, :name, :radius, :latitude, :longitude
     validates_associated :user
     validates_length_of :name, :maximum => 20
     validates_numericality_of :latitude
