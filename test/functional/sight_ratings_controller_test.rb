@@ -37,7 +37,7 @@ class SightRatingsControllerTest < ActionController::TestCase
     
     test "should update sight_rating" do
         put :update, :id => @sight_rating.id, :sight_id => @sight.id, :sight_rating => {:rating => 4}
-        assert SightRating.find(@sight_rating.id).rating == 4, "Rating not properly updated"
+        assert SightRating.find(@sight_rating.id).rating == 4
     end
     
     test "should destroy sight_rating" do

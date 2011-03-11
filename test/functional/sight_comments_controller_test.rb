@@ -39,8 +39,7 @@ class SightCommentsControllerTest < ActionController::TestCase
     test "should update sight_comment" do
         put :update, :id => @sight_comment.id, :sight_id => @sight.id, 
             :sight_comment => {:comment => "This is a different comment"}
-        assert SightComment.find(@sight_comment.id).comment == "This is a different comment",
-            "Comment not properly updated"
+        assert SightComment.find(@sight_comment.id).comment == "This is a different comment"
     end
     
     test "should destroy sight_comment" do

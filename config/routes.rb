@@ -7,7 +7,7 @@ Geosight::Application.routes.draw do
     resources :users, :except => [:index]
     resources :user_sessions, :only => [:new, :create, :destroy]
 
-    resources :sights do
+    resources :sights, :only => [:index, :show, :destroy] do
         resources :sight_comments
         resources :sight_ratings
         resources :photos, :only => [:index, :show, :destroy] do

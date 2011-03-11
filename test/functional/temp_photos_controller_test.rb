@@ -16,8 +16,9 @@ class TempPhotosControllerTest < ActionController::TestCase
     end
     
     test "should get index" do
-        get :index
-        assert_response :success
+        assert_raises(ActionController::RoutingError) do
+            get :index
+        end
     end
     
     test "should get new" do

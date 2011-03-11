@@ -2,12 +2,12 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 
-require "authlogic/test_case" # include at the top of test_helper.rb
+require "authlogic/test_case"
 
 class ActiveSupport::TestCase
     
     fixtures :all
-    
+
 end
 
 class ActionController::TestCase

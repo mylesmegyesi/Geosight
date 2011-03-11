@@ -31,8 +31,8 @@ class PhotoTagsController < ApplicationController
 
     def edit
         @sight = Sight.find(params[:sight_id])
-        @photo = Photo.find(params[:photo_id])
-        @photo_tag = PhotoTag.find(params[:id])
+        @photo = @sight.photos.find(params[:photo_id])
+        @photo_tag = @photo.photo_tags.find(params[:id])
     end
 
     def create

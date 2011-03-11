@@ -8,7 +8,6 @@
     <th>Radius</th>
     <th></th>
     <th></th>
-    <th></th>
   </tr>
 
 <% @sights.each do |sight| %>
@@ -18,7 +17,6 @@
     <td><%= sight.name %></td>
     <td><%= sight.radius %></td>
     <td><%= link_to 'Show', sight %></td>
-    <td><%= link_to 'Edit', edit_sight_path(sight) %></td>
     <td><%= link_to 'Destroy', sight, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
@@ -26,7 +24,6 @@
 
 <br />
 
-<%= link_to 'New Sight', new_sight_path %> |
 <%= if current_user
 		link_to 'Logout', logout_path, :confirm => 'Are you sure?', :method => :delete 
 	else

@@ -6,6 +6,6 @@ one:
   tag: MyString
 
 two:
-  photo_id: 2
-  user_id: 2
+  photo_id: 1
+  user_id: 1
   tag: MyString

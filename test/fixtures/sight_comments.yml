@@ -7,6 +7,6 @@ one:
 
 two:
   comment: MyString
-  user_id: 2
-  sight_id: 2
+  user_id: 1
+  sight_id: 1
   

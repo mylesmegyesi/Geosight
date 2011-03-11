@@ -9,12 +9,17 @@ class SightsControllerTest < ActionController::TestCase
     
     test "should get index" do
         get :index
-        assert_response :success, "Successful response"
-        assert_not_nil assigns(:sights)
+        assert_response :success
+    end
+    
+    test "should get new" do
+        assert_raises(ActionController::RoutingError) do
+            get :new
+        end
     end
     
     test "should show sight" do
-        get :show, :id => @sight.id, :user_id => @user.id
+        get :show, :id => @sight.id
         assert_response :success
     end
     
@@ -39,7 +44,7 @@ class SightsControllerTest < ActionController::TestCase
     
     test "should destroy sight" do
         assert_difference('Sight.count', -1) do
-            delete :destroy, :id => @sight.id, :user_id => @user.id
+            delete :destroy, :id => @sight.id
         end
     end
 end
