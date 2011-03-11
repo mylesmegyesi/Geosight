@@ -8,8 +8,9 @@ class SightsController < ApplicationController
     end
 
     def show
-        @sight = Sight.find(params[:id])    
-        respond_with(@sight)
+        @sight = Sight.find(params[:id])
+		render :layout => 'map'    
+        #respond_with(@sight)
     end
 
     def new
