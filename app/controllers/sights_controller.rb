@@ -4,7 +4,9 @@ class SightsController < ApplicationController
 
     def index
         @sights = Sight.all
-        respond_with(@sights)
+        respond_with(@sights) do |format|
+			format.html { render :layout => 'map'}
+		end
     end
 
     def show

@@ -1,3 +1,25 @@
+<script type="text/javascript">
+  function initialize() {
+	var bounds = new google.maps.LatLngBounds ();
+	var myOptions = { mapTypeId: google.maps.MapTypeId.ROADMAP };
+    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+	<% @sights.each do |sight| %>
+	  var latlng = new google.maps.LatLng(<%= sight.latitude %>, <%= sight.longitude %>);
+      bounds.extend (latlng);
+	  var marker = new google.maps.Marker({ 
+	    position: latlng, 
+	    title:"<%= sight.name %>", map: map 		
+	  });
+	  var circle = new google.maps.Circle({
+	    radius: <%= sight.radius %>, center: latlng, map: map, strokeWeight: 1
+	  }); 
+	<% end	%>
+
+	map.fitBounds (bounds);
+  }
+</script>
+
 <h1>Listing sights</h1>
 
 <table>
@@ -21,6 +43,8 @@
   </tr>
 <% end %>
 </table>
+
+<div id="map_canvas" style="width:50%; height:50%"></div>
 
 <br />
 

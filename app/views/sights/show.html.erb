@@ -1,27 +1,31 @@
 <script type="text/javascript">
   function initialize() {
+	var bounds = new google.maps.LatLngBounds ();
     var latlng = new google.maps.LatLng(<%= @sight.latitude %>, <%= @sight.longitude %>);
-    var myOptions = {
-      zoom: 18,
-      center: latlng,
-      mapTypeId: google.maps.MapTypeId.SATELLITE     
-    };
-
-    var map = new google.maps.Map(document.getElementById("map_canvas"),
-        myOptions);
-
+    var myOptions = { zoom: 19, center: latlng, mapTypeId: google.maps.MapTypeId.HYBRID };
+    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 	var circle = new google.maps.Circle({
 	  radius: <%= @sight.radius %>, center: latlng, map: map, strokeWeight: 1
 	});
 	
 	<% @sight.photos.each_with_index do |photo, i| %>
-	  var marker = new google.maps.Marker({ 
-	    position: new google.maps.LatLng(<%= photo.latitude %>, <%= photo.longitude %>), 
+	  var latlng = new google.maps.LatLng(<%= photo.latitude %>, <%= photo.longitude %>);
+	  bounds.extend(latlng);
+	  var marker = new google.maps.Marker({
+		position: latlng, 
 	    title:"Photo <%= i+1 %>", map: map 		
-	  }); 
-	<% end	%>
-  }
+	  });
 
+	var contentString = '<b>Photo <%= i+1 %></b>';
+
+	var infowindow = new google.maps.InfoWindow({ content: contentString });
+
+	google.maps.event.addListener(marker, 'click', function() {
+  	  infowindow.open(map,marker);
+	});
+	<% end	%>
+	//map.fitBounds(bounds);
+  }
 </script>
 
 <div id="map_canvas" style="width:50%; height:50%"></div>
