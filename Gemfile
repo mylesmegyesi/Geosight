@@ -8,6 +8,7 @@ gem 'authlogic', :git => "git://github.com/jjb/authlogic.git"
 gem 'ruby-debug'
 gem 'exifr'
 gem 'aws-s3'
+gem 'geokit-rails3'
 
 # group :test, :development do
 #   gem "rspec-rails", "~> 2.4"
