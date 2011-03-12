@@ -12,7 +12,7 @@ class Sight < ActiveRecord::Base
     
     def self.possible_sights(latitude, longitude)
         to = GeoKit::LatLng.new(latitude, longitude)
-        Sight.all.collect { |sight|
+        Sight.all.select { |sight|
             from = GeoKit::LatLng.new(sight.latitude, sight.longitude)
             if (from.distance_to(to)*1000) < sight.radius
                 sight
