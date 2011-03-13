@@ -1,28 +1,37 @@
 <script type="text/javascript">
   function initialize() {
 	var bounds = new google.maps.LatLngBounds ();
-    var latlng = new google.maps.LatLng(<%= @sight.latitude %>, <%= @sight.longitude %>);
-    var myOptions = { zoom: 19, center: latlng, mapTypeId: google.maps.MapTypeId.HYBRID };
+    var cent = new google.maps.LatLng(<%= @sight.latitude %>, <%= @sight.longitude %>);
+    var myOptions = { zoom: 19, center: cent, mapTypeId: google.maps.MapTypeId.HYBRID };
     var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 	var circle = new google.maps.Circle({
-	  radius: <%= @sight.radius %>, center: latlng, map: map, strokeWeight: 1
+	  radius: <%= @sight.radius %>, center: cent, map: map, strokeWeight: 1
 	});
-	
+	var lastOpened = null;
 	<% @sight.photos.each_with_index do |photo, i| %>
 	  var latlng = new google.maps.LatLng(<%= photo.latitude %>, <%= photo.longitude %>);
 	  bounds.extend(latlng);
-	  var marker = new google.maps.Marker({
+	  var marker<%=i+1%> = new google.maps.Marker({
 		position: latlng, 
 	    title:"Photo <%= i+1 %>", map: map 		
 	  });
 
-	var contentString = '<b>Photo <%= i+1 %></b>';
+	var contentString<%=i+1%> = '<b>Photo <%= i+1 %></b>'+
+		'<div><%= (image_tag(photo.file.url(:thumb))) %>'+
+		' Tags: <%= photo.photo_tags.each do |tag| tag.tag end %></div>';
 
-	var infowindow = new google.maps.InfoWindow({ content: contentString });
+	marker<%=i+1%>.infowindow = new google.maps.InfoWindow({ content: contentString<%=i+1%>, maxWidth: 1000 });
 
-	google.maps.event.addListener(marker, 'click', function() {
-  	  infowindow.open(map,marker);
+	google.maps.event.addListener(marker<%=i+1%>, 'click', function() {
+  	  if(lastOpened != null) lastOpened.infowindow.close();
+	  marker<%=i+1%>.infowindow.open(map,marker<%=i+1%>);
+      lastOpened = marker<%=i+1%>;	
 	});
+	google.maps.event.addListener(marker<%=i+1%>.infowindow,'closeclick', function() {
+	  map.setCenter(cent);
+	  lastOpened = null;
+	});
+	
 	<% end	%>
 	//map.fitBounds(bounds);
   }
