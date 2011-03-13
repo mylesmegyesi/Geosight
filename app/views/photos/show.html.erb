@@ -1,6 +1,20 @@
 <p id="notice"><%= notice %></p>
 
-<%= image_tag(@photo.file.url) %>
+<div id="photo-container">
+<div id="photo">
+<%= image_tag(@photo.file.url, {:width => '500px'}) %>
+</div>
+<div id="photo-info">
+</div>
+<div id="gmap">
+</div>
+
+<div id="comment-container">
+<div id="comment-box">
+</div>
+<div id="comment-list">
+</div>
+</div>
 
 <%= link_to 'Tags', sight_photo_photo_tags_path(@sight, @photo) %> |
 <%= link_to 'Comments', sight_photo_photo_comments_path(@sight, @photo) %> |
