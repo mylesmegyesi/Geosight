@@ -13,6 +13,8 @@ class PhotosController < ApplicationController
     def show
         @sight = Sight.find(params[:sight_id])
         @photo = Photo.find(params[:id])
+        @photo_comment = PhotoComment.new
+        @photo_comments = @photo.photo_comments
         respond_with(@photo) do |format|
             format.html { respond_with([@sight, @photo]) }
         end

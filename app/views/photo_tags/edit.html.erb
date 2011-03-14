@@ -1,6 +1,8 @@
+<% content_for :main_content do %>
 <h1>Editing photo_tag</h1>
 
 <%= render 'form' %>
 
 <%= link_to 'Show', sight_photo_photo_tag_path(@sight, @photo, @photo_tag) %> |
 <%= link_to 'Back', sight_photo_photo_tags_path(@sight, @photo) %>
+<% end %>

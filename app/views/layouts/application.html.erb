@@ -3,7 +3,9 @@
 <head>
   <title>Geosight</title>
   <%= stylesheet_link_tag "application" %>
+  <%= yield :css %>
   <%= javascript_include_tag :defaults %>
+  <%= yield :javascript %>
   <%= csrf_meta_tag %>
 </head>
 <body>
@@ -22,7 +24,7 @@
     </div>
   </div>
   <div id="main-content">
-    <%= yield %>
+    <%= yield :main_content %>
   </div>
   <div id="footer">
     About Us

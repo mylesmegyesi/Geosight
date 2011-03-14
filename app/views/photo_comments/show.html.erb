@@ -1,3 +1,4 @@
+<% content_for :main_content do %>
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -8,3 +9,4 @@
 
 <%= link_to 'Edit', edit_sight_photo_photo_comment_path(@sight, @photo, @photo_comment) %> |
 <%= link_to 'Back', sight_photo_photo_comments_path(@sight, @photo) %>
+<% end %>

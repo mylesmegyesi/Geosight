@@ -1,3 +1,4 @@
+<% content_for :main_content do %>
 <h1>Editing sight</h1>
 
 <%= image_tag(@photo.file.url(:medium)) %>
@@ -16,3 +17,4 @@
 
 <%= link_to 'Show', @sight %> |
 <%= link_to 'Back', sights_path %>
+<% end %>

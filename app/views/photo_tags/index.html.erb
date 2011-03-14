@@ -1,3 +1,4 @@
+<% content_for :main_content do %>
 <h1>Listing photo_tags</h1>
 
 <table>
@@ -22,3 +23,4 @@
 
 <%= link_to 'New Photo tag', new_sight_photo_photo_tag_path(@sight, @photo) %> | 
 <%= link_to 'Back', sight_photo_path(@sight, @photo) %>
+<% end %>

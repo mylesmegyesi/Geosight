@@ -1,21 +1,37 @@
+<% content_for :css do %>
+  <%= stylesheet_link_tag "photos_show" %>
+<% end %>
+
+<% content_for :main_content do %>
 <p id="notice"><%= notice %></p>
 
 <div id="photo-container">
-<div id="photo">
-<%= image_tag(@photo.file.url, {:width => '500px'}) %>
-</div>
-<div id="photo-info">
-</div>
-<div id="gmap">
-</div>
+  <div id="photo">
+  <%= image_tag(@photo.file.url, {:width => '400px'}) %>
+  </div>
+  <div id="photo-info">
+  </div>
+  <div id="gmap">
+  </div>
 
-<div id="comment-container">
-<div id="comment-box">
-</div>
-<div id="comment-list">
-</div>
+  <div id="comment-container">
+    <div id="comment-box">
+    <%= render 'form' %>
+    </div>
+    <div id="comment-list">
+    <% @photo_comments.each do |photo_comment| %>
+      <div id="comment">
+        <%= photo_comment.comment %> 
+        <br>
+        - <%= photo_comment.user_name() %> on <%= photo_comment.date() %> at <%= photo_comment.time() %>
+        <br>
+      </div>
+    <% end %>
+    </div>
+  </div>
 </div>
 
 <%= link_to 'Tags', sight_photo_photo_tags_path(@sight, @photo) %> |
-<%= link_to 'Comments', sight_photo_photo_comments_path(@sight, @photo) %> |
 <%= link_to 'Back', sight_photos_path(@sight) %>
+
+<% end %>

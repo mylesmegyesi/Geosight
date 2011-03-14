@@ -43,7 +43,7 @@ class PhotoCommentsController < ApplicationController
         @photo_comment = PhotoComment.new(params[:photo_comment])
         @photo_comment.save
         respond_with(@photo_comment) do |format|
-            format.html { respond_with([@sight, @photo, @photo_comment]) }
+            format.html { respond_with([@sight, @photo]) }
         end
     end
 
