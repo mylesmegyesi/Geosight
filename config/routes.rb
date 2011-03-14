@@ -16,7 +16,6 @@ Geosight::Application.routes.draw do
         end
     end
     
-    match 'upload' => 'temp_photos#new', :via => "get"
     match 'login' => 'user_sessions#create', :via => "post"
     match 'login' => 'user_sessions#new', :via => "get"
     match 'logout' => 'user_sessions#destroy', :via => "delete"
