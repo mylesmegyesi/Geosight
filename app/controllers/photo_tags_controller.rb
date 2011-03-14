@@ -36,7 +36,7 @@ class PhotoTagsController < ApplicationController
     end
 
     def create
-        params[:photo_tag][:user_id] = current_user
+        params[:photo_tag][:user_id] = current_user.id
         params[:photo_tag][:photo_id] = params[:photo_id]
         @sight = Sight.find(params[:sight_id])
         @photo = Photo.find(params[:photo_id])
