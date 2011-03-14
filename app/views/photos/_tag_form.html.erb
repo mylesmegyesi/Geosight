@@ -1,0 +1,20 @@
+<%= form_for([@sight, @photo, @photo_tag]) do |f| %>
+  <% if @photo_tag.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@photo_tag.errors.count, "error") %> prohibited this photo_tag from being saved:</h2>
+
+      <ul>
+      <% @photo_tag.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field" style="float: left;">
+    <%= f.text_field :tag %>
+  </div>
+  <div class="actions">
+    <%= f.submit(:value => "Add Tag") %>
+  </div>
+<% end %>

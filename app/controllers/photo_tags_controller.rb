@@ -43,7 +43,7 @@ class PhotoTagsController < ApplicationController
         @photo_tag = PhotoTag.new(params[:photo_tag])
         @photo_tag.save
         respond_with(@photo_tag) do |format|
-            format.html { respond_with([@sight, @photo, @photo_tag]) }
+            format.html { respond_with([@sight, @photo]) }
         end
     end
 

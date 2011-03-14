@@ -5,25 +5,33 @@
 <% content_for :main_content do %>
 <p id="notice"><%= notice %></p>
 
-<div id="photo-container">
-  <div id="photo">
-  <%= image_tag(@photo.file.url, {:width => '400px'}) %>
-  </div>
-  <div id="photo-info">
-  </div>
-  <div id="gmap">
+<div id="content">
+  <div id="photo-container">
+    <div id="photo">
+    <%= image_tag(@photo.file.url) %>
+    </div>
+    <div id="photo-info">
+    Uploaded by: <%= link_to(@photo.user_name(), user_path(@photo.user_id)) %>
+      <div id="photo-tags">
+      Tags: 
+      <% @photo_tags.each do |photo_tag| %>
+        <%= link_to(photo_tag.tag, sight_photo_photo_tag_path(@sight, @photo, photo_tag)) %> 
+      <% end %>
+      <%= render 'tag_form' %>
+      </div>
+    </div>
   </div>
 
   <div id="comment-container">
     <div id="comment-box">
-    <%= render 'form' %>
+    <%= render 'comment_form' %>
     </div>
     <div id="comment-list">
     <% @photo_comments.each do |photo_comment| %>
-      <div id="comment">
+      <div class="comment">
         <%= photo_comment.comment %> 
         <br>
-        - <%= photo_comment.user_name() %> on <%= photo_comment.date() %> at <%= photo_comment.time() %>
+        - <%= link_to(photo_comment.user_name(), user_path(photo_comment.user_id)) %> on <%= photo_comment.date() %> at <%= photo_comment.time() %>
         <br>
       </div>
     <% end %>
@@ -31,7 +39,16 @@
   </div>
 </div>
 
-<%= link_to 'Tags', sight_photo_photo_tags_path(@sight, @photo) %> |
-<%= link_to 'Back', sight_photos_path(@sight) %>
+<div id="sidebar">
+  <div id="gmap">
+  </div>
+  <div id="sight-photo-list">
+    <% @sight_photos.each do |sight_photo| %>
+      <div class="sight-photo">
+        <%= link_to(image_tag(sight_photo.file.url), sight_photo_path(@sight, sight_photo)) %>
+      </div>
+    <% end %>
+  </div>
+</div>
 
 <% end %>
