@@ -13,7 +13,11 @@
 	  });
 	  var circle = new google.maps.Circle({
 	    radius: <%= sight.radius %>, center: latlng, map: map, strokeWeight: 1
-	  }); 
+	  });
+	  google.maps.event.addListener(marker, 'click', function() { 
+	    window.location = '<%= sight_path sight %>';
+		
+	  });
 	<% end	%>
 
 	map.fitBounds (bounds);
