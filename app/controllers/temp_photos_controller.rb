@@ -61,7 +61,7 @@ class TempPhotosController < ApplicationController
             @sight = Sight.find(params[:old_sight_id])
         end
         
-        @photo = Photo.new(:sight_id => @sight.id, :user_id => @temp_photo.id, :file => @temp_photo.file, :latitude => @temp_photo.latitude, :longitude => @temp_photo.longitude)
+        @photo = Photo.new(:sight_id => @sight.id, :user_id => @temp_photo.user_id, :file => @temp_photo.file, :latitude => @temp_photo.latitude, :longitude => @temp_photo.longitude)
         
         if @photo.save
             @temp_photo.destroy
