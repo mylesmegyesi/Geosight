@@ -16,21 +16,32 @@
 	    title:"Photo <%= i+1 %>", map: map 		
 	  });
 
-	var contentString<%=i+1%> = '<b>Photo <%= i+1 %></b>'+
-		'<div><%= (image_tag(photo.file.url(:thumb))) %>'+
-		' Tags: <%= photo.photo_tags.each do |tag| tag.tag end %></div>';
+	  var contentString<%=i+1%> = '<b>Photo <%= i+1 %></b>'+
+		'<div>'+
+		'<%= link_to image_tag(photo.file.url(:thumb)), sight_photo_path(@sight, photo) %> '+
+		'Tags: '+
+		<% first = true %>
+		<% photo.photo_tags.collect do |ptag| %>
+		  <% if first == false %>
+		    '<%= ", " %>'+ 
+		  <% else %> 
+		    <% first = false %>
+          <% end %> 
+        '<%= link_to (ptag.tag, sight_photo_photo_tag_path(@sight, photo, ptag)) %>'+ 
+		<% end %>
+		'</div>';
 
-	marker<%=i+1%>.infowindow = new google.maps.InfoWindow({ content: contentString<%=i+1%>, maxWidth: 1000 });
+	  marker<%=i+1%>.infowindow = new google.maps.InfoWindow({content: contentString<%=i+1%>, maxWidth: 210});
 
-	google.maps.event.addListener(marker<%=i+1%>, 'click', function() {
-  	  if(lastOpened != null) lastOpened.infowindow.close();
-	  marker<%=i+1%>.infowindow.open(map,marker<%=i+1%>);
-      lastOpened = marker<%=i+1%>;	
-	});
-	google.maps.event.addListener(marker<%=i+1%>.infowindow,'closeclick', function() {
-	  map.setCenter(cent);
-	  lastOpened = null;
-	});
+	  google.maps.event.addListener(marker<%=i+1%>, 'click', function() {
+  	    if(lastOpened != null) lastOpened.infowindow.close();
+	    marker<%=i+1%>.infowindow.open(map,marker<%=i+1%>);
+        lastOpened = marker<%=i+1%>;	
+	  });
+	  google.maps.event.addListener(marker<%=i+1%>.infowindow,'closeclick', function() {
+	    map.setCenter(cent);
+	    lastOpened = null;
+	  });
 	
 	<% end	%>
 	//map.fitBounds(bounds);
