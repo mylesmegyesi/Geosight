@@ -1,2 +1,2 @@
-module PhotoTagsHelper
+module TagsHelper
 end

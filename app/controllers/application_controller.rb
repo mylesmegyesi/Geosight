@@ -1,11 +1,12 @@
 class ApplicationController < ActionController::Base
     helper :all # include all helpers, all the time
     protect_from_forgery # See ActionController::RequestForgeryProtection for details
+    helper_method :current_session, :current_user, :respond_to_parent, :not_found
     
     private
     def current_session
         return @current_session if defined?(@current_session)
-        @current_session = Session.find
+        @current_session = UserSession.find
     end
 
     def current_user

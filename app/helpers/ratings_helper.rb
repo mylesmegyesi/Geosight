@@ -1,2 +1,2 @@
-module SightRatingsHelper
+module RatingsHelper
 end

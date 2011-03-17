@@ -10,20 +10,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110223034429) do
+ActiveRecord::Schema.define(:version => 201103179) do
 
-  create_table "photo_comments", :force => true do |t|
+  create_table "comments", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "photo_id"
+    t.integer  "sight_id"
     t.text     "comment"
-    t.integer  "user_id"
-    t.integer  "photo_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "photo_tags", :force => true do |t|
-    t.integer  "photo_id"
-    t.integer  "user_id"
-    t.text     "tag"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -41,17 +34,15 @@ ActiveRecord::Schema.define(:version => 20110223034429) do
     t.datetime "updated_at"
   end
 
-  create_table "sight_comments", :force => true do |t|
-    t.text     "comment"
-    t.integer  "user_id"
-    t.integer  "sight_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "photos_tags", :force => true do |t|
+    t.integer "photo_id"
+    t.integer "tag_id"
   end
 
-  create_table "sight_ratings", :force => true do |t|
-    t.integer  "sight_id"
+  create_table "ratings", :force => true do |t|
     t.integer  "user_id"
+    t.integer  "photo_id"
+    t.integer  "sight_id"
     t.integer  "rating"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -67,7 +58,21 @@ ActiveRecord::Schema.define(:version => 20110223034429) do
     t.datetime "updated_at"
   end
 
-  create_table "temp_photos", :force => true do |t|
+  create_table "sights_tags", :force => true do |t|
+    t.integer "sight_id"
+    t.integer "tag_id"
+  end
+
+  create_table "tags", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "photo_id"
+    t.integer  "sight_id"
+    t.text     "tag"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "unassigneds", :force => true do |t|
     t.integer  "user_id"
     t.string   "file_file_name"
     t.string   "file_content_type"

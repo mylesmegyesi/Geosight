@@ -32,6 +32,8 @@ class SightsController < ApplicationController
     end
 
     def create
+        
+        ## Move Photos to Unassigned
         @sight = Sight.new(params[:sight])
         @sight.save
         respond_with(@sight)

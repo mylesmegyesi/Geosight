@@ -5,21 +5,21 @@ class PhotosController < ApplicationController
     def index
         @sight = Sight.find_by_id(params[:sight_id])
         if @sight.nil?
-            sight_not_found
+            not_found("Sight doesn't exist", home_path)
         end
         @photos = @sight.photos
-        respond_with(@photos)
+        respond_with([@sight, @photos])
     end
 
     def show
         @sight = Sight.find_by_id(params[:sight_id])
         if @sight.nil?
-            sight_not_found
+            not_found("Sight doesn't exist", home_path)
         end
         
         @photo = Photo.find_by_id(params[:id])
         if @photo.nil?
-            photo_not_found
+            not_found("Photo doesn't exist", sight_path(@sight))
         end
         
         @photos = @sight.photos
@@ -30,14 +30,20 @@ class PhotosController < ApplicationController
         @tag = Tag.new
         @tags = @photo.photo_tags
         
-        respond_with(@photo)
+        respond_with([@sight, @photo])
     end
 
     def destroy
-        @photo = Photo.find(params[:id])
-        @sight = Sight.find(@photo.sight_id)
+        @sight= Sight.find_by_id(params[:sight_id])
+        if @sight.nil?
+            not_found("Sight doesn't exist", home_path)
+        end
+        @photo = Photo.find_by_id(params[:id])
+        if @photo.nil?
+            not_found("Photo doesn't exist", sight_path(@sight))
+        end
         @photo.destroy
-        respond_with(@photo)
+        respond_with([@sight, @photo])
     end
     
     def move_to_unassigned

@@ -1,6 +1,6 @@
 class Sight < ActiveRecord::Base
     belongs_to :user
-    has_many :photos, :dependent => :move_to_unassigned
+    has_many :photos
     has_many :comments, :dependent => :destroy
     has_many :ratings, :dependent => :destroy
     validates_associated :user

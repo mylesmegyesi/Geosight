@@ -1,2 +1,2 @@
-module PhotoCommentsHelper
+module CommentsHelper
 end
