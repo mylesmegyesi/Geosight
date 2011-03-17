@@ -28,7 +28,7 @@ class TempPhotosController < ApplicationController
 
     def create
         params[:temp_photo] = {} if params[:temp_photo].nil?
-        params[:temp_photo][:user_id] = current_user        
+        params[:temp_photo][:user_id] = current_user.id        
         @photo = TempPhoto.new(params[:temp_photo])
         @photo.save
         respond_with(@photo) do |format|
@@ -52,7 +52,7 @@ class TempPhotosController < ApplicationController
             @sight.radius = params[:radius]
             @sight.latitude = @temp_photo.latitude
             @sight.longitude = @temp_photo.longitude
-            @sight.user_id = current_user
+            @sight.user_id = current_user.id
             
             if not @sight.save
                 respond_with(@temp_photo)

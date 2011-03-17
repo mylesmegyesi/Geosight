@@ -27,7 +27,7 @@ class SightsController < ApplicationController
 
     def create
         if !params[:sight].nil?
-            params[:sight][:user_id] = current_user
+            params[:sight][:user_id] = current_user.id
         end
         @sight = Sight.new(params[:sight])
         @sight.save

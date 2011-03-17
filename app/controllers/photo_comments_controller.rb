@@ -36,7 +36,7 @@ class PhotoCommentsController < ApplicationController
     end
 
     def create
-        params[:photo_comment][:user_id] = current_user
+        params[:photo_comment][:user_id] = current_user.id
         params[:photo_comment][:photo_id] = params[:photo_id]
         @sight = Sight.find(params[:sight_id])
         @photo = Photo.find(params[:photo_id])

@@ -32,7 +32,7 @@ class SightCommentsController < ApplicationController
     end
 
     def create
-        params[:sight_comment][:user_id] = current_user
+        params[:sight_comment][:user_id] = current_user.id
         params[:sight_comment][:sight_id] = params[:sight_id]
         @sight = Sight.find(params[:sight_id])
         @sight_comment = SightComment.new(params[:sight_comment])
