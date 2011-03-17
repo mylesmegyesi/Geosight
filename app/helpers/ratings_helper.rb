@@ -1,0 +1,2 @@
+module SightRatingsHelper
+end
