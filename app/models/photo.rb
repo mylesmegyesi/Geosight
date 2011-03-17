@@ -13,9 +13,4 @@ class Photo < ActiveRecord::Base
     :storage => :s3,
     :s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
     :path => "/photos/:id/:style.:filename"
-
-    def user_name
-      user = User.find(self.user_id)
-      user.first_name + " " + user.last_name
-    end
 end

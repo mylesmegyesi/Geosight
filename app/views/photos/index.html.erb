@@ -3,7 +3,7 @@
 
 <table>
   <tr>
-    <th>File</th>
+    <th></th>
     <th></th>
     <th></th>
   </tr>
@@ -11,13 +11,13 @@
 <% @photos.each do |photo| %>
   <tr>
     <td><%= image_tag(photo.file.url(:thumb)) %></td>
-    <td><%= link_to 'Show', sight_photo_path(@sight, photo) %></td>
-    <td><%= link_to 'Destroy', sight_photo_path(@sight, photo), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Show', photo_path(photo) %></td>
+    <td><%= link_to 'Destroy', photo_path(photo), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'Back', sight_path(@sight) %>
+<%= link_to 'Back to Sight', sight_path(@sight) %>
 <% end %>

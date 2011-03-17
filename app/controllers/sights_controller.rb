@@ -1,6 +1,6 @@
 class SightsController < ApplicationController
     before_filter :require_user, :except => [:index, :show]
-    respond_to :html, :json, :xml
+    respond_to :html, :json
 
     def index
         @sights = Sight.all
@@ -10,7 +10,10 @@ class SightsController < ApplicationController
     end
 
     def show
-        @sight = Sight.find(params[:id])
+        @sight = Sight.find_by_id(params[:id])
+        if @sight.nil?
+            sight_not_found
+        end
         respond_with(@sight) do |format|
             format.html { render :layout => 'map' }
         end
@@ -22,20 +25,23 @@ class SightsController < ApplicationController
     end
 
     def edit
-        @sight = Sight.find(params[:id])
+        @sight = Sight.find_by_ids(params[:id])
+        if @sight.nil?
+            sight_not_found
+        end
     end
 
     def create
-        if !params[:sight].nil?
-            params[:sight][:user_id] = current_user.id
-        end
         @sight = Sight.new(params[:sight])
         @sight.save
         respond_with(@sight)
     end
 
     def update
-        @sight = Sight.find(params[:id])
+        @sight = Sight.find_by_ids(params[:id])
+        if @sight.nil?
+            sight_not_found
+        end
         @sight.update_attributes(params[:sight])
         respond_with(@sight)
     end

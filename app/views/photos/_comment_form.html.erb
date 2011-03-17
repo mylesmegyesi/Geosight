@@ -1,20 +1,21 @@
-<%= form_for([@sight, @photo, @photo_comment]) do |f| %>
-  <% if @photo_comment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@photo_comment.errors.count, "error") %> prohibited this photo_comment from being saved:</h2>
+<%= form_for(@comment) do |f| %>
+    <% if @comment.errors.any? %>
+        <div id="error_explanation">
+            <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+            <ul>
+                <% @comment.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
 
-      <ul>
-      <% @photo_comment.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+    <%= f.hidden_field(:user_id, current_user.id) %>
+    <%= f.hidden_field(:photo_id, @photo.id) %>
+    <div class="field">
+        <%= f.text_area(:comment, :rows => 5) %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.text_area(:comment, :rows => 5) %>
-  </div>
-  <div class="actions">
-    <%= f.submit(:value => "Post comment") %>
-  </div>
+    <div class="actions">
+        <%= f.submit(:value => "Post comment") %>
+    </div>
 <% end %>
