@@ -1,19 +1,19 @@
 <% content_for :main_content do %>
 
-    <%= image_tag(@photo.file.url(:medium)) %>
+    <%= image_tag(@unassigned.file.url(:medium)) %>
     
     <p>
         <b>Latitude:</b>
-        <%= @photo.latitude %>
+        <%= @unassigned.latitude %>
     </p>
         
     <p>
         <b>Longitude:</b>
-        <%= @photo.longitude %>
+        <%= @unassigned.longitude %>
     </p>
         
     <%= render 'update' %>
         
-    <%= link_to 'All Unassigned Photos', unassigned_index_path %>
+    <%= link_to 'All Unassigned Photos', unassigneds_path %>
     
 <% end %>

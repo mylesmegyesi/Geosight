@@ -1,6 +1,6 @@
 class CreateSightTagJoin < ActiveRecord::Migration
     def self.up
-        create_table :sights_tags do |t|
+        create_table :sights_tags, :id => false do |t|
             t.integer :sight_id
             t.integer :tag_id
         end

@@ -4,13 +4,14 @@ class UnassignedsController < ApplicationController
     
     def index
         @user = current_user
-        @photos = @user.unassigneds
+        @unassigneds = @user.unassigneds
     end
 
     def show
         @unassigned = Unassigned.find_by_id(params[:id])
         if @unassigned.nil?
-            not_found("Unassigned photo doesn't exist", unassigned_index_path)
+            not_found("", "Unassigned photo doesn't exist", unassigned_index_path)
+            return
         end
         @possible_sights = Sight.possible_sights(@unassigned.latitude, 
             @unassigned.longitude).map { |sight| [sight.name, sight.id] }
@@ -39,11 +40,13 @@ class UnassignedsController < ApplicationController
         
         @unassigned = Unassigned.find_by_id(params[:id])
         if @unassigned.nil?
-            not_found("Unassigned photo doesn't exist", unassigned_index_path)
+            not_found("", "Unassigned photo doesn't exist", unassigneds_path)
+            return
         end
         
         if params[:old_sight_id].nil?
-            not_found("Old sight ID is blank", unassigned_path(@unassigned))
+            not_found("", "Old sight ID is blank", unassigned_path(@unassigned))
+            return
         end
         
         if params[:old_sight_id] == "0"
@@ -76,7 +79,8 @@ class UnassignedsController < ApplicationController
     def destroy
         @unassigned = Unassigned.find_by_id(params[:id])
         if @unassigned.nil?
-            not_found("Unassigned photo doesn't exist", unassigned_index_path)
+            not_found("", "Unassigned photo doesn't exist", unassigneds_path)
+            return
         end
         @unassigned.destroy
         respond_with(@unassigned)

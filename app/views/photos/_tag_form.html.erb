@@ -11,8 +11,8 @@
         </div>
     <% end %>
     
-    <%= f.hidden_field(:user_id, current_user.id) %>
-    <%= f.hidden_field(:photo_id, @photo) %>
+    <%= f.hidden_field(:user_id, {:value => current_user.id}) %>
+    <%= f.hidden_field(:photo_id, {:value => @photo.id}) %>
     <div class="field" style="float: left;">
         <%= f.text_field :tag %>
     </div>

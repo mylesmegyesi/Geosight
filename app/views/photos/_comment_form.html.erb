@@ -10,8 +10,8 @@
         </div>
     <% end %>
 
-    <%= f.hidden_field(:user_id, current_user.id) %>
-    <%= f.hidden_field(:photo_id, @photo.id) %>
+    <%= f.hidden_field(:user_id, {:value => current_user.id}) %>
+    <%= f.hidden_field(:photo_id, {:value => @photo.id}) %>
     <div class="field">
         <%= f.text_area(:comment, :rows => 5) %>
     </div>

@@ -11,7 +11,8 @@ class RatingsController < ApplicationController
     def update
         @rating = Rating.find_by_id(params[:id])
         if @rating.nil?
-            rating_not_found
+            not_found("", "Rating does not exist", home_path)
+            return
         end
         @rating.update_attributes(params[:rating])
         @rating.save
@@ -21,7 +22,8 @@ class RatingsController < ApplicationController
     def destroy        
         @rating = Rating.find_by_id(params[:id])
         if @rating.nil?
-            rating_not_found
+            not_found("", "Rating does not exist", home_path)
+            return
         end
         @sight = @rating.sight
         @photo = @rating.photo

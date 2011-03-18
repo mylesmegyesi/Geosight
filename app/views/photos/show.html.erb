@@ -44,9 +44,9 @@
         <div id="gmap">
         </div>
         <div id="sight-photo-list">
-            <% @sight_photos.each do |sight_photo| %>
+            <% @photos.each do |photo| %>
                 <div class="sight-photo">
-                    <%= link_to(image_tag(sight_photo.file.url), sight_photo_path(@sight, sight_photo)) %>
+                    <%= link_to(image_tag(photo.file.url), sight_photo_path(@sight, photo)) %>
                 </div>
             <% end %>
         </div>

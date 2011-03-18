@@ -11,7 +11,8 @@ class CommentsController < ApplicationController
     def update
         @comment = Comment.find_by_id(params[:id])
         if @comment.nil?
-            comment_not_found
+            not_found("", "Comment does not exist", home_path)
+            return
         end
         @comment.update_attributes(params[:comment])
         @comment.save
@@ -21,7 +22,8 @@ class CommentsController < ApplicationController
     def destroy        
         @comment = Comment.find_by_id(params[:id])
         if @comment.nil?
-            comment_not_found
+            not_found("", "Comment does not exist", home_path)
+            return
         end
         @sight = @comment.sight
         @photo = @comment.photo

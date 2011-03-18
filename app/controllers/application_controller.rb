@@ -42,13 +42,13 @@ class ApplicationController < ActionController::Base
         end
     end
     
-    def not_found(msg, redirect)
+    def not_found(html, json, redirect)
         respond_to do |format|
             format.html {
-                flash[:error] = msg
+                flash[:error] = html
                 redirect_to redirect
             }
-            format.json { render :json => msg }
+            format.json { render :json => json }
         end
     end
     

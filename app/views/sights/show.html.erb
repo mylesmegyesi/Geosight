@@ -21,13 +21,13 @@
 		'<%= link_to image_tag(photo.file.url(:thumb)), sight_photo_path(@sight, photo) %> '+
 		'Tags: '+
 		<% first = true %>
-		<% photo.photo_tags.collect do |ptag| %>
+		<% photo.tags.collect do |ptag| %>
 		  <% if first == false %>
 		    '<%= ", " %>'+ 
 		  <% else %> 
 		    <% first = false %>
           <% end %> 
-        '<%= link_to (ptag.tag, sight_photo_photo_tag_path(@sight, photo, ptag)) %>'+ 
+        '<%= link_to (ptag.tag, tag_path(ptag)) %>'+ 
 		<% end %>
 		'</div>';
 
@@ -72,13 +72,5 @@
   <%= @sight.radius %>
 </p>
 
-<%= link_to 'Ratings', sight_sight_ratings_path(@sight) %> |
-<%= link_to 'Comments', sight_sight_comments_path(@sight) %> |
 <%= link_to 'Photos', sight_photos_path(@sight) %> |
-<%= link_to 'Back', sights_path %> |
-<%= if current_user
-		link_to 'Logout', logout_path, :confirm => 'Are you sure?', :method => :delete 
-	else
-		link_to 'Login', login_path
-	end
-%>
+<%= link_to 'Back to Sights', sights_path %>

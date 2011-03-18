@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(:version => 201103179) do
     t.datetime "updated_at"
   end
 
-  create_table "photos_tags", :force => true do |t|
+  create_table "photos_tags", :id => false, :force => true do |t|
     t.integer "photo_id"
     t.integer "tag_id"
   end
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(:version => 201103179) do
     t.datetime "updated_at"
   end
 
-  create_table "sights_tags", :force => true do |t|
+  create_table "sights_tags", :id => false, :force => true do |t|
     t.integer "sight_id"
     t.integer "tag_id"
   end

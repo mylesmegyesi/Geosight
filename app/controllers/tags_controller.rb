@@ -5,7 +5,8 @@ class TagsController < ApplicationController
     def show
         @tag = Tag.find_by_id(params[:id])
         if @tag.nil?
-            not_found("Tag does not exist", home_path)
+            not_found("", "Tag does not exist", home_path)
+            return
         end
         respond_with(@tag)
     end

@@ -1,8 +1,8 @@
 class Unassigned < ActiveRecord::Base
     belongs_to :user
     validates_presence_of :user_id
-    validates_associated :user, "not registered"
-    validates_presence_of :file, "not selected"
+    validates_associated :user, :message => "not registered"
+    validates_presence_of :file, :message => "not selected"
     validate :gps_data
     has_attached_file :file, 
         :styles => {
@@ -11,7 +11,7 @@ class Unassigned < ActiveRecord::Base
         },
         :storage => :s3,
         :s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
-        :path => "/temp_photos/:id/:style.:filename"
+        :path => "/unassigned/:id/:style.:filename"
     
     protected
     def gps_data
