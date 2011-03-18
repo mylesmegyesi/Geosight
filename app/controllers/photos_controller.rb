@@ -47,10 +47,11 @@ class PhotosController < ApplicationController
             not_found("", "Photo doesn't exist", sight_path(@sight))
             return
         end
-        @photo.destroy
+        if @photo.destroy
+            flash[:notice] = "Photo successfully deleted"
+        else
+            flash[:error] = "There was a problem deleting your Photo"
+        end
         respond_with([@sight, @photo])
-    end
-    
-    def move_to_unassigned
     end
 end

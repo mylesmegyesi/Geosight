@@ -14,9 +14,9 @@ class TagsController < ApplicationController
     def create
         @tag = Tag.new(params[:tag])
         if @tag.save
-            flash[:notice] = "Tag successfully created!"
+            flash[:notice] = "Tag successfully created"
         else
-            flash[:error] = "Tag creation unsuccessfull"
+            flash[:error] = "TThere was a problem creating your Tag"
         end
         respond_with(@tag)
     end
@@ -24,9 +24,9 @@ class TagsController < ApplicationController
     def destroy
         @tag = Tag.find_by_id(params[:id])
         if @tag.destroy
-            flash[:notice] = "Tag successfully deleted!"
+            flash[:notice] = "Tag successfully deleted"
         else
-            flash[:error] = "Tag deletion unsuccessful"
+            flash[:error] = "There was a problem creating your tag"
         end
         redirect_to home_path
     end

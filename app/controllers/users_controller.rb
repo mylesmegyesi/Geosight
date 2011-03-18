@@ -29,13 +29,21 @@ class UsersController < ApplicationController
 
     def update
         @user = current_user
-        @user.update_attributes(params[:user])
+        if @user.update_attributes(params[:user])
+            flash[:notice] = "Settings successfully updated"
+        else
+            flash[:error] = "There was a problem updating your Settings"
+        end
         respond_with(@user)
     end
 
     def destroy
         @user = current_user
-        @user.destroy
-        redirect_to root_url #go to the root_url
+        if @user.destroy
+            flash[:notice] = "Account successfully deleted"
+        else
+            flash[:error] = "There was a problem deleting your account"
+        end
+        redirect_to home_path
     end
 end

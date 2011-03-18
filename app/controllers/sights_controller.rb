@@ -56,7 +56,10 @@ class SightsController < ApplicationController
             return
         end
         @sight.photos.each do |photo|
-            photo.move_to_unassigned
+            @unassigned = Unassigned.create(:user_id => photo.user_id, 
+                :file => photo.file, :latitude => photo.latitude, 
+                :longitude => photo.longitude)
+            photo.destroy
         end
         @sight.destroy
         respond_with(@sight)

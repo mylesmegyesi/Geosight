@@ -4,7 +4,11 @@ class RatingsController < ApplicationController
 
     def create
         @rating = Rating.new(params[:rating])
-        @rating.save
+        if @rating.save
+            flash[:notice] = "Rating successfully created"
+        else
+            flash[:error] = "There was a problem creating your Rating"
+        end
         respond_with_parent(@rating, @rating.photo, @rating.sight)
     end
 
@@ -14,8 +18,11 @@ class RatingsController < ApplicationController
             not_found("", "Rating does not exist", home_path)
             return
         end
-        @rating.update_attributes(params[:rating])
-        @rating.save
+        if @rating.update_attributes(params[:rating])
+            flash[:notice] = "Rating successfully updated"
+        else
+            flash[:error] = "There was a problem updating your Rating"
+        end
         respond_with_parent(@rating, @rating.photo, @rating.sights)
     end
 
@@ -27,7 +34,11 @@ class RatingsController < ApplicationController
         end
         @sight = @rating.sight
         @photo = @rating.photo
-        @rating.destroy
+        if @rating.destroy
+            flash[:notice] = "Rating successfully deleted"
+        else
+            flash[:error] = "There was a problem delesting your Rating"
+        end
         respond_with_parent(@rating, @photo, @sight)
     end
 end

@@ -4,7 +4,11 @@ class CommentsController < ApplicationController
 
     def create
         @comment = Comment.new(params[:comment])
-        @comment.save
+        if @comment.save
+            flash[:notice] = "Comment successfully posted"
+        else
+            flash[:error] = "There was a problem posting your comment"
+        end
         respond_with_parent(@comment, @comment.photo, @comment.sight)
     end
 
@@ -14,8 +18,11 @@ class CommentsController < ApplicationController
             not_found("", "Comment does not exist", home_path)
             return
         end
-        @comment.update_attributes(params[:comment])
-        @comment.save
+        if @comment.update_attributes(params[:comment])
+            flash[:notice] = "Comment successfully updated"
+        else
+            flash[:error] = "There was a problem updating your Comment"
+        end
         respond_with_parent(@comment, @comment.photo, @comment.sights)
     end
 
@@ -27,7 +34,11 @@ class CommentsController < ApplicationController
         end
         @sight = @comment.sight
         @photo = @comment.photo
-        @comment.destroy
+        if @comment.destroy
+            flash[:notice] = "Comment successfully deleted"
+        else
+            flash[:error] = "There was a problem deleting your Comment"
+        end
         respond_with_parent(@comment, @photo, @sight)
     end
 end

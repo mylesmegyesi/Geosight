@@ -70,8 +70,10 @@ class UnassignedsController < ApplicationController
         
         if @photo.save
             @unassigned.destroy
+            flash[:notice] = "Photo succefully added to Sight"
             respond_with([@sight, @photo])
         else
+            flash[:notice] = "There was a problem adding the Photo to the Sight"
             respond_with(@unassigned, @photo)
         end
     end
@@ -82,7 +84,11 @@ class UnassignedsController < ApplicationController
             not_found("", "Unassigned photo doesn't exist", unassigneds_path)
             return
         end
-        @unassigned.destroy
+        if @unassigned.destroy
+            flash[:notice] = "Unassigned Photo successfully deleted"
+        else
+            flash[:error] = "There was a problem deleting your Unassigned Photo"
+        end
         respond_with(@unassigned)
     end    
 end
