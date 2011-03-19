@@ -9,6 +9,7 @@ gem 'ruby-debug'
 gem 'exifr'
 gem 'aws-s3'
 gem 'geokit-rails3'
+gem 'rack-ssl'
 
 # group :test, :development do
 #   gem "rspec-rails", "~> 2.4"
