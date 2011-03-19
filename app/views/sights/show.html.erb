@@ -1,76 +1,83 @@
-<script type="text/javascript">
-  function initialize() {
-	var bounds = new google.maps.LatLngBounds ();
-    var cent = new google.maps.LatLng(<%= @sight.latitude %>, <%= @sight.longitude %>);
-    var myOptions = { zoom: 19, center: cent, mapTypeId: google.maps.MapTypeId.HYBRID };
-    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-	var circle = new google.maps.Circle({
-	  radius: <%= @sight.radius %>, center: cent, map: map, strokeWeight: 1
-	});
-	var lastOpened = null;
-	<% @sight.photos.each_with_index do |photo, i| %>
-	  var latlng = new google.maps.LatLng(<%= photo.latitude %>, <%= photo.longitude %>);
-	  bounds.extend(latlng);
-	  var marker<%=i+1%> = new google.maps.Marker({
-		position: latlng, 
-	    title:"Photo <%= i+1 %>", map: map 		
-	  });
+<% content_for :css do %>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
+    <%= stylesheet_link_tag("map") %>
+<% end %>
 
-	  var contentString<%=i+1%> = '<b>Photo <%= i+1 %></b>'+
-		'<div>'+
-		'<%= link_to image_tag(photo.file.url(:thumb)), sight_photo_path(@sight, photo) %> '+
-		'Tags: '+
-		<% first = true %>
-		<% photo.tags.collect do |ptag| %>
-		  <% if first == false %>
-		    '<%= ", " %>'+ 
-		  <% else %> 
-		    <% first = false %>
-          <% end %> 
-        '<%= link_to (ptag.tag, tag_path(ptag)) %>'+ 
-		<% end %>
-		'</div>';
+<% content_for :javascript do %>
+    <%= javascript_include_tag("http://maps.google.com/maps/api/js?sensor=false") %>
+<% end %>
 
-	  marker<%=i+1%>.infowindow = new google.maps.InfoWindow({content: contentString<%=i+1%>, maxWidth: 210});
+<% content_for :body do %>
 
-	  google.maps.event.addListener(marker<%=i+1%>, 'click', function() {
-  	    if(lastOpened != null) lastOpened.infowindow.close();
-	    marker<%=i+1%>.infowindow.open(map,marker<%=i+1%>);
-        lastOpened = marker<%=i+1%>;	
-	  });
-	  google.maps.event.addListener(marker<%=i+1%>.infowindow,'closeclick', function() {
-	    map.setCenter(cent);
-	    lastOpened = null;
-	  });
-	
-	<% end	%>
-	//map.fitBounds(bounds);
-  }
-</script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var bounds = new google.maps.LatLngBounds ();
+            var cent = new google.maps.LatLng(<%= @sight.latitude %>, <%= @sight.longitude %>);
+            var myOptions = { zoom: 19, center: cent, mapTypeId: google.maps.MapTypeId.HYBRID };
+            var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+            var circle = new google.maps.Circle({
+                radius: <%= @sight.radius %>, center: cent, map: map, strokeWeight: 1
+            });
+            var lastOpened = null;
+            <% @sight.photos.each_with_index do |photo, i| %>
+                var latlng = new google.maps.LatLng(<%= photo.latitude %>, <%= photo.longitude %>);
+                bounds.extend(latlng);
+                var marker<%=i+1%> = new google.maps.Marker({
+                    position: latlng,
+                    title:"Photo <%= i+1 %>", map: map
+                });
+                var contentString<%=i+1%> = '<b>Photo <%= i+1 %></b>'+
+                    '<div>'+
+                    '<%= link_to image_tag(photo.file.url(:thumb)), photo_path(photo) %>'+
+                    'Tags: '+
+                    <% first = true %>
+                    <% photo.tags.collect do |ptag| %>
+                        <% if first == false %>
+                            '<%= ", " %>'+
+                        <% else %>
+                            <% first = false %>
+                        <% end %>
+                        '<%= link_to (ptag.tag, tag_path(ptag)) %>'+
+                    <% end %>
+                    '</div>';
+                marker<%=i+1%>.infowindow = new google.maps.InfoWindow({content: contentString<%=i+1%>, maxWidth: 210});
+                google.maps.event.addListener(marker<%=i+1%>, 'click', function() {
+                    if(lastOpened != null) lastOpened.infowindow.close();
+                    marker<%=i+1%>.infowindow.open(map,marker<%=i+1%>);
+                    lastOpened = marker<%=i+1%>;
+                });
+                google.maps.event.addListener(marker<%=i+1%>.infowindow,'closeclick', function() {
+                    map.setCenter(cent);
+                    lastOpened = null;
+                });
+            <% end	%>
+            //map.fitBounds(bounds);
+        });
+    </script>
+    
+    <div id="map_canvas"></div>
+    
+    <p>
+        <b>Latitude:</b>
+        <%= @sight.latitude %>
+    </p>
+    
+    <p>
+        <b>Longitude:</b>
+        <%= @sight.longitude %>
+    </p>
+    
+    <p>
+        <b>Name:</b>
+        <%= @sight.name %>
+    </p>
+    
+    <p>
+        <b>Radius:</b>
+        <%= @sight.radius %>
+    </p>
+    
+    <%= link_to 'Photos', photos_path({:sight_id => @sight.id}) %> |
+    <%= link_to 'Back to Sights', sights_path %>
 
-<div id="map_canvas" style="width:50%; height:50%"></div>
-
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Latitude:</b>
-  <%= @sight.latitude %>
-</p>
-
-<p>
-  <b>Longitude:</b>
-  <%= @sight.longitude %>
-</p>
-
-<p>
-  <b>Name:</b>
-  <%= @sight.name %>
-</p>
-
-<p>
-  <b>Radius:</b>
-  <%= @sight.radius %>
-</p>
-
-<%= link_to 'Photos', sight_photos_path(@sight) %> |
-<%= link_to 'Back to Sights', sights_path %>
+<% end %>

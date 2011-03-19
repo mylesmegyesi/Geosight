@@ -5,46 +5,90 @@ class PhotosController < ApplicationController
     def index
         @sight = Sight.find_by_id(params[:sight_id])
         if @sight.nil?
-            not_found("", "Sight doesn't exist", home_path)
+            redirect_to unassigned_photos_path
             return
         end
-        @photos = @sight.photos
-        respond_with([@sight, @photos])
+        @photos = @sight.photos            
     end
 
     def show
-        @sight = Sight.find_by_id(params[:sight_id])
-        if @sight.nil?
-            not_found("", "Sight doesn't exist", home_path)
-            return
-        end
-        
         @photo = Photo.find_by_id(params[:id])
         if @photo.nil?
-            not_found("", "Photo doesn't exist", sight_path(@sight))
+            redirect_to not_found_path
             return
         end
         
-        @photos = @sight.photos
-        
-        @comment = Comment.new
-        @comments = @photo.comments
+        if @photo.sight.nil?
+            redirect_to edit_photo_path(@photo)
+            return
+        end
         
         @tag = Tag.new
-        @tags = @photo.tags
+        @comment = Comment.new
         
-        respond_with([@sight, @photo])
+        respond_with(@photo)
+    end
+    
+    def new
+        @photo = Photo.new
+    end
+    
+    def edit
+        @photo = Photo.find_by_id(params[:id])
+        if @photo.nil?
+            redirect_to not_found_path
+            return
+        end
+    end
+    
+    def create 
+        @photo = Photo.new(params[:photo])
+        if @photo.save
+            flash[:notice] = "Photo successfully created"
+        else
+            flash[:error] = "There was a problem creating your Photo"
+        end
+        respond_with(@photo)
+    end
+    
+    def update
+        @photo = Photo.find_by_id(params[:id])
+        if @photo.nil?
+            redirect_to not_found_path
+            return
+        end
+        
+        if params[:photo][:existing_sight_id] == "0"
+            @sight = Sight.new
+            @sight.name = params[:photo][:name]
+            @sight.radius = params[:photo][:radius]
+            @sight.latitude = @photo.latitude
+            @sight.longitude = @photo.longitude
+            @sight.user_id = current_user.id
+            
+            if not @sight.save
+                @sight.errors.each do |attr, msg|
+                    @photo.errors.add(attr, msg)
+                end
+                respond_with(@photo)
+                return
+            end
+        else
+            @sight = Sight.find_by_id(params[:photo][:existing_sight_id])
+            if @sight.nil?
+                redirect_to not_found_path
+                return
+            end
+        end
+        
+        @photo.update_attribute(:sight_id, @sight.id)
+        respond_with(@photo)
     end
 
     def destroy
-        @sight= Sight.find_by_id(params[:sight_id])
-        if @sight.nil?
-            not_found("", "Sight doesn't exist", home_path)
-            return
-        end
         @photo = Photo.find_by_id(params[:id])
         if @photo.nil?
-            not_found("", "Photo doesn't exist", sight_path(@sight))
+            redirect_to not_found_path
             return
         end
         if @photo.destroy
@@ -52,6 +96,15 @@ class PhotosController < ApplicationController
         else
             flash[:error] = "There was a problem deleting your Photo"
         end
-        respond_with([@sight, @photo])
+        @sight = Sight.find_by_id(params[:sight_id])
+        if @sight.nil?
+            respond_with(@photo)
+        else
+            respond_with(@sight)
+        end
+    end
+    
+    def unassigned
+        @photos = Photo.where(:user_id => current_user.id, :sight_id => nil)
     end
 end

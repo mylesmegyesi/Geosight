@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
     def update
         @comment = Comment.find_by_id(params[:id])
         if @comment.nil?
-            not_found("", "Comment does not exist", home_path)
+            redirect_to not_found_path
             return
         end
         if @comment.update_attributes(params[:comment])
@@ -29,7 +29,7 @@ class CommentsController < ApplicationController
     def destroy        
         @comment = Comment.find_by_id(params[:id])
         if @comment.nil?
-            not_found("", "Comment does not exist", home_path)
+            redirect_to not_found_path
             return
         end
         @sight = @comment.sight

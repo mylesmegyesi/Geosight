@@ -1,15 +1,31 @@
-class SightRating < ActiveRecord::Base
+class Rating < ActiveRecord::Base
     belongs_to :photo
     belongs_to :sight
     belongs_to :user
-    validates_presence_of :rating, :user_id
+    validate :parent
+    validates_associated :user, :if => :user?
     validates_numericality_of :rating, :only_integer => true,
         :greater_than_or_equal_to => 1,
-        :less_than_or_equal_to => 5
-    validates_associated :user
-    validate :parent
+        :less_than_or_equal_to => 5, :if => :rating?
         
-    protected
+    private 
+    
+    def user?
+        if self.user.nil?
+            errors.add(:user, "not present")
+            return false
+        end
+        return true
+    end
+    
+    def rating?
+        if self.rating.nil?
+            errors.add(:rating, "not present")
+            return false
+        end
+        return true
+    end
+    
     def parent
         if not self.sight_id.nil?
             if Sight.find_by_id(self.sight_id).nil?

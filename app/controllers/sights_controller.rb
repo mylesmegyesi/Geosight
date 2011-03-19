@@ -4,20 +4,16 @@ class SightsController < ApplicationController
 
     def index
         @sights = Sight.all
-        respond_with(@sights) do |format|
-			format.html { render :layout => 'map'}
-		end
+        respond_with(@sights)
     end
 
     def show
         @sight = Sight.find_by_id(params[:id])
         if @sight.nil?
-            not_found("", "Sight does not exist", home_path)
+            redirect_to not_found_path
             return
         end
-        respond_with(@sight) do |format|
-            format.html { render :layout => 'map' }
-        end
+        respond_with(@sight)
     end
 
     def new
@@ -28,7 +24,7 @@ class SightsController < ApplicationController
     def edit
         @sight = Sight.find_by_ids(params[:id])
         if @sight.nil?
-            not_found("", "Sight does not exist", home_path)
+            redirect_to not_found_path
             return
         end
     end
@@ -42,7 +38,7 @@ class SightsController < ApplicationController
     def update
         @sight = Sight.find_by_ids(params[:id])
         if @sight.nil?
-            not_found("", "Sight does not exist", home_path)
+            redirect_to not_found_path
             return
         end
         @sight.update_attributes(params[:sight])
@@ -52,14 +48,11 @@ class SightsController < ApplicationController
     def destroy
         @sight = Sight.find(params[:id])
         if @sight.nil?
-            not_found("", "Sight does not exist", home_path)
+            redirect_to not_found_path
             return
         end
         @sight.photos.each do |photo|
-            @unassigned = Unassigned.create(:user_id => photo.user_id, 
-                :file => photo.file, :latitude => photo.latitude, 
-                :longitude => photo.longitude)
-            photo.destroy
+            photo.update_attribute(:sight_id, nil)
         end
         @sight.destroy
         respond_with(@sight)

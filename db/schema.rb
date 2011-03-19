@@ -65,21 +65,7 @@ ActiveRecord::Schema.define(:version => 201103179) do
 
   create_table "tags", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "photo_id"
-    t.integer  "sight_id"
     t.text     "tag"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "unassigneds", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "file_file_name"
-    t.string   "file_content_type"
-    t.integer  "file_file_size"
-    t.datetime "file_updated_at"
-    t.float    "latitude"
-    t.float    "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,23 +1,33 @@
-<% content_for :main_content do %>
-<h1>Listing photos</h1>
+<% content_for :body do %>
 
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+    <% if not @sight.nil? %>
+        <h1>Photos for <%= @sight.name %></h1>
+    <% else %>
+        <h1>Photos</h1>
+    <% end %>
+    
+    <table>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    
+        <% @photos.each do |photo| %>
+            <tr>
+                <td><%= image_tag(photo.file.url(:thumb)) %></td>
+                <td><%= link_to 'Show', photo_path(photo) %></td>
+                <td><%= link_to 'Destroy', photo_path(photo), :confirm => 'Are you sure?', :method => :delete %></td>
+            </tr>
+        <% end %>
+    </table>
+    
+    <br />
+    
+    <% if not @sight.nil? %>
+        <%= link_to 'Back to Sight', sight_path(@sight) %>
+    <% else %>
+        <%= link_to 'Home', home_path %>
+    <% end %>
 
-<% @photos.each do |photo| %>
-  <tr>
-    <td><%= image_tag(photo.file.url(:thumb)) %></td>
-    <td><%= link_to 'Show', sight_photo_path(@sight, photo) %></td>
-    <td><%= link_to 'Destroy', sight_photo_path(@sight, photo), :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'Back to Sight', sight_path(@sight) %>
 <% end %>

@@ -11,7 +11,13 @@
     <% end %>
 
     <%= f.hidden_field(:user_id, {:value => current_user.id}) %>
-    <%= f.hidden_field(:photo_id, {:value => @photo.id}) %>
+    <%=
+        if not @photo.nil?
+            f.hidden_field(:photo_id, {:value => @photo.id})
+        elsif not @sight.nil?
+            f.hidden_field(:sight_id, {:value => @sight.id})
+        end
+    %>
     <div class="field">
         <%= f.text_area(:comment, :rows => 5) %>
     </div>

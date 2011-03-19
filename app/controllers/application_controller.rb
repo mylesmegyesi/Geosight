@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
         session[:return_to] = request.fullpath
     end
     
-    def respond_to_parent(obj, photo, sight)
+    def respond_with_parent(obj, photo, sight)
         if not sight.nil?
             respond_with(obj) do |format|
                 format.html { respond_with(sight) }
@@ -39,16 +39,6 @@ class ApplicationController < ActionController::Base
         else
             flash[:error] = "Parent not specified"
             redirect_to home_path
-        end
-    end
-    
-    def not_found(html, json, redirect)
-        respond_to do |format|
-            format.html {
-                flash[:error] = html
-                redirect_to redirect
-            }
-            format.json { render :json => json }
         end
     end
     

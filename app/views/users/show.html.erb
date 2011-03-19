@@ -1,24 +1,24 @@
-<% content_for :main_content do %>
-<p id="notice"><%= notice %></p>
+<% content_for :body do %>
 
-<p>
-  <b>First Name:</b>
-  <%= @user.first_name %>
-</p>
+    <p>
+        <b>First Name:</b>
+        <%= @user.first_name %>
+    </p>
+    
+    <p>
+        <b>Last Name:</b>
+        <%= @user.last_name %>
+    </p>
+    
+    <p>
+        <b>email:</b>
+        <%= @user.email %>
+    </p>
+    
+    <%= link_to 'Sights', sights_path %> |
+    <%= link_to 'Upload a Photo', new_photo_path %> |
+    <%= link_to 'Edit', edit_user_path(@user) %> |
+    <%= link_to 'Back', users_path %> |
+    <%= link_to 'Logout', logout_path, :confirm => 'Are you sure?', :method => :delete %>
 
-<p>
-  <b>Last Name:</b>
-  <%= @user.last_name %>
-</p>
-
-<p>
-  <b>email:</b>
-  <%= @user.email %>
-</p>
-
-<%= link_to 'Sights', sights_path %> |
-<%= link_to 'Upload a Photo', upload_path %> |
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %> |
-<%= link_to 'Logout', logout_path, :confirm => 'Are you sure?', :method => :delete %>
 <% end %>

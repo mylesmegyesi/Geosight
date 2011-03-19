@@ -37,189 +37,41 @@ In a browser, navigate to
 
 ## API
 
-GET    /uploads(.:format)                                                   
-POST   /uploads(.:format)                                                   
-GET    /uploads/new(.:format)                                               
-GET    /uploads/:id/edit(.:format)                                          
-GET    /uploads/:id(.:format)                                               
-PUT    /uploads/:id(.:format)                                               
-DELETE /uploads/:id(.:format)                                               
-POST   /users(.:format)                                                     
-GET    /users/new(.:format)                                                 
-GET    /users/:id/edit(.:format)                                            
-GET    /users/:id(.:format)                                                 
-PUT    /users/:id(.:format)                                                 
-DELETE /users/:id(.:format)                                                 
-POST   /user_sessions(.:format)                                             
-GET    /user_sessions/new(.:format)                                         
-GET    /user_sessions/:id/edit(.:format)                                    
-GET    /user_sessions/:id(.:format)                                         
-PUT    /user_sessions/:id(.:format)                                         
-DELETE /user_sessions/:id(.:format)                                         
-GET    /sights/:sight\_id/sight\_comments(.:format)                          
-POST   /sights/:sight\_id/sight\_comments(.:format)                          
-GET    /sights/:sight\_id/sight\_comments/new(.:format)                       
-GET    /sights/:sight\_id/sight\_comments/:id/edit(.:format)                  
-GET    /sights/:sight\_id/sight\_comments/:id(.:format)                       
-PUT    /sights/:sight\_id/sight\_comments/:id(.:format)                       
-DELETE /sights/:sight\_id/sight\_comments/:id(.:format)                       
-GET    /sights/:sight\_id/sight\_ratings(.:format)                            
-POST   /sights/:sight\_id/sight\_ratings(.:format)                            
-GET    /sights/:sight\_id/sight\_ratings/new(.:format)                        
-GET    /sights/:sight\_id/sight\_ratings/:id/edit(.:format)                   
-GET    /sights/:sight\_id/sight\_ratings/:id(.:format)                        
-PUT    /sights/:sight\_id/sight\_ratings/:id(.:format)                        
-DELETE /sights/:sight\_id/sight\_ratings/:id(.:format)                        
-GET    /sights/:sight\_id/photos/:photo\_id/photo\_comments(.:format)          
-POST   /sights/:sight\_id/photos/:photo\_id/photo\_comments(.:format)          
-GET    /sights/:sight\_id/photos/:photo\_id/photo\_comments/new(.:format)      
-GET    /sights/:sight\_id/photos/:photo\_id/photo\_comments/:id/edit(.:format) 
-GET    /sights/:sight\_id/photos/:photo\_id/photo\_comments/:id(.:format)      
-PUT    /sights/:sight\_id/photos/:photo\_id/photo\_comments/:id(.:format)      
-DELETE /sights/:sight\_id/photos/:photo\_id/photo\_comments/:id(.:format)      
-GET    /sights/:sight\_id/photos/:photo\_id/photo\_tags(.:format)              
-POST   /sights/:sight\_id/photos/:photo\_id/photo\_tags(.:format)              
-GET    /sights/:sight\_id/photos/:photo\_id/photo\_tags/new(.:format)          
-GET    /sights/:sight\_id/photos/:photo\_id/photo\_tags/:id/edit(.:format)     
-GET    /sights/:sight\_id/photos/:photo\_id/photo\_tags/:id(.:format)          
-PUT    /sights/:sight\_id/photos/:photo\_id/photo\_tags/:id(.:format)          
-DELETE /sights/:sight\_id/photos/:photo\_id/photo\_tags/:id(.:format)          
-GET    /sights/:sight\_id/photos(.:format)                                   
-GET    /sights/:sight\_id/photos/:id/edit(.:format)                          
-GET    /sights/:sight\_id/photos/:id(.:format)                               
-PUT    /sights/:sight\_id/photos/:id(.:format)                               
-DELETE /sights/:sight\_id/photos/:id(.:format)                               
-GET    /sights(.:format)                                                    
-GET    /sights/:id/edit(.:format)                                           
-GET    /sights/:id(.:format)                                                
-PUT    /sights/:id(.:format)                                                
-DELETE /sights/:id(.:format)                                                
-POST   /login(.:format)                                                     
-GET    /login(.:format)                                                     
-DELETE /logout(.:format)                                                    
-GET    /account(.:format)                                                   
-GET    /register(.:format)                                                  
-GET    /home(.:format)                                                      
-GET    /(.:format)                                                          
-
-
-## Example API Requests
-
-### Login
-
-Send a POST request to:
-	
-	http://localhost:3000/login.json?user_session[email]=test@test.com&user_session[password]=1234
-	
-You will be returned a JSON object such as:  
-  
-	{  
-		"scope": {  
-		},  
-		"remember_me": "1",   
-		"invalid_password": false,   
-		"new_session": false,  
-		"attempted_record": {  
-			"user": {  
-				"created_at": "2011-02-03T22:23:49Z",   
-				"last_request_at": "2011-02-07T23:45:33Z",   
-				"single_access_token": "jOvcIBs7ASIEm0w8Vy",  
-				"crypted_password":   "66ef6c2b1f59c7ee76a09239764d48786839ee9382b0075becf8b89db87504f8aa36aacd0d473e5345cadb09d9f2dbb9cf8684d9aad6cb07e6a125762f79e523",   
-				"perishable_token": "gPgEc6b8D9esiuQHZiO",   
-				"updated_at": "2011-02-07T23:45:33Z",   
-				"current_login_ip": "127.0.0.1",   
-				"failed_login_count": 0,   
-				"id": 6,   
-				"current_login_at": "2011-02-07T23:45:33Z",   
-				"password_salt": "UwIf3BhJeQyCFkYPgfIv",    
-				"last_name": "test",   
-				"login_count": 17,   
-				"persistence_token":   "3156e8e6a9342cc41888efb0c02163e88a18ba81bad49fe2f7906e785bbaba0965242c44a0ba7a2f60e1e440c1f5390f834124f062aa89c81a3bedf89e5465ad",   
-				"last_login_ip": "127.0.0.1",   
-				"last_login_at": "2011-02-07T23:41:15Z",   
-				"email": "test@test.com",   
-				"first_name": "test"  
-			}   
-		},    
-		"errors": {   
-		},    
-		"password": "1234",   
-		"record": {   
-			"user": {   
-				"created_at": "2011-02-03T22:23:49Z",   
-				"last_request_at": "2011-02-07T23:45:33Z",    
-				"single_access_token": "jOvcIBs7ASIEm0w8Vy",    
-				"crypted_password":    "66ef6c2b1f59c7ee76a09239764d48786839ee9382b0075becf8b89db87504f8aa36aacd0d473e5345cadb09d9f2dbb9cf8684d9aad6cb07e6a125762f79e523",   
-				"perishable_token": "gPgEc6b8D9esiuQHZiO",   
-				"updated_at": "2011-02-07T23:45:33Z",   
-				"current_login_ip": "127.0.0.1",   
-				"failed_login_count": 0,    
-				"id": 6,    
-				"current_login_at": "2011-02-07T23:45:33Z",     
-				"password_salt": "UwIf3BhJeQyCFkYPgfIv",    
-				"last_name": "test",    
-				"login_count": 17,   
-				"persistence_token":    "3156e8e6a9342cc41888efb0c02163e88a18ba81bad49fe2f7906e785bbaba0965242c44a0ba7a2f60e1e440c1f5390f834124f062aa89c81a3bedf89e5465ad",   
-				"last_login_ip": "127.0.0.1",   
-				"last_login_at": "2011-02-07T23:41:15Z",   
-				"email": "test@test.com",   
-				"first_name": "test"  
-			}   
-		},   
-		"email": "test@test.com"  
-	}
-
-
-From this token, you will need to store the user_id and the persistence_token
-
-### List all sights
-
-	http://localhost:3000/sights.json
-	
-Sample return:  
-	
-	[  
-		{  
-			"sight": {  
-				"name": "test",   
-				"radius": 50,   
-				"created_at": "2011-02-07T23:54:50Z",   
-				"latitude": 1000,   
-				"updated_at": "2011-02-07T23:54:50Z",   
-				"id": 2,   
-				"user_id": 1,   
-				"longitude": 1000  
-			}  
-		},   
-		{  
-			"sight": {  
-				"name": "new sight",   
-				"radius": 80,   
-				"created_at": "2011-02-07T23:55:26Z",   
-				"latitude": 50,   
-				"updated_at": "2011-02-07T23:55:26Z",   
-				"id": 3,   
-				"user_id": 1,    
-				"longitude": 35.8  
-			}   
-		}  
-	]  
-	
-### Get specific sight
-
-	http://localhost:3000/sights/1.json
-	
-Sample return:  
-
-	{  
-		"sight": {  
-			"name": "test",   
-			"radius": 50,   
-			"created_at": "2011-02-07T23:54:50Z",    
-			"latitude": 1000,   
-			"updated_at": "2011-02-07T23:54:50Z",   
-			"id": 2,   
-			"user_id": 1,    
-			"longitude": 1000  
-		}  
-	}  
+POST   /users(.:format)                
+GET    /users/register(.:format)       
+GET    /users/:id/settings(.:format)   
+GET    /users/:id(.:format)            
+PUT    /users/:id(.:format)            
+DELETE /users/:id(.:format)            
+POST   /user_sessions(.:format)        
+GET    /user_sessions/new(.:format)    
+DELETE /user_sessions/:id(.:format)    
+GET    /login(.:format)                
+DELETE /logout(.:format)               
+POST   /ratings(.:format)              
+PUT    /ratings/:id(.:format)          
+DELETE /ratings/:id(.:format)          
+POST   /comments(.:format)             
+PUT    /comments/:id(.:format)         
+DELETE /comments/:id(.:format)         
+POST   /tags(.:format)                 
+GET    /tags/:id(.:format)             
+DELETE /tags/:id(.:format)             
+GET    /photos/unassigned(.:format)    
+GET    /photos(.:format)               
+POST   /photos(.:format)               
+GET    /photos/new(.:format)           
+GET    /photos/:id/edit(.:format)      
+GET    /photos/:id(.:format)           
+PUT    /photos/:id(.:format)           
+DELETE /photos/:id(.:format)           
+GET    /upload(.:format)               
+GET    /sights(.:format)               
+GET    /sights/:id(.:format)           
+DELETE /sights/:id(.:format)           
+GET    /home(.:format)                 
+GET    /(.:format)                     
+GET    /not_found(.:format)            
+GET    /unprocessable_entity(.:format) 
+GET    /internal_server_error(.:format) 
+       /*path(.:format)                

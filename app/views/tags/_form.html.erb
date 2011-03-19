@@ -12,7 +12,13 @@
     <% end %>
     
     <%= f.hidden_field(:user_id, {:value => current_user.id}) %>
-    <%= f.hidden_field(:photo_id, {:value => @photo.id}) %>
+    <%=
+        if not @photo.nil?
+            hidden_field_tag(:photo_id, @photo.id)
+        elsif not @sight.nil?
+            hidden_field_tag(:sight_id, @sight.id)
+        end
+    %>
     <div class="field" style="float: left;">
         <%= f.text_field :tag %>
     </div>

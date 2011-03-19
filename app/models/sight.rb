@@ -3,12 +3,16 @@ class Sight < ActiveRecord::Base
     has_many :photos
     has_many :comments, :dependent => :destroy
     has_many :ratings, :dependent => :destroy
-    validates_associated :user
-    validates_presence_of :user_id, :name, :radius, :latitude, :longitude
-    validates_length_of :name, :maximum => 20
-    validates_numericality_of :latitude
-    validates_numericality_of :longitude
-    validates_numericality_of :radius, :less_than_or_equal_to => 100 # max 100 meter radius
+    has_and_belongs_to_many :tags
+    validates_associated :user, :if => :user?
+    validates_length_of :name, :minimum => 1, :maximum => 20, :if => :name?
+    validates_numericality_of :latitude, :if => :location?
+    validates_numericality_of :longitude, :if => :location?
+    validates_numericality_of :radius, :less_than_or_equal_to => 30, :if => :radius?
+    
+    def rating
+        Rating.average(:rating, :condtions => ["id = ?", self.id])
+    end
     
     def self.possible_sights(latitude, longitude)
         to = GeoKit::LatLng.new(latitude, longitude)
@@ -18,5 +22,44 @@ class Sight < ActiveRecord::Base
                 sight
             end
         }
+    end
+    
+    private
+    
+    def user?
+        if self.user.nil?
+            errors.add(:user, "not present")
+            return false
+        end
+        return true
+    end
+    
+    def name?
+        if self.name.nil?
+            errors.add(:name, "can't be blank")
+            return false
+        end
+        return true
+    end
+    
+    def location?
+        if self.latitude.nil?
+            errors.add_to_base("GPS location not present")
+            return false
+        end
+        
+        if self.longitude.nil?
+            errors.add_to_base("GPS location not present")
+            return false
+        end
+        return true
+    end
+    
+    def radius?
+        if self.radius.nil?
+            errors.add(:radius, "can't be blank")
+            return false
+        end
+        return true
     end
 end

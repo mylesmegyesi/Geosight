@@ -1,38 +1,36 @@
 <% content_for :css do %>
-    <%= stylesheet_link_tag "photos_show" %>
+    <%= stylesheet_link_tag "photo" %>
 <% end %>
 
-<% content_for :main_content do %>
-
-    <p id="notice"><%= flash[:notice] %></p>
+<% content_for :body do %>
     
     <div id="content">
         <div id="photo-container">
             <div id="photo">
-                <%= image_tag(@photo.file.url) %>
+                <%= image_tag(@photo.file.url(:medium)) %>
             </div>
             <div id="photo-info">
                 Uploaded by: <%= link_to(@photo.user.user_name, user_path(@photo.user)) %>
                 <div id="photo-tags">
                     Tags:
-                    <% @tags.each do |tag| %>
-                        <%= link_to(tag.tag, tag_path(photo_tag)) %>
+                    <% @photo.tags.each do |tag| %>
+                        <%= link_to(tag.tag, tag_path(tag)) %>
                     <% end %>
-                    <%= render 'tag_form' %>
+                    <%= render 'tags/form' %>
                 </div>
             </div>
         </div>
     
         <div id="comment-container">
             <div id="comment-box">
-                <%= render 'comment_form' %>
+                <%= render 'comments/form' %>
             </div>
             <div id="comment-list">
-                <% @comments.each do |comment| %>
+                <% @photo.comments.each do |comment| %>
                     <div class="comment">
                         <%= comment.comment %>
                         <br>
-        -                <%= link_to(comment.user.user_name, user_path(comment.user)) %> on <%= comment.date %> at <%= comment.time %>
+                            <%= link_to(comment.user.user_name, user_path(comment.user)) %> on <%= comment.date %> at <%= comment.time %>
                         <br>
                     </div>
                 <% end %>
@@ -44,9 +42,9 @@
         <div id="gmap">
         </div>
         <div id="sight-photo-list">
-            <% @photos.each do |photo| %>
+            <% @photo.sight.photos.each do |photo| %>
                 <div class="sight-photo">
-                    <%= link_to(image_tag(photo.file.url), sight_photo_path(@sight, photo)) %>
+                    <%= link_to(image_tag(photo.file.url(:thumb)), photo_path(photo)) %>
                 </div>
             <% end %>
         </div>

@@ -13,15 +13,14 @@ class UserSessionsController < ApplicationController
     end
 
     def create
-        @session = UserSession.new(params[:user_session])
-        if @session.save
-            respond_with(@session) do |format|
-                format.html { redirect_to user_path(@session.user) }
+        @user_session = UserSession.new(params[:user_session])
+        if @user_session.save
+            respond_with(@user_session) do |format|
+                format.html { redirect_to user_path(@user_session.user) }
             end
         else
-            respond_to do |format|
-                format.html { redirect_to login_path }
-                format.json { render :json => @session.errors, :status => :unprocessable_entity }
+            respond_with(@user_session) do |format|
+                format.json { render :json => @user_session.errors, :status => :unprocessable_entity }
             end
         end
     end

@@ -1,0 +1,19 @@
+<% content_for :body do %>
+
+    <%= image_tag(@photo.file.url(:medium)) %>
+    
+    <p>
+        <b>Latitude:</b>
+        <%= @photo.latitude %>
+    </p>
+        
+    <p>
+        <b>Longitude:</b>
+        <%= @photo.longitude %>
+    </p>
+        
+    <%= render 'edit' %>
+        
+    <%= link_to 'All Photos', photos_path %>
+    
+<% end %>
