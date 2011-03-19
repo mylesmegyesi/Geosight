@@ -17,13 +17,19 @@
             <tr>
                 <td><%= image_tag(photo.file.url(:thumb)) %></td>
                 <td><%= link_to 'Show', photo_path(photo) %></td>
+                <% if not @sight.nil? %>
+                <td><%= link_to 'Destroy', photo_path(photo, {:sight_id => @sight.id}), :confirm => 'Are you sure?', :method => :delete %></td>
+                <% else %>
                 <td><%= link_to 'Destroy', photo_path(photo), :confirm => 'Are you sure?', :method => :delete %></td>
+                <% end %>
             </tr>
         <% end %>
     </table>
     
     <br />
     
+    <%= link_to 'Upload a Photo', upload_path %> |
+    <%= link_to 'Unassigned Photos', unassigned_photos_path %> | 
     <% if not @sight.nil? %>
         <%= link_to 'Back to Sight', sight_path(@sight) %>
     <% else %>

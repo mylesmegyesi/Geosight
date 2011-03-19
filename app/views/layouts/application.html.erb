@@ -1,35 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Geosight</title>
-  <%= stylesheet_link_tag "application" %>
-  <%= yield :css %>
-  <%= javascript_include_tag :defaults %>
-  <%= yield :javascript %>
-  <%= csrf_meta_tag %>
+    <title>Geosight</title>
+    <%= stylesheet_link_tag "application" %>
+    <%= yield :css %>
+    <%= javascript_include_tag :defaults %>
+    <%= yield :javascript %>
+    <%= csrf_meta_tag %>
 </head>
 <body>
-  <div id="header">
-    <div id="logo">
-      <%= link_to (image_tag 'logo.png'), home_path %>
+    <% notice = false%>
+    <% if not flash[:notice].nil?
+        notice = true    
+    %>
+    <div class="flash-container">
+        <div class="flash-message-buffer"></div>
+        <div class="flash-message" id="flash-notice">
+            <%= flash[:notice]%>
+        </div>
+        <div class="flash-message-buffer"></div>
     </div>
-
-    <div id="login-options">
-      <% if current_user %>
-		    <%= link_to 'Logout', logout_path, :confirm => 'Are you sure?', :method => :delete %>
-      <% else %>
-		    <%= link_to 'Login', login_path %>
-		    <%= link_to 'Register', new_user_path %>
-      <% end %>
+    <% elsif not flash[:error].nil?
+        notice = true
+    %>
+    <div class="flash-container">
+        <div class="flash-message-buffer"></div>
+        <div class="flash-message" id="flash-error">
+            <%= flash[:error] %>
+        </div>
+        <div class="flash-message-buffer"></div>
     </div>
-  </div>
-  <div id="main-content">
-    <%= yield :body %>
-  </div>
-  <div id="footer">
-    About Us
-    <br>
-    Contact Us
-  </div>
+    <% end %>
+    
+    <% if notice %>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".flash-container").show("slide", {direction: "up"}, 750, function() {
+                setTimeout(function() {
+                    $(".flash-container").hide("slide", {direction: "up"}, 750);
+                }, 4000);
+            });
+        });
+    </script>
+    <% end %>
+    <div id="header">
+        <div id="logo">
+            <%= link_to (image_tag 'logo.png'), home_path %>
+        </div>
+        
+        <div id="login-options">
+            <% if current_user %>
+            <%= link_to 'Logout', logout_path, :confirm => 'Are you sure?', :method => :delete %>
+            <% else %>
+            <%= link_to 'Login', login_path %>
+            <%= link_to 'Register', new_user_path %>
+            <% end %>
+        </div>
+    </div>
+    <div id="main-content">
+        <%= yield :body %>
+    </div>
+    <div id="footer">
+        About Us
+        <br>
+        Contact Us
+    </div>
 </body>
 </html>

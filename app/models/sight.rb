@@ -8,7 +8,7 @@ class Sight < ActiveRecord::Base
     validates_length_of :name, :minimum => 1, :maximum => 20, :if => :name?
     validates_numericality_of :latitude, :if => :location?
     validates_numericality_of :longitude, :if => :location?
-    validates_numericality_of :radius, :less_than_or_equal_to => 30, :if => :radius?
+    validates_numericality_of :radius, :less_than_or_equal_to => 50, :if => :radius?
     
     def rating
         Rating.average(:rating, :condtions => ["id = ?", self.id])

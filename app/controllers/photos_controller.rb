@@ -5,10 +5,10 @@ class PhotosController < ApplicationController
     def index
         @sight = Sight.find_by_id(params[:sight_id])
         if @sight.nil?
-            redirect_to unassigned_photos_path
-            return
+            @photos = current_user.photos
+        else
+            @photos = @sight.photos
         end
-        @photos = @sight.photos            
     end
 
     def show
@@ -91,16 +91,27 @@ class PhotosController < ApplicationController
             redirect_to not_found_path
             return
         end
+        @sight = @photo.sight
         if @photo.destroy
             flash[:notice] = "Photo successfully deleted"
         else
             flash[:error] = "There was a problem deleting your Photo"
         end
-        @sight = Sight.find_by_id(params[:sight_id])
-        if @sight.nil?
-            respond_with(@photo)
-        else
+        
+        sight_destroyed = false
+        if not @sight.nil?
+            if @sight.photos.empty?
+                sight_destroyed = true
+                @sight.destroy
+            end
+        end
+        
+        if (not Sight.find_by_id(params[:sight_id]).nil?) && (not sight_destroyed)
             respond_with(@sight)
+        elsif sight_destroyed
+            redirect_to sights_path
+        else
+            respond_with(@photo)
         end
     end
     

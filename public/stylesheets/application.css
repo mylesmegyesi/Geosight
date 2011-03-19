@@ -33,8 +33,42 @@ div.field, div.actions {
     margin-bottom: 10px;
 }
 
-#notice {
-    color: green;
+.flash-container {
+    position: absolute;
+    display: table;
+    width: 100%;
+    height: 50px;
+}
+
+.flash-message-buffer {
+    display: table-cell;
+    width: 20%;
+}
+
+.flash-message {
+    position: relative;
+    display: table-cell;
+    width: 650px;
+    height: 60%;
+    margin: 0px auto;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 24px;
+    color: white;
+    -webkit-border-bottom-right-radius: 15px;
+    -webkit-border-bottom-left-radius: 15px;
+    -moz-border-radius-bottomright: 15px;
+    -moz-border-radius-bottomleft: 15px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+#flash-notice {
+    background-color: rgba(5,69,0,0.9);
+}
+
+#flash-error {
+    background-color: rgba(69,0,0,0.9);
 }
 
 .field_with_errors {
