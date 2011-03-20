@@ -6,15 +6,13 @@ class Photo < ActiveRecord::Base
     has_and_belongs_to_many :tags
     validates_associated :user, :if => :user?
     validate :gps_data
-    has_attached_file :file, 
-    :styles => {
-        :medium => "x450",
-        :small => "x300>",
-        :thumb => "x100>"
-        },
-    :storage => :s3,
-    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
-    :path => "/photos/:id/:style.:filename"
+    has_attached_file :file, {
+        :styles => {
+            :medium => "x450>",
+            :small => "x300>",
+            :thumb => "x100>"
+        }
+    }.merge(PAPERCLIP_STORAGE_OPTIONS)
     
     # Virtual fields to trick the form builder
     def name

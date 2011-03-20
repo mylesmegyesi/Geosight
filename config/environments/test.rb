@@ -33,3 +33,8 @@ Geosight::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 end
+
+PAPERCLIP_STORAGE_OPTIONS = {
+    :path => File.join(Rails.root, "public/system/photos/:id/:style.:filename"),
+    :url => "/system/photos/:id/:style.:filename"
+}

@@ -51,3 +51,10 @@ Geosight::Application.configure do
 
     config.middleware.insert_before ActionDispatch::Cookies, Rack::SSL
 end
+
+PAPERCLIP_STORAGE_OPTIONS = {
+    :storage => :s3,
+    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
+    :s3_protocol => "https",
+    :path => "/photos/:id/:style.:filename"
+}

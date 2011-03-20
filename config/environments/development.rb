@@ -24,3 +24,7 @@ Geosight::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 end
 
+PAPERCLIP_STORAGE_OPTIONS = {
+    :path => File.join(Rails.root, "public/system/photos/:id/:style.:filename"),
+    :url => "/system/photos/:id/:style.:filename"
+}
