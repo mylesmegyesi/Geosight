@@ -9,7 +9,9 @@ class CommentsController < ApplicationController
         else
             flash[:error] = "There was a problem posting your comment"
         end
-        respond_with_parent(@comment, @comment.photo, @comment.sight)
+        respond_with(@comment) do |format|
+            format.html {respond_with_parent(@comment, @comment.photo, @comment.sight) }
+        end
     end
 
     def update
@@ -23,7 +25,9 @@ class CommentsController < ApplicationController
         else
             flash[:error] = "There was a problem updating your Comment"
         end
-        respond_with_parent(@comment, @comment.photo, @comment.sights)
+        respond_with(@comment) do |format|
+            format.html {respond_with_parent(@comment, @comment.photo, @comment.sight) }
+        end
     end
 
     def destroy        
@@ -39,6 +43,8 @@ class CommentsController < ApplicationController
         else
             flash[:error] = "There was a problem deleting your Comment"
         end
-        respond_with_parent(@comment, @photo, @sight)
+        respond_with(@comment) do |format|
+            format.html {respond_with_parent(@comment, @comment.photo, @comment.sight) }
+        end
     end
 end

@@ -43,8 +43,8 @@ class TagsController < ApplicationController
             @parent.tags << @tag
         end
         
-        respond_with(@parent) do |format|
-            format.json { respond_with(@tag) }
+        respond_with(@tag) do |format|
+            format.html { respond_with(@parent) }
         end
     end
 
@@ -76,6 +76,8 @@ class TagsController < ApplicationController
         end
         
         flash[:notice] = "Tag successfully deleted"
-        respond_with(@parent)
+        respond_with(@tag) do |format|
+            format.html { respond_with(@parent) }
+        end
     end
 end

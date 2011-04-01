@@ -44,6 +44,8 @@ class UsersController < ApplicationController
         else
             flash[:error] = "There was a problem deleting your account"
         end
-        redirect_to home_path
+        respond_with(@user) do |format|
+            format.html { redirect_to home_path }
+        end
     end
 end

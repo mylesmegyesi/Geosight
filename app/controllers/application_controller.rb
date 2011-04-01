@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
     helper :all # include all helpers, all the time
     protect_from_forgery # See ActionController::RequestForgeryProtection for details
-    helper_method :current_session, :current_user, :respond_to_parent, :not_found
+    helper_method :current_session, :current_user, :respond_with_parent, :add_urls_to_photo, :add_urls_to_sight
     
     private
     def current_session
@@ -39,6 +39,16 @@ class ApplicationController < ActionController::Base
             flash[:error] = "Parent not specified"
             redirect_to home_path
         end
+    end
+    
+    def add_urls_to_photo(photo)
+        photo["thumbnail"] = photo.file.url(:thumb)
+        photo["small"] = photo.file.url(:small)
+        photo["medium"] = photo.file.url(:medium)
+        photo["original"] = photo.file.url
+    end
+    
+    def add_urls_to_sight(sight)
     end
     
 end

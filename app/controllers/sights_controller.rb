@@ -4,7 +4,15 @@ class SightsController < ApplicationController
 
     def index
         @sights = Sight.all
-        respond_with(@sights)
+        respond_with(@sights) do |format|
+            format.json {
+                @sights = @sights.collect do |sight|
+                    add_urls_to_sight(sight)
+                    sight
+                end
+                respond_with(@sights)
+            }
+        end
     end
 
     def show
@@ -13,7 +21,12 @@ class SightsController < ApplicationController
             redirect_to not_found_path
             return
         end
-        respond_with(@sight)
+        respond_with(@sight) do |format|
+            format.json {
+                add_urls_to_sight(@sight)
+                respond_with(@sight)
+            }
+        end
     end
 
     def new
@@ -32,7 +45,12 @@ class SightsController < ApplicationController
     def create
         @sight = Sight.new(params[:sight])
         @sight.save
-        respond_with(@sight)
+        respond_with(@sight) do |format|
+            format.json {
+                add_urls_to_sight(@sight)
+                respond_with(@sight)
+            }
+        end
     end
 
     def update
@@ -42,7 +60,12 @@ class SightsController < ApplicationController
             return
         end
         @sight.update_attributes(params[:sight])
-        respond_with(@sight)
+        respond_with(@sight) do |format|
+            format.json {
+                add_urls_to_sight(@sight)
+                respond_with(@sight)
+            }
+        end
     end
 
     def destroy

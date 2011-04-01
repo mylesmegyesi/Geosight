@@ -9,6 +9,15 @@ class PhotosController < ApplicationController
         else
             @photos = @sight.photos
         end
+        respond_with(@photos) do |format|
+            format.json {
+                @photos = @photos.collect do |photo|
+                    add_urls_to_photo(photo)
+                    photo
+                end
+                respond_with(@photos)
+            }
+        end
     end
 
     def show
@@ -26,7 +35,12 @@ class PhotosController < ApplicationController
         @tag = Tag.new
         @comment = Comment.new
         
-        respond_with(@photo)
+        respond_with(@photo) do |format|
+            format.json {
+                add_urls_to_photo(@photo)
+                respond_with(@photo)
+            }
+        end
     end
     
     def new
@@ -48,7 +62,12 @@ class PhotosController < ApplicationController
         else
             flash[:error] = "There was a problem creating your Photo"
         end
-        respond_with(@photo)
+        respond_with(@photo) do |format|
+            format.json {
+                add_urls_to_photo(@photo)
+                respond_with(@photo)
+            }
+        end
     end
     
     def update
@@ -82,7 +101,14 @@ class PhotosController < ApplicationController
         end
         
         @photo.update_attribute(:sight_id, @sight.id)
-        respond_with(@photo)
+        
+        respond_with(@photo) do |format|
+            format.html {}
+            format.json {
+                add_urls_to_photo(@photo)
+                respond_with(@photo)
+            }
+        end
     end
 
     def destroy
@@ -106,16 +132,29 @@ class PhotosController < ApplicationController
             end
         end
         
-        if (not Sight.find_by_id(params[:sight_id]).nil?) && (not sight_destroyed)
-            respond_with(@sight)
-        elsif sight_destroyed
-            redirect_to sights_path
-        else
-            respond_with(@photo)
+        respond_with(@photo) do |format|
+            format.html {
+                if (not Sight.find_by_id(params[:sight_id]).nil?) && (not sight_destroyed)
+                    respond_with(@sight)
+                elsif sight_destroyed
+                    redirect_to sights_path
+                else
+                    respond_with(@photo)
+                end
+            }
         end
     end
     
     def unassigned
         @photos = Photo.where(:user_id => current_user.id, :sight_id => nil)
+        respond_with(@photos) do |format|
+            format.json {
+                @photos = @photos.collect do |photo|
+                    add_urls_to_photo(photo)
+                    photo
+                end
+                respond_with(@photos)
+            }
+        end
     end
 end
