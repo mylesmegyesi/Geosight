@@ -29,14 +29,14 @@ class Rating < ActiveRecord::Base
     def parent
         if not self.sight_id.nil?
             if Sight.find_by_id(self.sight_id).nil?
-                errors.add_to_base("Sight doesn't exist")
+                errors.add(:base, "Sight doesn't exist")
             end
         elsif not self.photo_id.nil?
             if Photo.find_by_id(self.photo_id).nil?
-                errors.add_to_base("Photo doesn't exist")
+                errors.add(:base, "Photo doesn't exist")
             end
         else
-            errors.add_to_base("No photo or sight specified")
+            errors.add(:base, "No photo or sight specified")
         end
     end
 end

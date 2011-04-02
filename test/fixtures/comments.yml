@@ -1,0 +1,10 @@
+one:
+  comment: comment1
+  user_id: 1
+  sight_id: 1
+
+two:
+  comment: comment2
+  user_id: 1
+  photo_id: 1
+  

@@ -53,6 +53,10 @@ class PhotosController < ApplicationController
             redirect_to not_found_path
             return
         end
+        
+        if not @photo.sight.nil?
+            redirect_to photo_path(@photo)
+        end
     end
     
     def create 
@@ -76,7 +80,19 @@ class PhotosController < ApplicationController
             redirect_to not_found_path
             return
         end
+        if not @photo.sight.nil?
+            flash[:error] = "Photo already assigned to a Sight"
+            redirect_to photo_path(@photo)
+        end
         
+        if params[:photo].nil?
+            redirect_to not_found_path
+            return
+        end
+        if params[:photo][:existing_sight_id].nil?
+            redirect_to not_found_path
+            return
+        end
         if params[:photo][:existing_sight_id] == "0"
             @sight = Sight.new
             @sight.name = params[:photo][:name]
@@ -103,7 +119,6 @@ class PhotosController < ApplicationController
         @photo.update_attribute(:sight_id, @sight.id)
         
         respond_with(@photo) do |format|
-            format.html {}
             format.json {
                 add_urls_to_photo(@photo)
                 respond_with(@photo)

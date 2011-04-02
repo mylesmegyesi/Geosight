@@ -3,6 +3,11 @@ class RatingsController < ApplicationController
     respond_to :html, :json
 
     def create
+        if params[:rating].nil?
+            redirect_to not_found_path
+            return
+        end
+        params[:rating][:user_id] = current_user.id
         @rating = Rating.new(params[:rating])
         if @rating.save
             flash[:notice] = "Rating successfully created"
@@ -44,7 +49,7 @@ class RatingsController < ApplicationController
             flash[:error] = "There was a problem delesting your Rating"
         end
         respond_with(@rating) do |format|
-            format.html { respond_with_parent(@rating, @rating.photo, @rating.sight) }
+            format.html { respond_with_parent(@rating, @photo, @sight) }
         end
     end
 end

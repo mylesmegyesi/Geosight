@@ -3,6 +3,11 @@ class CommentsController < ApplicationController
     respond_to :html, :json
 
     def create
+        if params[:comment].nil?
+            redirect_to not_found_path
+            return
+        end
+        params[:comment][:user_id] = current_user.id
         @comment = Comment.new(params[:comment])
         if @comment.save
             flash[:notice] = "Comment successfully posted"

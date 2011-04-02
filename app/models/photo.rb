@@ -76,7 +76,7 @@ class Photo < ActiveRecord::Base
         		self.latitude = lat
                 self.longitude = lng
             else
-                errors.add_to_base("GPS data not present in file")
+                errors.add(:base, "GPS data not present in file")
             end
         end
     end

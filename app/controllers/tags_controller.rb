@@ -11,35 +11,41 @@ class TagsController < ApplicationController
         respond_with(@tag)
     end
 
-    def create
-        if not params[:photo_id].nil?
-            @parent = Photo.find_by_id(params[:photo_id])
-        elsif not params[:sight_id].nil?
-            @parent = Sight.find_by_id(params[:photo_id])
-        end
+    def create        
         
-        if @parent.nil?
+        if params[:tag].nil?
             redirect_to not_found_path
             return
         end
         
-        if @tag.nil?
-            @tag = Tag.find_by_tag(params[:tag][:tag]) 
-            @tag = Tag.new(params[:tag])
-            if @tag.save
-                flash[:notice] = "Tag successfully created"
-            else
-                flash[:error] = "TThere was a problem creating your Tag"
-            end
+        if not params[:photo_id].nil?
+            @parent = Photo.find_by_id(params[:photo_id])
+        elsif not params[:sight_id].nil?
+            @parent = Sight.find_by_id(params[:sight_id])
+        else
+            redirect_to not_found_path
+            return
+        end
+        
+        if params[:tag][:tag].nil?
+            redirect_to not_found_path
+            return
         end
         
         is_tagged = false
         @parent.tags.each do |tag|
-            if tag.tag == @tag.tag
+            if tag.tag == params[:tag][:tag]
                 is_tagged = true
             end
         end
         if not is_tagged
+            params[:tag][:user_id] = current_user.id
+            @tag = Tag.new(params[:tag])
+            if @tag.save
+                flash[:notice] = "Tag successfully created"
+            else
+                flash[:error] = "There was a problem creating your Tag"
+            end
             @parent.tags << @tag
         end
         
@@ -55,18 +61,22 @@ class TagsController < ApplicationController
             return
         end
         
-        if params[:photo_id].nil? && params[:sight_id].nil?
-            flash[:error] = "There was a problem deleting your tag"
-            redirect_to home_path
-        elsif not params[:photo_id].nil?
-            @parent = Photo.find_by_id(params[:tag][:photo_id])
+        if not params[:photo_id].nil?
+            @parent = Photo.find_by_id(params[:photo_id])
         elsif not params[:sight_id].nil?
-            @parent = Sight.find_by_id(params[:tag][:photo_id])
-        end
-        
-        if @parent.nil?
-            redirect_to not_found_path
-            return
+            @parent = Sight.find_by_id(params[:sight_id])
+        else
+            respond_to do |format|
+                format.html {
+                    flash[:error] = "There was a problem deleting your tag"
+                    redirect_to not_found_path
+                    return
+                }
+                format.json {
+                    render :nothing, :status => 404
+                    return
+                }
+            end
         end
         
         @parent.tags.delete(@tag)

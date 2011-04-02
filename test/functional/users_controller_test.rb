@@ -7,19 +7,13 @@ class UsersControllerTest < ActionController::TestCase
         UserSession.create(@user)
     end
     
-    test "should get index" do
-        assert_raises(ActionController::RoutingError) do
-            get :index
-        end
-    end
-    
     test "should get new" do
         get :new
         assert_response :success
     end
     
     test "should create user" do
-        assert_difference('User.count') do
+        assert_difference('User.count', 1) do
             post :create, :user => { :first_name => "ben", :last_name => "rocks",
                 :email => "ben@blah.com", :password => "benrocks",
                 :password_confirmation => "benrocks"

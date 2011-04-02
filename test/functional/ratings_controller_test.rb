@@ -1,48 +1,42 @@
 require 'test_helper'
 
-class SightRatingsControllerTest < ActionController::TestCase
+class RatingsControllerTest < ActionController::TestCase
     setup do
-        @sight_rating = sight_ratings(:one)
+        @rating = ratings(:one)
         @sight = sights(:one)        
         @user = users(:one)
         UserSession.create(@user)
+        @photo = Photo.create(:user_id => @user.id, :sight_id => @sight.id,
+            :file => File.open(File.join(Rails.root, "test", "fixtures", "IMAG0091.jpg")),
+            :latitude => 10, :longitude => 10)
     end
     
-    test "should get index" do
-        get :index, :sight_id => @sight.id  
-        assert_response :success
-        assert_not_nil assigns(:sight_ratings)
+    teardown do
+        @photo.destroy
     end
     
-    test "should get new" do
-        get :new, :sight_id => @sight.id
-        assert_response :success
-    end
-    
-    test "should create sight_rating" do
-        assert_difference('SightRating.count') do
-            post :create, :sight_id => @sight.id, :sight_rating => {:rating => 4}
+    test "should create sight rating" do
+        assert_difference('Rating.count') do
+            post :create, :rating => {:sight_id => @sight.id, :rating => 4}
         end
+        assert_response :found
     end
     
-    test "should show sight_rating" do
-        get :show, :id => @sight_rating.id, :sight_id => @sight.id
-        assert_response :success
+    test "should create photo rating" do
+        assert_difference('Rating.count') do
+            post :create, :rating => {:photo_id => @photo.id, :rating => 4}
+        end
+        assert_response :found
     end
     
-    test "should get edit" do
-        get :edit, :id => @sight_rating.id, :sight_id => @sight.id
-        assert_response :success
-    end
-    
-    test "should update sight_rating" do
-        put :update, :id => @sight_rating.id, :sight_id => @sight.id, :sight_rating => {:rating => 4}
-        assert SightRating.find(@sight_rating.id).rating == 4
+    test "should update rating" do
+        put :update, :id => @rating.id, :rating => {:rating => 3}
+        assert_response :found
     end
     
     test "should destroy sight_rating" do
-        assert_difference('SightRating.count', -1) do
-            delete :destroy, :id => @sight_rating.id, :sight_id => @sight.id
+        assert_difference('Rating.count', -1) do
+            delete :destroy, :id => @rating.id
         end
     end
 end

@@ -44,12 +44,12 @@ class Sight < ActiveRecord::Base
     
     def location?
         if self.latitude.nil?
-            errors.add_to_base("GPS location not present")
+            errors.add(:base, "GPS location not present")
             return false
         end
         
         if self.longitude.nil?
-            errors.add_to_base("GPS location not present")
+            errors.add(:base, "GPS location not present")
             return false
         end
         return true
