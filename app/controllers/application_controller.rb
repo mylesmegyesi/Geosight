@@ -49,6 +49,15 @@ class ApplicationController < ActionController::Base
     end
     
     def add_urls_to_sight(sight)
+        if not (sight.photos.length > 0)
+            return
+        end
+        
+        photo = sight.photos.at(0)
+        sight["thumbnail"] = photo.file.url(:thumb)
+        sight["small"] = photo.file.url(:small)
+        sight["medium"] = photo.file.url(:medium)
+        sight["original"] = photo.file.url
     end
     
 end
