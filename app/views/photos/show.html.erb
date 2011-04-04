@@ -41,7 +41,7 @@
         $(document).ready(function() {
             var bounds = new google.maps.LatLngBounds ();
             var cent = new google.maps.LatLng(<%= @photo.sight.latitude %>, <%= @photo.sight.longitude %>);
-            var myOptions = { zoom: 19, center: cent, mapTypeId: google.maps.MapTypeId.HYBRID };
+            var myOptions = { zoom: 18, center: cent, mapTypeId: google.maps.MapTypeId.HYBRID };
             var map = new google.maps.Map(document.getElementById("gmap"), myOptions);
             var circle = new google.maps.Circle({
                 radius: <%= @photo.sight.radius %>, center: cent, map: map, strokeWeight: 1
@@ -102,6 +102,7 @@
                 <% end %>
             </div>
         </div>
+		<%= link_to('Back to ' + @photo.sight.name, sight_path(@photo.sight)) %>
     </div>
     
     <div id="sidebar">
