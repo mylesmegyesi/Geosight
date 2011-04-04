@@ -1,5 +1,6 @@
 <% content_for :css do %>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
+	<%= stylesheet_link_tag "photo" %>
     <%= stylesheet_link_tag("map") %>
 <% end %>
 
@@ -76,6 +77,34 @@
         <b>Radius:</b>
         <%= @sight.radius %>
     </p>
+	
+	<div id = content>
+		<div id="photo-info">
+            
+            <div id="photo-tags">
+                Tags:
+                <% @sight.tags.each do |tag| %>
+                    <%= link_to(tag.tag, tag_path(tag)) %>
+                <% end %>
+                <%= render 'tags/form' %>
+            </div>
+        </div>
+		<div id="comment-container">
+            <div id="comment-box">
+                <%= render 'comments/form' %>
+            </div>
+            <div id="comment-list">
+                <% @sight.comments.each do |comment| %>
+                    <div class="comment">
+                        <%= comment.comment %>
+                        <br>
+                            <%= link_to(comment.user.user_name, user_path(comment.user)) %> on <%= comment.date %> at <%= comment.time %>
+                        <br>
+                    </div>
+                <% end %>
+            </div>
+		</div>
+	</div>
     
     <%= link_to 'Photos', photos_path({:sight_id => @sight.id}) %> |
     <%= link_to 'Back to Sights', sights_path %>

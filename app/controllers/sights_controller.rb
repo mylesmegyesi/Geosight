@@ -21,6 +21,8 @@ class SightsController < ApplicationController
             redirect_to not_found_path
             return
         end
+		@tag = Tag.new
+		@comment = Comment.new
         respond_with(@sight) do |format|
             format.json {
                 add_urls_to_sight(@sight)
