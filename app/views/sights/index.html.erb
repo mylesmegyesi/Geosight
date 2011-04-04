@@ -22,7 +22,7 @@
 
 		// adds infowindows to the markers on the sight index
 		function add_sight_index_infowindow(map, marker, bounds, contentString) {
-          marker.infowindow = new google.maps.InfoWindow({ content: contentString });
+          marker.infowindow = new google.maps.InfoWindow({ content: contentString, maxWidth: 200 });
 
           // makes clicking on a marker popup the infowindow associated with it
           google.maps.event.addListener(marker, 'click', function() {

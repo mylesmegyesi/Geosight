@@ -11,6 +11,19 @@
 
     <script type="text/javascript">
         var lastOpened = null; // the last opened infowindow
+		
+		/*
+		// to preload images in infowindows
+		function swapsource_and_dosomething(url,handler,element){
+		  var img=new Image();
+		  img.onload=function(){
+		    element.src= url;
+		    return handler(element);
+		  }
+		  img.src=url;
+		}
+		*/
+	
         // adds photo markers to the map
         function add_marker(map, bounds, lat, lng, i, cent, contentString) { 
           var latlng = new google.maps.LatLng(lat, lng);
@@ -22,7 +35,7 @@
               title:'Photo '+i, map: map
           });
           marker.infowindow = new google.maps.InfoWindow({
-            content: contentString 
+            content: contentString, maxWidth: 200 
           });
 
           // pops up an infowindow when you click on a marker
