@@ -1,6 +1,7 @@
 <% content_for :css do %>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
     <%= stylesheet_link_tag("map") %>
+    <%= stylesheet_link_tag "sights" %>
 <% end %>
 
 <% content_for :javascript do %>
@@ -34,9 +35,11 @@
         });
     </script>
     
+    <div id="map_canvas"></div>
+    
     <h1>Listing sights</h1>
     
-    <table>
+    <table id="sight-table">
         <tr>
             <th>Latitude</th>
             <th>Longitude</th>
@@ -48,17 +51,13 @@
         
         <% @sights.each do |sight| %>
             <tr>
-                <td><%= sight.latitude %></td>
-                <td><%= sight.longitude %></td>
-                <td><%= sight.name %></td>
+                <td><%= link_to sight.name, sight %></td>
+                <td><%= number_with_precision(sight.latitude, :precision => 2) %></td>
+                <td><%= number_with_precision(sight.longitude, :precision => 2) %></td>
                 <td><%= sight.radius %></td>
-                <td><%= link_to 'Show', sight %></td>
-                <td><%= link_to 'Destroy', sight, :confirm => 'Are you sure?', :method => :delete %></td>
             </tr>
         <% end %>
     </table>
-    
-    <div id="map_canvas"></div>
     
     <br />
 
