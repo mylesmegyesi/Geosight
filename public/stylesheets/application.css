@@ -120,3 +120,8 @@ div.field, div.actions {
     font-size: 12px;
     list-style: square;
 }
+
+#infoWindowDiv {
+	height: 500px
+	width: 500px
+}

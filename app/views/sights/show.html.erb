@@ -40,7 +40,10 @@
                         '<%= link_to(ptag.tag, tag_path(ptag)) %>'+
                     <% end %>
                     '</div>';
-                marker<%=i+1%>.infowindow = new google.maps.InfoWindow({content: contentString<%=i+1%>, maxWidth: 210});
+                marker<%=i+1%>.infowindow = new google.maps.InfoWindow({
+                  content: contentString<%=i+1%>, 
+                  maxWidth: 210
+                });
                 google.maps.event.addListener(marker<%=i+1%>, 'click', function() {
                     if(lastOpened != null) lastOpened.infowindow.close();
                     marker<%=i+1%>.infowindow.open(map,marker<%=i+1%>);
