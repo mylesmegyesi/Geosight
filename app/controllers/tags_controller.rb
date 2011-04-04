@@ -36,6 +36,7 @@ class TagsController < ApplicationController
         @parent.tags.each do |tag|
             if tag.tag == params[:tag][:tag]
                 is_tagged = true
+                flash[:error] = "Photo already has that tag!"
             end
         end
         if not is_tagged
@@ -47,12 +48,14 @@ class TagsController < ApplicationController
                 @tag = Tag.new(params[:tag])
                 if @tag.save
                     flash[:notice] = "Tag successfully created"
+                    @parent.tags << @tag
                 else
                     flash[:error] = "There was a problem creating your Tag"
                 end 
-            end
+            else
+               @parent.tags << @tag  
+            end               
             
-            @parent.tags << @tag
         end
         
         respond_with(@tag) do |format|
