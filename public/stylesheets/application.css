@@ -19,13 +19,12 @@ pre {
 }
 
 a {
-    color: #aaa;
-}
-a:visited {
     color: #666;
+    text-decoration:none;
 }
+
 a:hover { 
-    color: #fff;
+    color: #000;
 }
 
 div.field, div.actions {
@@ -77,7 +76,7 @@ div.field, div.actions {
 }
 
 #header {
-    margin: 0px 50px;    
+    background-color: #aaa;
 }
 
 #logo {
@@ -85,38 +84,87 @@ div.field, div.actions {
 }
 
 #menu-bar {
-    clear: both;
-    background-color: #bbb;
+    clear: right;
+    padding: 15px;
+    background-color: #444;
 }
 
 #menu-bar ul li {
     display: inline;
-    padding: 10px;
-    margin: 5px;
+    margin-right: 30px;
+    font-size: 1.25em;
 }
 
-#login-options ul li {
-    display: inline;
-    padding: 10px;
-    margin: 5px;
+#menu-bar ul li.first {
+    margin-left: 30px;
+}
+
+#menu-bar ul li a {
+    color: #ccc;
+}
+
+#menu-bar ul li a:hover {
+    color: #fff;
 }
 
 #login-options {
     float: right;
-    margin: 30px;
-    background-color: #bbb;
+    padding: 5px 10px;
+    background-color: #aaa;
+}
+
+#login-options ul li {
+    display: inline;
+    margin-left: 15px;
+    font-size: 1em;
+}
+
+#login-options ul li.first {
+    margin-left: 0px;
+}
+
+#login-options ul li a {
+    color: #444;
+}
+
+#login-options ul li a:hover {
+    color: #000;
 }
 
 #main-content {
     clear: both;
-    min-height: 400px;
+    min-height: 500px;
     width: 800px;
     margin: 0px auto;
+    padding: 20px 150px;
 }
 
 #footer {
-    clear :both;
-    margin: 0px 50px;
+    clear: both;
+    background-color: #aaa;
+}
+
+#footer-bar {
+    padding: 15px;
+    background-color: #444;
+}
+
+#footer-bar ul li {
+    display: inline;
+    margin-right: 30px;
+    font-size: 1.25em;
+}
+
+#footer-bar ul li.first {
+    margin-left: 50px;
+}
+
+#footer-bar ul li a {
+    color: #ccc;
+}
+
+#footer-bar ul li a:hover {
+    color: #fff;
 }
 
 #error_explanation {

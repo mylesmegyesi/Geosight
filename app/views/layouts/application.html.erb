@@ -50,14 +50,14 @@
         <div id="login-options">
             <ul>
             <% if current_user %>
-            <li>
+            <li class="first">
             <%= link_to 'My Account', user_path(current_user) %>
             </li>
             <li>
             <%= link_to 'Logout', logout_path, :confirm => 'Are you sure?', :method => :delete %>
             </li>
             <% else %>
-            <li>
+            <li class="first">
             <%= link_to 'Login', login_path %>
             </li>
             <li>
@@ -67,8 +67,8 @@
         </div>
         <div id="menu-bar">
             <ul>
-                <li>
-                    <%= link_to 'Sights', sights_path %>
+                <li class="first">
+                    <%= link_to 'Sights Map', sights_path %>
                 </li>
                 <li>
                     <%= link_to 'Upload a Photo', new_photo_path %>
@@ -80,9 +80,16 @@
         <%= yield :body %>
     </div>
     <div id="footer">
-        About Us
-        <br>
-        Contact Us
+        <div id="footer-bar">
+            <ul>
+                <li class="first">
+                    <%= link_to 'About Us', home_path %>
+                </li>
+                <li>
+                    <%= link_to 'Contact Us', home_path %>
+                </li>
+            </ul>
+        </div>
     </div>
 </body>
 </html>

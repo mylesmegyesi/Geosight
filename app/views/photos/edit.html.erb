@@ -4,16 +4,16 @@
     
     <p>
         <b>Latitude:</b>
-        <%= @photo.latitude %>
+        <%= number_with_precision(@photo.latitude, :precision => 2) %>
     </p>
         
     <p>
         <b>Longitude:</b>
-        <%= @photo.longitude %>
+        <%= number_with_precision(@photo.longitude, :precision => 2) %>
     </p>
         
     <%= render 'edit' %>
         
-    <%= link_to 'All Photos', photos_path %>
+    <%= link_to 'Return to Home', home_path %>
     
 <% end %>
