@@ -10,6 +10,34 @@
 <% content_for :body do %>
 
     <script type="text/javascript">
+        var lastOpened = null; // the last opened infowindow
+        // adds photo markers to the map
+        function add_marker(map, bounds, lat, lng, i, cent, contentString) { 
+          var latlng = new google.maps.LatLng(lat, lng);
+
+          bounds.extend(latlng);
+
+          var marker = new google.maps.Marker({
+              position: latlng,
+              title:'Photo '+i, map: map
+          });
+          marker.infowindow = new google.maps.InfoWindow({
+            content: contentString 
+          });
+
+          // pops up an infowindow when you click on a marker
+          google.maps.event.addListener(marker, 'click', function() {
+              if(lastOpened != null) lastOpened.infowindow.close();
+              marker.infowindow.open(map,marker);
+              lastOpened = marker;
+          });
+          // recenters map when you close an infowindow
+          google.maps.event.addListener(marker.infowindow,'closeclick', function() {
+              map.setCenter(cent);
+              lastOpened = null;
+          });
+        }
+
         $(document).ready(function() {
             var bounds = new google.maps.LatLngBounds ();
             var cent = new google.maps.LatLng(<%= @sight.latitude %>, <%= @sight.longitude %>);
@@ -18,40 +46,27 @@
             var circle = new google.maps.Circle({
                 radius: <%= @sight.radius %>, center: cent, map: map, strokeWeight: 1
             });
-            var lastOpened = null;
+            var contentString = null;
             <% @sight.photos.each_with_index do |photo, i| %>
-                var latlng = new google.maps.LatLng(<%= photo.latitude %>, <%= photo.longitude %>);
-                bounds.extend(latlng);
-                var marker<%=i+1%> = new google.maps.Marker({
-                    position: latlng,
-                    title:"Photo <%= i+1 %>", map: map
-                });
-                var contentString<%=i+1%> = '<b>Photo <%= i+1 %></b>'+
-                    '<div>'+
-                    '<%= link_to image_tag(photo.file.url(:thumb)), photo_path(photo) %>'+
-                    'Tags: '+
-                    <% first = true %>
-                    <% photo.tags.collect do |ptag| %>
-                        <% if first == false %>
-                            '<%= ", " %>'+
-                        <% else %>
-                            <% first = false %>
-                        <% end %>
-                        '<%= link_to(ptag.tag, tag_path(ptag)) %>'+
-                    <% end %>
-                    '</div>';
-                marker<%=i+1%>.infowindow = new google.maps.InfoWindow({content: contentString<%=i+1%>, maxWidth: 210});
-                google.maps.event.addListener(marker<%=i+1%>, 'click', function() {
-                    if(lastOpened != null) lastOpened.infowindow.close();
-                    marker<%=i+1%>.infowindow.open(map,marker<%=i+1%>);
-                    lastOpened = marker<%=i+1%>;
-                });
-                google.maps.event.addListener(marker<%=i+1%>.infowindow,'closeclick', function() {
-                    map.setCenter(cent);
-                    lastOpened = null;
-                });
-            <% end	%>
-            //map.fitBounds(bounds);
+              contentString = 
+              '<b>Photo <%= i+1 %></b>'+
+              '<div id="infoWindowDiv">'+
+                '<%= link_to image_tag(photo.file.url(:thumb)), photo_path(photo) %>'+
+                'Tags: '+
+                <% first = true %>
+                <% photo.tags.collect do |ptag| %>
+                  <% if first == false %>
+                      '<%= ", " %>'+
+                  <% else %>
+                      <% first = false %>
+                  <% end %>
+                  '<%= link_to(ptag.tag, tag_path(ptag)) %>'+
+                <% end %>
+              '</div>';
+              add_marker( map, bounds,
+                <%= photo.latitude %>, <%= photo.longitude %>,
+                <%= i+1 %>, cent, contentString);
+            <% end%>
         });
     </script>
     

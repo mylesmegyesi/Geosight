@@ -11,24 +11,56 @@
 <% content_for :body do %>
 
     <script type="text/javascript">
+        var lastOpened = null; // the last infowindow opened
+        // adds sight markers to the map
+        function add_marker(map, bounds, lat, lng, name, rad, contentString) { 
+          var latlng = new google.maps.LatLng(lat, lng);
+
+          bounds.extend(latlng);
+
+          var marker = new google.maps.Marker({
+              position: latlng,
+              title: name,
+              map: map
+          });
+
+          var circle = new google.maps.Circle({
+              radius: rad, center: latlng, map: map, strokeWeight: 1
+          });
+          
+          marker.infowindow = new google.maps.InfoWindow({ content: contentString });
+
+          // makes clicking on a marker popup the infowindow associated with it
+          google.maps.event.addListener(marker, 'click', function() {
+              if(lastOpened != null) lastOpened.infowindow.close();
+              marker.infowindow.open(map,marker);
+              lastOpened = marker;
+          });
+          // refits the map view when there arent any infoWindows open
+          google.maps.event.addListener(marker.infowindow,'closeclick', function() {
+              map.fitBounds(bounds);
+              lastOpened = null;
+          });
+        }
+
         $(document).ready(function() {
             var bounds = new google.maps.LatLngBounds();
             var myOptions = { mapTypeId: google.maps.MapTypeId.ROADMAP };
             var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+            var contentString = null;
             <% @sights.each do |sight| %>
-                var latlng = new google.maps.LatLng(<%= sight.latitude %>, <%= sight.longitude %>);
-                bounds.extend (latlng);
-                var marker = new google.maps.Marker({
-                    position: latlng,
-                    title:"<%= sight.name %>",
-                    map: map
-                });
-                var circle = new google.maps.Circle({
-                    radius: <%= sight.radius %>, center: latlng, map: map, strokeWeight: 1
-                });
-                google.maps.event.addListener(marker, 'click', function() {
-                    window.location = '<%= sight_path sight %>';
-                });
+              contentString = 
+                '<b><%= sight.name %></b>' +
+                '<div id="infoWindowDiv">' +
+                  '<%= link_to(image_tag(sight.photos[0].file.url(:thumb)), sight_path(sight)) %>' +
+                '</div>';
+              add_marker( map, bounds,
+                <%= sight.latitude %>, 
+                <%= sight.longitude %>,
+                "<%= sight.name %>",
+                <%= sight.radius %>,
+                contentString
+              );
             <% end %>
             
             map.fitBounds (bounds);
