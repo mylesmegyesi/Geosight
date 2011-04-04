@@ -10,23 +10,28 @@
 <% content_for :body do %>
 
     <script type="text/javascript">
-        var lastOpened = null;
+        var lastOpened = null; // the last opened infowindow
+        // adds photo markers to the map
         function add_marker(map, bounds, lat, lng, i, cent, contentString) { 
           var latlng = new google.maps.LatLng(lat, lng);
+
           bounds.extend(latlng);
+
           var marker = new google.maps.Marker({
               position: latlng,
-              title:'Photo ', map: map
+              title:'Photo '+i, map: map
           });
           marker.infowindow = new google.maps.InfoWindow({
             content: contentString 
           });
 
+          // pops up an infowindow when you click on a marker
           google.maps.event.addListener(marker, 'click', function() {
               if(lastOpened != null) lastOpened.infowindow.close();
               marker.infowindow.open(map,marker);
               lastOpened = marker;
           });
+          // recenters map when you close an infowindow
           google.maps.event.addListener(marker.infowindow,'closeclick', function() {
               map.setCenter(cent);
               lastOpened = null;
@@ -60,7 +65,7 @@
               '</div>';
               add_marker( map, bounds,
                 <%= photo.latitude %>, <%= photo.longitude %>,
-                <%= i %>, cent, contentString);
+                <%= i+1 %>, cent, contentString);
             <% end%>
         });
     </script>
