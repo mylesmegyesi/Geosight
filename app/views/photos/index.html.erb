@@ -3,7 +3,7 @@
     <% if not @sight.nil? %>
         <h1>Photos for <%= @sight.name %></h1>
     <% else %>
-        <h1>Photos</h1>
+        <h1>My Photos</h1>
     <% end %>
     
     <table>
@@ -15,12 +15,11 @@
     
         <% @photos.each do |photo| %>
             <tr>
-                <td><%= image_tag(photo.file.url(:thumb)) %></td>
-                <td><%= link_to 'Show', photo_path(photo) %></td>
+                <td><%= link_to (image_tag(photo.file.url(:thumb))), photo_path(photo) %></td>
                 <% if not @sight.nil? %>
-                <td><%= link_to 'Destroy', photo_path(photo, {:sight_id => @sight.id}), :confirm => 'Are you sure?', :method => :delete %></td>
+                    <td>by <%= photo.user.user_name %></td>
                 <% else %>
-                <td><%= link_to 'Destroy', photo_path(photo), :confirm => 'Are you sure?', :method => :delete %></td>
+                    <td>in <%= photo.sight.name %></td>
                 <% end %>
             </tr>
         <% end %>
@@ -29,7 +28,6 @@
     <br />
     
     <%= link_to 'Upload a Photo', upload_path %> |
-    <%= link_to 'Unassigned Photos', unassigned_photos_path %> | 
     <% if not @sight.nil? %>
         <%= link_to 'Back to Sight', sight_path(@sight) %>
     <% else %>

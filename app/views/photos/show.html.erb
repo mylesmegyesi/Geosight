@@ -67,6 +67,8 @@
             </div>
             <div id="photo-info">
                 Uploaded by: <%= link_to(@photo.user.user_name, user_path(@photo.user)) %>
+                <br />
+                Sight: <%= link_to(@photo.sight.name, sight_path(@photo.sight)) %>
                 <div id="photo-tags">
                     Tags:
                     <% @photo.tags.each do |tag| %>
@@ -96,15 +98,22 @@
     </div>
     
     <div id="sidebar">
+        <div style="float:right">
+        <h3>Other Photos in <%= @photo.sight.name %></h3>
         <div id="gmap">
     		<div id="small_map_canvas"></div>
         </div>
-        <div id="sight-photo-list">
-            <% @photo.sight.photos.each do |photo| %>
-                <div class="sight-photo">
+        </div>
+        <div style="float:right">
+        <h3>Other Photos by <%= @photo.user.user_name %></h3>
+        <div id="user-photo-list">
+            <% @photo.user.photos.each do |photo| %>
+                <div class="user-photo">
                     <%= link_to(image_tag(photo.file.url(:thumb)), photo_path(photo)) %>
+                    in <%= photo.sight.name %>
                 </div>
             <% end %>
+        </div>
         </div>
     </div>
 

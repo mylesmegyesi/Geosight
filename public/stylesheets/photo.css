@@ -4,7 +4,8 @@
 
 
 #photo img {
-  width: 400px;
+  max-width: 500px;
+  max-height: 500px;
 }
 
 .comment {
@@ -20,20 +21,20 @@
   background-color: gray;
 }
 
-#sight-photo-list {
+#user-photo-list {
   float: right;
   overflow: auto;
   width: 300px;
-  height: 500px;
+  height: 400px;
 }
 
-.sight-photo {
+.user-photo {
   margin: 10px;
   padding: 5px;
   text-align: center;
 }
 
-.sight-photo img {
+.user-photo img {
   max-width: 200px;
   max-height: 200px;
 }

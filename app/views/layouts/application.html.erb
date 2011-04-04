@@ -70,6 +70,11 @@
                 <li class="first">
                     <%= link_to 'Sights Map', sights_path %>
                 </li>
+                <% if current_user %>
+                <li>
+                    <%= link_to 'My Photos', photos_path %>
+                </li>
+                <% end %>
                 <li>
                     <%= link_to 'Upload a Photo', new_photo_path %>
                 </li>

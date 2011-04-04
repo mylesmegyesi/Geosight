@@ -27,6 +27,10 @@ a:hover {
     color: #000;
 }
 
+img {
+    border: 1px solid #000;
+}
+
 div.field, div.actions {
     margin-bottom: 10px;
 }
@@ -83,6 +87,10 @@ div.field, div.actions {
     float: left;
 }
 
+#logo img {
+    border: none;
+}
+
 #menu-bar {
     clear: right;
     padding: 15px;
@@ -96,7 +104,7 @@ div.field, div.actions {
 }
 
 #menu-bar ul li.first {
-    margin-left: 30px;
+    margin-left: 10px;
 }
 
 #menu-bar ul li a {
@@ -134,7 +142,7 @@ div.field, div.actions {
 #main-content {
     clear: both;
     min-height: 500px;
-    width: 800px;
+    width:900px;
     margin: 0px auto;
     padding: 20px 150px;
 }

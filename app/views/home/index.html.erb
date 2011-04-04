@@ -2,11 +2,14 @@
   <h1>Welcome to Geosight!</h1>
   <p>
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc hendrerit, dui sit amet dapibus sodales, nisi enim ultrices magna, nec convallis justo leo sed risus. Vivamus viverra diam ac lacus dapibus sed fringilla nisl mollis. Suspendisse venenatis felis non velit imperdiet vulputate. Donec dictum magna tristique massa malesuada sodales. Mauris sit amet urna vitae purus elementum fringilla. Proin eu nibh eget nisi vulputate vestibulum. Sed quis neque lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras vulputate sodales arcu, in feugiat elit porttitor quis. Praesent laoreet tellus quis lacus varius venenatis. Vivamus pellentesque elit vel lorem dictum aliquet.
-
-Maecenas et magna nec sapien porttitor elementum. Ut iaculis semper consectetur. Morbi dapibus varius massa, vel tincidunt metus consequat in. Sed pulvinar augue quis tellus egestas vitae ultricies neque malesuada. Ut mattis nisl sed nibh interdum eu vehicula libero dapibus. Nullam rutrum nisi id est congue convallis. Nunc non dolor eros. Integer nulla ipsum, ultrices eget malesuada in, rutrum non tellus. Sed luctus semper leo, et ultricies dui tempor sodales. Maecenas vitae magna nec nibh feugiat tristique. Vestibulum gravida scelerisque sollicitudin. Integer eget nulla est, at lobortis nisl. Duis leo nunc, vulputate eu iaculis et, viverra et leo. Nam mollis ante ut mi facilisis ut tempor orci pretium. Cras facilisis lorem eget nibh convallis eu venenatis nisi cursus. Suspendisse aliquam hendrerit lacus. Quisque tempus dolor eu lorem varius tincidunt.
   </p>
+  <h1>Get Started:</h1>
   <p>
+  <% if not current_user %>
+  <h2 style="text-align:center"><%= link_to 'Register an Account', new_user_path %></h2>
+  <% end %>
   <h2 style="text-align:center"><%= link_to 'Upload a Photo', new_photo_path %></h2>
+  <h2 style="text-align:center"><%= link_to 'View the Sights Map', sights_path %></h2>
   </p>
   
 <% end %>
