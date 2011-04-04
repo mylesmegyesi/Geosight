@@ -9,7 +9,7 @@ html, body, p, ol, ul, td {
 
 body {
     background-color: #fff;
-    color: #333;
+    color: #000;
 }
 
 pre {
@@ -19,14 +19,16 @@ pre {
 }
 
 a {
+    color: #666;
+    text-decoration:none;
+}
+
+a:hover { 
     color: #000;
 }
-a:visited {
-    color: #666;
-}
-a:hover { 
-    color: #fff;
-    background-color: #000;
+
+img {
+    border: 1px solid #000;
 }
 
 div.field, div.actions {
@@ -77,23 +79,100 @@ div.field, div.actions {
     display: table;
 }
 
+#header {
+    background-color: #aaa;
+}
+
 #logo {
     float: left;
 }
 
+#logo img {
+    border: none;
+}
+
+#menu-bar {
+    clear: right;
+    padding: 15px;
+    background-color: #444;
+}
+
+#menu-bar ul li {
+    display: inline;
+    margin-right: 30px;
+    font-size: 1.25em;
+}
+
+#menu-bar ul li.first {
+    margin-left: 10px;
+}
+
+#menu-bar ul li a {
+    color: #ccc;
+}
+
+#menu-bar ul li a:hover {
+    color: #fff;
+}
+
 #login-options {
     float: right;
+    padding: 5px 10px;
+    background-color: #aaa;
+}
+
+#login-options ul li {
+    display: inline;
+    margin-left: 15px;
+    font-size: 1em;
+}
+
+#login-options ul li.first {
+    margin-left: 0px;
+}
+
+#login-options ul li a {
+    color: #444;
+}
+
+#login-options ul li a:hover {
+    color: #000;
 }
 
 #main-content {
     clear: both;
-    min-height: 400px;
-    width: 800px;
+    min-height: 500px;
+    width:900px;
     margin: 0px auto;
+    padding: 20px 150px;
 }
 
 #footer {
-    clear :both;
+    clear: both;
+    background-color: #aaa;
+}
+
+#footer-bar {
+    padding: 15px;
+    background-color: #444;
+}
+
+#footer-bar ul li {
+    display: inline;
+    margin-right: 30px;
+    font-size: 1.25em;
+}
+
+#footer-bar ul li.first {
+    margin-left: 50px;
+}
+
+#footer-bar ul li a {
+    color: #ccc;
+}
+
+#footer-bar ul li a:hover {
+    color: #fff;
 }
 
 #error_explanation {

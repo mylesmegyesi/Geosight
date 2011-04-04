@@ -1,6 +1,7 @@
 <% content_for :css do %>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
     <%= stylesheet_link_tag("map") %>
+    <%= stylesheet_link_tag "sights" %>
 <% end %>
 
 <% content_for :javascript do %>
@@ -10,33 +11,77 @@
 <% content_for :body do %>
 
     <script type="text/javascript">
-        $(document).ready(function() {
+        var lastOpened = null; // the last infowindow opened
+		
+		// adds circular radius to map
+		function add_circle(map, cent, rad) {
+		  var circle = new google.maps.Circle({
+              radius: rad, center: cent, map: map, strokeWeight: 1
+          });
+		}
+
+		// adds infowindows to the markers on the sight index
+		function add_sight_index_infowindow(map, marker, bounds, contentString) {
+          marker.infowindow = new google.maps.InfoWindow({ content: contentString, maxWidth: 200 });
+
+          // makes clicking on a marker popup the infowindow associated with it
+          google.maps.event.addListener(marker, 'click', function() {
+              if(lastOpened != null) lastOpened.infowindow.close();
+              marker.infowindow.open(map,marker);
+              lastOpened = marker;
+          });
+          // refits the map view when there arent any infoWindows open
+          google.maps.event.addListener(marker.infowindow,'closeclick', function() {
+              map.fitBounds(bounds);
+              lastOpened = null;
+          });
+        }
+
+        // adds sight markers to the map
+        function add_marker(map, bounds, lat, lng, rad, title, contentString) { 
+          var latlng = new google.maps.LatLng(lat, lng);
+
+          bounds.extend(latlng);
+
+          var marker = new google.maps.Marker({
+              position: latlng,
+              title: title,
+              map: map
+          });
+		  add_circle(map, latlng, rad);
+		  add_sight_index_infowindow(map, marker, bounds, contentString);  
+        }
+		
+		$(document).ready(function() {
             var bounds = new google.maps.LatLngBounds();
             var myOptions = { mapTypeId: google.maps.MapTypeId.ROADMAP };
             var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+            var contentString = null;
             <% @sights.each do |sight| %>
-                var latlng = new google.maps.LatLng(<%= sight.latitude %>, <%= sight.longitude %>);
-                bounds.extend (latlng);
-                var marker = new google.maps.Marker({
-                    position: latlng,
-                    title:"<%= sight.name %>",
-                    map: map
-                });
-                var circle = new google.maps.Circle({
-                    radius: <%= sight.radius %>, center: latlng, map: map, strokeWeight: 1
-                });
-                google.maps.event.addListener(marker, 'click', function() {
-                    window.location = '<%= sight_path sight %>';
-                });
+              contentString = 
+                '<b><%= sight.name %></b>' +
+                '<div id="infoWindowDiv">' +
+                  '<%= link_to(image_tag(sight.photos[0].file.url(:thumb)), sight_path(sight)) %>' +
+                '</div>';
+              add_marker( map, bounds,
+                <%= sight.latitude %>, 
+                <%= sight.longitude %>,
+				<%= sight.radius %>,
+                "<%= sight.name %>",
+                contentString
+              );
+			  
             <% end %>
             
             map.fitBounds (bounds);
         });
     </script>
     
+    <div id="map_canvas"></div>
+    
     <h1>Listing sights</h1>
     
-    <table>
+    <table id="sight-table">
         <tr>
             <th>Latitude</th>
             <th>Longitude</th>
@@ -48,17 +93,13 @@
         
         <% @sights.each do |sight| %>
             <tr>
-                <td><%= sight.latitude %></td>
-                <td><%= sight.longitude %></td>
-                <td><%= sight.name %></td>
+                <td><%= link_to sight.name, sight %></td>
+                <td><%= number_with_precision(sight.latitude, :precision => 2) %></td>
+                <td><%= number_with_precision(sight.longitude, :precision => 2) %></td>
                 <td><%= sight.radius %></td>
-                <td><%= link_to 'Show', sight %></td>
-                <td><%= link_to 'Destroy', sight, :confirm => 'Are you sure?', :method => :delete %></td>
             </tr>
         <% end %>
     </table>
-    
-    <div id="map_canvas"></div>
     
     <br />
 

@@ -11,7 +11,8 @@
             </ul>
         </div>
     <% end %>
-
+    
+    <h3>Please enter a new Sight name and radius to create a new sight based on the location of this photo.</h3>
     <div class="field">
         <%= f.label :name %><br />
         <%= f.text_field :name %>
@@ -20,6 +21,7 @@
         <%= f.label :radius %><br />
         <%= f.text_field :radius %>
     </div>
+    <h3>Or choose an existing Sight in which to add this photo.</h3>
     <div class="field">
         <%= f.label :possible_sights %><br />
         <%

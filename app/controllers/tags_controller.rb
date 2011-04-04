@@ -40,12 +40,18 @@ class TagsController < ApplicationController
         end
         if not is_tagged
             params[:tag][:user_id] = current_user.id
-            @tag = Tag.new(params[:tag])
-            if @tag.save
-                flash[:notice] = "Tag successfully created"
-            else
-                flash[:error] = "There was a problem creating your Tag"
+            
+            @tag = Tag.find_by_tag(params[:tag][:tag])
+            
+            if @tag.nil?
+                @tag = Tag.new(params[:tag])
+                if @tag.save
+                    flash[:notice] = "Tag successfully created"
+                else
+                    flash[:error] = "There was a problem creating your Tag"
+                end 
             end
+            
             @parent.tags << @tag
         end
         

@@ -1,4 +1,11 @@
 #map_canvas { 
-    height: 300px;
-    width: 550px;
+    height: 500px;
+    width: 700px;
 }
+
+#infoWindowDiv {
+	height: 500px
+	width: 250px
+}
+
+

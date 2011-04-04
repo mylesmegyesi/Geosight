@@ -1,9 +1,65 @@
 <% content_for :css do %>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
+    <%= stylesheet_link_tag("map") %>
     <%= stylesheet_link_tag "photo" %>
 <% end %>
 
+<% content_for :javascript do %>
+    <%= javascript_include_tag("https://maps.google.com/maps/api/js?sensor=false") %>
+<% end %>
+
 <% content_for :body do %>
-    
+    <script type="text/javascript">
+        var lastOpened = null; // the last opened infowindow
+        // adds photo markers to the map
+        function add_marker(map, bounds, lat, lng, i, cent, contentString) { 
+          var latlng = new google.maps.LatLng(lat, lng);
+
+          bounds.extend(latlng);
+
+          var marker = new google.maps.Marker({
+              position: latlng,
+              title:'Photo '+i, map: map
+          });
+          marker.infowindow = new google.maps.InfoWindow({
+            content: contentString, maxWidth: 200 
+          });
+
+          // pops up an infowindow when you click on a marker
+          google.maps.event.addListener(marker, 'click', function() {
+              if(lastOpened != null) lastOpened.infowindow.close();
+              marker.infowindow.open(map,marker);
+              lastOpened = marker;
+          });
+          // recenters map when you close an infowindow
+          google.maps.event.addListener(marker.infowindow,'closeclick', function() {
+              map.setCenter(cent);
+              lastOpened = null;
+          });
+        }
+
+        $(document).ready(function() {
+            var bounds = new google.maps.LatLngBounds ();
+            var cent = new google.maps.LatLng(<%= @photo.sight.latitude %>, <%= @photo.sight.longitude %>);
+            var myOptions = { zoom: 18, center: cent, mapTypeId: google.maps.MapTypeId.HYBRID };
+            var map = new google.maps.Map(document.getElementById("gmap"), myOptions);
+            var circle = new google.maps.Circle({
+                radius: <%= @photo.sight.radius %>, center: cent, map: map, strokeWeight: 1
+            });
+            var contentString = null;
+            <% @photo.sight.photos.each_with_index do |photo, i| %>
+              contentString = 
+              '<b>Photo <%= i+1 %></b>'+
+              '<div id="infoWindowDiv">'+
+                '<%= link_to image_tag(photo.file.url(:thumb)), photo_path(photo) %>'+
+              '</div>';
+              add_marker( map, bounds,
+                <%= photo.latitude %>, <%= photo.longitude %>,
+                <%= i+1 %>, cent, contentString);
+            <% end%>
+        });
+    </script>
+
     <div id="content">
         <div id="photo-container">
             <div id="photo">
@@ -11,6 +67,8 @@
             </div>
             <div id="photo-info">
                 Uploaded by: <%= link_to(@photo.user.user_name, user_path(@photo.user)) %>
+                <br />
+                Sight: <%= link_to(@photo.sight.name, sight_path(@photo.sight)) %>
                 <div id="photo-tags">
                     Tags:
                     <% @photo.tags.each do |tag| %>
@@ -36,17 +94,26 @@
                 <% end %>
             </div>
         </div>
+		<%= link_to('Back to ' + @photo.sight.name, sight_path(@photo.sight)) %>
     </div>
     
     <div id="sidebar">
+        <div style="float:right">
+        <h3>Other Photos in <%= @photo.sight.name %></h3>
         <div id="gmap">
+    		<div id="small_map_canvas"></div>
         </div>
-        <div id="sight-photo-list">
-            <% @photo.sight.photos.each do |photo| %>
-                <div class="sight-photo">
+        </div>
+        <div style="float:right">
+        <h3>Other Photos by <%= @photo.user.user_name %></h3>
+        <div id="user-photo-list">
+            <% @photo.user.photos.each do |photo| %>
+                <div class="user-photo">
                     <%= link_to(image_tag(photo.file.url(:thumb)), photo_path(photo)) %>
+                    in <%= photo.sight.name %>
                 </div>
             <% end %>
+        </div>
         </div>
     </div>
 

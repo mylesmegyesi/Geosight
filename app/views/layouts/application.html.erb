@@ -47,23 +47,54 @@
         <div id="logo">
             <%= link_to (image_tag 'logo.png'), home_path %>
         </div>
-        
         <div id="login-options">
+            <ul>
             <% if current_user %>
+            <li class="first">
+            <%= link_to 'My Account', user_path(current_user) %>
+            </li>
+            <li>
             <%= link_to 'Logout', logout_path, :confirm => 'Are you sure?', :method => :delete %>
+            </li>
             <% else %>
+            <li class="first">
             <%= link_to 'Login', login_path %>
+            </li>
+            <li>
             <%= link_to 'Register', new_user_path %>
+            </li>
             <% end %>
+        </div>
+        <div id="menu-bar">
+            <ul>
+                <li class="first">
+                    <%= link_to 'Sights Map', sights_path %>
+                </li>
+                <% if current_user %>
+                <li>
+                    <%= link_to 'My Photos', photos_path %>
+                </li>
+                <% end %>
+                <li>
+                    <%= link_to 'Upload a Photo', new_photo_path %>
+                </li>
+            </ul>
         </div>
     </div>
     <div id="main-content">
         <%= yield :body %>
     </div>
     <div id="footer">
-        About Us
-        <br>
-        Contact Us
+        <div id="footer-bar">
+            <ul>
+                <li class="first">
+                    <%= link_to 'About Us', home_path %>
+                </li>
+                <li>
+                    <%= link_to 'Contact Us', home_path %>
+                </li>
+            </ul>
+        </div>
     </div>
 </body>
 </html>

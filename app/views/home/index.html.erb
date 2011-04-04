@@ -1,3 +1,15 @@
 <% content_for :body do %>
-  <%= link_to 'Upload a photo', new_photo_path %>
+  <h1>Welcome to Geosight!</h1>
+  <p>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc hendrerit, dui sit amet dapibus sodales, nisi enim ultrices magna, nec convallis justo leo sed risus. Vivamus viverra diam ac lacus dapibus sed fringilla nisl mollis. Suspendisse venenatis felis non velit imperdiet vulputate. Donec dictum magna tristique massa malesuada sodales. Mauris sit amet urna vitae purus elementum fringilla. Proin eu nibh eget nisi vulputate vestibulum. Sed quis neque lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras vulputate sodales arcu, in feugiat elit porttitor quis. Praesent laoreet tellus quis lacus varius venenatis. Vivamus pellentesque elit vel lorem dictum aliquet.
+  </p>
+  <h1>Get Started:</h1>
+  <p>
+  <% if not current_user %>
+  <h2 style="text-align:center"><%= link_to 'Register an Account', new_user_path %></h2>
+  <% end %>
+  <h2 style="text-align:center"><%= link_to 'Upload a Photo', new_photo_path %></h2>
+  <h2 style="text-align:center"><%= link_to 'View the Sights Map', sights_path %></h2>
+  </p>
+  
 <% end %>
