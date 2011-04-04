@@ -12,22 +12,16 @@
 
     <script type="text/javascript">
         var lastOpened = null; // the last infowindow opened
-        // adds sight markers to the map
-        function add_marker(map, bounds, lat, lng, name, rad, contentString) { 
-          var latlng = new google.maps.LatLng(lat, lng);
-
-          bounds.extend(latlng);
-
-          var marker = new google.maps.Marker({
-              position: latlng,
-              title: name,
-              map: map
+		
+		// adds circular radius to map
+		function add_circle(map, cent, rad) {
+		  var circle = new google.maps.Circle({
+              radius: rad, center: cent, map: map, strokeWeight: 1
           });
+		}
 
-          var circle = new google.maps.Circle({
-              radius: rad, center: latlng, map: map, strokeWeight: 1
-          });
-          
+		// adds infowindows to the markers on the sight index
+		function add_sight_index_infowindow(map, marker, bounds, contentString) {
           marker.infowindow = new google.maps.InfoWindow({ content: contentString });
 
           // makes clicking on a marker popup the infowindow associated with it
@@ -43,7 +37,22 @@
           });
         }
 
-        $(document).ready(function() {
+        // adds sight markers to the map
+        function add_marker(map, bounds, lat, lng, rad, title, contentString) { 
+          var latlng = new google.maps.LatLng(lat, lng);
+
+          bounds.extend(latlng);
+
+          var marker = new google.maps.Marker({
+              position: latlng,
+              title: title,
+              map: map
+          });
+		  add_circle(map, latlng, rad);
+		  add_sight_index_infowindow(map, marker, bounds, contentString);  
+        }
+		
+		$(document).ready(function() {
             var bounds = new google.maps.LatLngBounds();
             var myOptions = { mapTypeId: google.maps.MapTypeId.ROADMAP };
             var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
@@ -57,10 +66,11 @@
               add_marker( map, bounds,
                 <%= sight.latitude %>, 
                 <%= sight.longitude %>,
+				<%= sight.radius %>,
                 "<%= sight.name %>",
-                <%= sight.radius %>,
                 contentString
               );
+			  
             <% end %>
             
             map.fitBounds (bounds);
