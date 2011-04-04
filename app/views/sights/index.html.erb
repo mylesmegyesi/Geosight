@@ -46,7 +46,7 @@
             <% @sights.each do |sight| %>
               contentString = 
                 '<b><%= sight.name %></b>' +
-                '<div id=\"infoWindowDiv\">' +
+                '<div id="infoWindowDiv">' +
                   '<%= link_to(image_tag(sight.photos[0].file.url(:thumb)), sight_path(sight)) %>' +
                 '</div>';
               add_marker( map, bounds,
