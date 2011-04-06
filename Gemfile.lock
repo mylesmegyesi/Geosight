@@ -121,6 +121,6 @@ DEPENDENCIES
   paperclip
   pg
   rack-ssl
-  rails
+  rails (= 3.0.6)
   ruby-debug
   sqlite3
