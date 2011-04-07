@@ -4,24 +4,32 @@ class Comment < ActiveRecord::Base
     belongs_to :user
     validates_presence_of :comment, :user_id
     validates_associated :user
-    validate :parent
+    validate :parent?
     
     def date
-      self.created_at.strftime("%B %e, %Y")
+        created_at.strftime("%B %e, %Y")
     end
     
     def time
-      self.created_at.strftime("%l:%M %P")
+        created_at.strftime("%l:%M %P")
+    end
+    
+    def parent
+        if not sight_id.nil?
+            Sight.find_by_id(sight_id)
+        else
+            Photo.find_by_id(photo_id)
+        end
     end
     
     protected
-    def parent
-        if not self.sight_id.nil?
-            if Sight.find_by_id(self.sight_id).nil?
+    def parent?
+        if not sight_id.nil?
+            if Sight.find_by_id(sight_id).nil?
                 errors.add(:base, "Sight doesn't exist")
             end
-        elsif not self.photo_id.nil?
-            if Photo.find_by_id(self.photo_id).nil?
+        elsif not photo_id.nil?
+            if Photo.find_by_id(photo_id).nil?
                 errors.add(:base, "Photo doesn't exist")
             end
         else

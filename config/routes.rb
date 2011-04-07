@@ -3,8 +3,8 @@ Geosight::Application.routes.draw do
     resources :users, :except => [:index], :path_names => {:edit => "settings", :new => "register"}
     
     resources :user_sessions, :only => [:new, :create, :destroy]
-    match 'login' => 'user_sessions#new', :via => "get"
-    match 'logout' => 'user_sessions#destroy', :via => "delete"
+    match "login" => "user_sessions#new", :via => "get"
+    match "logout" => "user_sessions#destroy", :via => "delete"
     
     resources :ratings, :only => [:create, :update, :destroy]
     
@@ -12,16 +12,11 @@ Geosight::Application.routes.draw do
     
     resources :tags, :only => [:show, :create, :destroy]
     
-    resources :photos do
-        collection do
-            get 'unassigned'
-        end
-    end
-    match 'upload' => 'photos#new', :via => "get"
-
-    resources :sights, :only => [:index, :show, :destroy]
+    resources :photos, :except => [:edit, :update]
     
-    match 'home' => "home#index", :via => "get"
+    resources :sights
+    
+    match "home" => "home#index", :via => "get"
     root :to => "home#index", :via => "get"
     
     match "not_found" => "errors#not_found", :via => "get"

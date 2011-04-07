@@ -12,7 +12,7 @@
 
     <script type="text/javascript">
         var lastOpened = null; // the last infowindow opened
-		
+
 		// adds circular radius to map
 		function add_circle(map, cent, rad) {
 		  var circle = new google.maps.Circle({
@@ -51,13 +51,22 @@
 		  add_circle(map, latlng, rad);
 		  add_sight_index_infowindow(map, marker, bounds, contentString);  
         }
-		
-		$(document).ready(function() {
+        
+        $(document).ready(function() {
+            <% if @sights.length == 0 %>
+            // there are no sights, set the center to Champaign, IL
+            var map = new google.maps.Map(document.getElementById("map-canvas"), {
+                zoom: 18,
+                center: new google.maps.LatLng(40.114044, -88.22485), 
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+            <% else %>
             var bounds = new google.maps.LatLngBounds();
-            var myOptions = { mapTypeId: google.maps.MapTypeId.ROADMAP };
-            var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-            var contentString = null;
+            var map = new google.maps.Map(document.getElementById("map-canvas"), {
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
             <% @sights.each do |sight| %>
+            var contentString = null;
               contentString = 
                 '<b><%= sight.name %></b>' +
                 '<div id="infoWindowDiv">' +
@@ -70,37 +79,12 @@
                 "<%= sight.name %>",
                 contentString
               );
-			  
+            map.fitBounds(bounds);
             <% end %>
-            
-            map.fitBounds (bounds);
+            <% end %>
         });
     </script>
     
-    <div id="map_canvas"></div>
-    
-    <h1>Listing sights</h1>
-    
-    <table id="sight-table">
-        <tr>
-            <th>Latitude</th>
-            <th>Longitude</th>
-            <th>Name</th>
-            <th>Radius</th>
-            <th></th>
-            <th></th>
-        </tr>
-        
-        <% @sights.each do |sight| %>
-            <tr>
-                <td><%= link_to sight.name, sight %></td>
-                <td><%= number_with_precision(sight.latitude, :precision => 2) %></td>
-                <td><%= number_with_precision(sight.longitude, :precision => 2) %></td>
-                <td><%= sight.radius %></td>
-            </tr>
-        <% end %>
-    </table>
-    
-    <br />
+    <div id="map-canvas"></div>
 
 <% end %>

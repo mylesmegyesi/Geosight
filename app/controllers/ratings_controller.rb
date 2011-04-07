@@ -15,7 +15,7 @@ class RatingsController < ApplicationController
             flash[:error] = "There was a problem creating your Rating"
         end
         respond_with(@rating) do |format|
-            format.html { respond_with_parent(@rating, @rating.photo, @rating.sight) }
+            format.html { respond_with(@rating.parent) }
         end
     end
 
@@ -31,7 +31,7 @@ class RatingsController < ApplicationController
             flash[:error] = "There was a problem updating your Rating"
         end
         respond_with(@rating) do |format|
-            format.html { respond_with_parent(@rating, @rating.photo, @rating.sight) }
+            format.html { respond_with(@rating.parent) }
         end
     end
 
@@ -49,7 +49,7 @@ class RatingsController < ApplicationController
             flash[:error] = "There was a problem delesting your Rating"
         end
         respond_with(@rating) do |format|
-            format.html { respond_with_parent(@rating, @photo, @sight) }
+            format.html { respond_with(@rating.parent) }
         end
     end
 end

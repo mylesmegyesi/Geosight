@@ -1,20 +1,20 @@
 class Sight < ActiveRecord::Base
     belongs_to :user
-    has_many :photos
     has_many :comments, :dependent => :destroy
     has_many :ratings, :dependent => :destroy
+    has_and_belongs_to_many :photos
     has_and_belongs_to_many :tags
-    validates_associated :user, :if => :user?
+    validates_associated :user
     validates_length_of :name, :minimum => 1, :maximum => 20, :if => :name?
-    validates_numericality_of :latitude, :if => :location?
-    validates_numericality_of :longitude, :if => :location?
-    validates_numericality_of :radius, :less_than_or_equal_to => 50, :if => :radius?
+    validates_numericality_of :latitude, :if => :latitude?
+    validates_numericality_of :longitude, :if => :longitude?
+    validates_numericality_of :radius, :less_than_or_equal_to => 200, :if => :radius?
     
     def rating
-        Rating.average(:rating, :condtions => ["id = ?", self.id])
+        Rating.average(:rating, :condtions => ["sight_id = ?", self.id])
     end
     
-    def self.possible_sights(latitude, longitude)
+    def self.find_sights(latitude, longitude)
         to = GeoKit::LatLng.new(latitude, longitude)
         Sight.all.select { |sight|
             from = GeoKit::LatLng.new(sight.latitude, sight.longitude)
@@ -24,31 +24,47 @@ class Sight < ActiveRecord::Base
         }
     end
     
-    private
-    
-    def user?
-        if self.user.nil?
-            errors.add(:user, "not present")
-            return false
+    def as_json(options = {})
+        if (photos.length > 0)
+            photo = photos.at(0)
+            pics = {
+                :thumbnail => photo.file.url(:thumb),
+                :small => photo.file.url(:small),
+                :medium => photo.file.url(:medium),
+                :original => photo.file.url
+            }
+        else
+            pics = {}
         end
-        return true
+        {
+            :id => id,
+            :user_id => user_id,
+            :radius => radius,
+            :latitude => latitude,
+            :longitude => longitude
+        }.merge(pics)
     end
     
+    private
+    
     def name?
-        if self.name.nil?
+        if name.nil?
             errors.add(:name, "can't be blank")
             return false
         end
         return true
     end
     
-    def location?
-        if self.latitude.nil?
+    def latitude?
+        if latitude.nil?
             errors.add(:base, "GPS location not present")
             return false
         end
-        
-        if self.longitude.nil?
+        return true
+    end
+      
+    def longitude?
+        if longitude.nil?
             errors.add(:base, "GPS location not present")
             return false
         end
@@ -56,7 +72,7 @@ class Sight < ActiveRecord::Base
     end
     
     def radius?
-        if self.radius.nil?
+        if radius.nil?
             errors.add(:radius, "can't be blank")
             return false
         end

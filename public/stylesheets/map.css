@@ -1,11 +1,11 @@
-#map_canvas { 
+#map-canvas { 
     height: 500px;
-    width: 700px;
+    width: 100%;
 }
 
 #infoWindowDiv {
-	height: 500px
-	width: 250px
+	height: 500px;
+	width: 250px;
 }
 
 

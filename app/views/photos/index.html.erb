@@ -1,11 +1,5 @@
 <% content_for :body do %>
 
-    <% if not @sight.nil? %>
-        <h1>Photos for <%= @sight.name %></h1>
-    <% else %>
-        <h1>My Photos</h1>
-    <% end %>
-    
     <table>
         <tr>
             <th></th>
@@ -16,22 +10,9 @@
         <% @photos.each do |photo| %>
             <tr>
                 <td><%= link_to (image_tag(photo.file.url(:thumb))), photo_path(photo) %></td>
-                <% if not @sight.nil? %>
-                    <td>by <%= photo.user.user_name %></td>
-                <% else %>
-                    <td>in <%= photo.sight.name %></td>
-                <% end %>
+                <td>by <%= photo.user.user_name %></td>
             </tr>
         <% end %>
     </table>
-    
-    <br />
-    
-    <%= link_to 'Upload a Photo', upload_path %> |
-    <% if not @sight.nil? %>
-        <%= link_to 'Back to Sight', sight_path(@sight) %>
-    <% else %>
-        <%= link_to 'Home', home_path %>
-    <% end %>
 
 <% end %>

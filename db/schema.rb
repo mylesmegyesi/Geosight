@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110319054312) do
+ActiveRecord::Schema.define(:version => 20110407201142) do
 
   create_table "comments", :force => true do |t|
     t.integer  "user_id"
@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(:version => 20110319054312) do
   end
 
   create_table "photos", :force => true do |t|
-    t.integer  "sight_id"
     t.integer  "user_id"
     t.string   "file_file_name"
     t.string   "file_content_type"
@@ -32,6 +31,11 @@ ActiveRecord::Schema.define(:version => 20110319054312) do
     t.float    "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "photos_sights", :id => false, :force => true do |t|
+    t.integer "photo_id"
+    t.integer "sight_id"
   end
 
   create_table "photos_tags", :id => false, :force => true do |t|

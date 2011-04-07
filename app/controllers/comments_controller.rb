@@ -9,13 +9,11 @@ class CommentsController < ApplicationController
         end
         params[:comment][:user_id] = current_user.id
         @comment = Comment.new(params[:comment])
-        if @comment.save
-            flash[:notice] = "Comment successfully posted"
-        else
+        if not @comment.save
             flash[:error] = "There was a problem posting your comment"
         end
         respond_with(@comment) do |format|
-            format.html {respond_with_parent(@comment, @comment.photo, @comment.sight) }
+            format.html {respond_with(@comment.parent) }
         end
     end
 
@@ -25,13 +23,11 @@ class CommentsController < ApplicationController
             redirect_to not_found_path
             return
         end
-        if @comment.update_attributes(params[:comment])
-            flash[:notice] = "Comment successfully updated"
-        else
+        if not @comment.update_attributes(params[:comment])
             flash[:error] = "There was a problem updating your Comment"
         end
         respond_with(@comment) do |format|
-            format.html {respond_with_parent(@comment, @comment.photo, @comment.sight) }
+            format.html {respond_with(@comment.parent) }
         end
     end
 
@@ -43,13 +39,11 @@ class CommentsController < ApplicationController
         end
         @sight = @comment.sight
         @photo = @comment.photo
-        if @comment.destroy
-            flash[:notice] = "Comment successfully deleted"
-        else
+        if not @comment.destroy
             flash[:error] = "There was a problem deleting your Comment"
         end
         respond_with(@comment) do |format|
-            format.html {respond_with_parent(@comment, @comment.photo, @comment.sight) }
+            format.html {respond_with(@comment.parent) }
         end
     end
 end

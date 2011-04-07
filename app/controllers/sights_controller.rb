@@ -4,31 +4,19 @@ class SightsController < ApplicationController
 
     def index
         @sights = Sight.all
-        respond_with(@sights) do |format|
-            format.json {
-                @sights = @sights.collect do |sight|
-                    add_urls_to_sight(sight)
-                    sight
-                end
-                respond_with(@sights)
-            }
-        end
+        respond_with(@sights)        
     end
 
     def show
         @sight = Sight.find_by_id(params[:id])
         if @sight.nil?
+            flash[:error] = "Sight not found"
             redirect_to not_found_path
             return
         end
 		@tag = Tag.new
 		@comment = Comment.new
-        respond_with(@sight) do |format|
-            format.json {
-                add_urls_to_sight(@sight)
-                respond_with(@sight)
-            }
-        end
+        respond_with(@sight)
     end
 
     def new
@@ -39,6 +27,7 @@ class SightsController < ApplicationController
     def edit
         @sight = Sight.find_by_ids(params[:id])
         if @sight.nil?
+            flash[:error] = "Sight not found"
             redirect_to not_found_path
             return
         end
@@ -46,33 +35,32 @@ class SightsController < ApplicationController
 
     def create
         @sight = Sight.new(params[:sight])
-        @sight.save
-        respond_with(@sight) do |format|
-            format.json {
-                add_urls_to_sight(@sight)
-                respond_with(@sight)
-            }
+        if @sight.save
+            # Add photos to Sight
+            @sight.photos.concat(Photo.find_photos(@sight.latitude, @sight.longitude, @sight.radius))
+        else
+            flash[:error] = "There was a problem saving your Sight"
         end
+        respond_with(@sight)
     end
 
     def update
         @sight = Sight.find_by_ids(params[:id])
         if @sight.nil?
+            flash[:error] = "Sight not found"
             redirect_to not_found_path
             return
         end
-        @sight.update_attributes(params[:sight])
-        respond_with(@sight) do |format|
-            format.json {
-                add_urls_to_sight(@sight)
-                respond_with(@sight)
-            }
+        if not @sight.update_attributes(params[:sight])
+            flash[:error] = "There was a problem updating your Sight"
         end
+        respond_with(@sight)
     end
 
     def destroy
         @sight = Sight.find(params[:id])
         if @sight.nil?
+            flash[:error] = "Sight not found"
             redirect_to not_found_path
             return
         end

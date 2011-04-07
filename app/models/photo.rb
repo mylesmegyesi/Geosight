@@ -1,10 +1,10 @@
 class Photo < ActiveRecord::Base
-    belongs_to :sight
     belongs_to :user
     has_many :comments, :dependent => :destroy
     has_many :ratings, :dependent => :destroy
+    has_and_belongs_to_many :sights
     has_and_belongs_to_many :tags
-    validates_associated :user, :if => :user?
+    validates_associated :user
     validate :gps_data
     has_attached_file :file, {
         :styles => {
@@ -14,29 +14,30 @@ class Photo < ActiveRecord::Base
         }
     }.merge(PAPERCLIP_STORAGE_OPTIONS)
     
-    # Virtual fields to trick the form builder
-    def name
+    def as_json(options = {})
+        {
+            :id => id,
+            :user_id => user_id,
+            :latitude => latitude,
+            :longitude => longitude,
+            :thumbnail => file.url(:thumb),
+            :small => file.url(:small),
+            :medium => file.url(:medium),
+            :original => file.url
+        }
     end
-    def name=(name)
-    end
-    def radius
-    end
-    def radius=(radius)
-    end
-    def existing_sight_id
-    end
-    def existing_sight_id=(existing_sight_id)
+     
+    def self.find_photos(latitude, longitude, radius)
+        to = GeoKit::LatLng.new(latitude, longitude)
+        Photo.all.select { |photo|
+            from = GeoKit::LatLng.new(photo.latitude, photo.longitude)
+            if (from.distance_to(to)*1000) < radius
+                sight
+            end
+        }
     end
     
     private
-    
-    def user?
-        if self.user.nil?
-            errors.add(:user, "not present")
-            return false
-        end
-        return true
-    end
     
     def gps_data
         if (latitude.nil? or longitude.nil?)
