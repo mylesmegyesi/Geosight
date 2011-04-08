@@ -1,0 +1,9 @@
+#map-canvas {
+    height: 300px;
+    width: 500px;
+}
+
+.comment {
+  margin: 10px;
+  padding: 5px;
+}

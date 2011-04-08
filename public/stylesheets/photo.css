@@ -1,40 +1,52 @@
-#content {
-  float: left;
+#align-container {
+    display: table-row;
 }
 
+#content {
+    display: table-cell;
+    float: left;
+    height: 100%;
+}
+
+#sidebar {
+    display: table-cell;
+    float: right;
+    height: 100%;
+}
 
 #photo img {
-  max-width: 500px;
-  max-height: 500px;
+    max-width: 500px;
 }
 
 .comment {
-  margin: 10px;
-  padding: 5px;
+    margin: 10px;
+    padding: 5px;
 }
 
-#gmap {
-  width: 300px;
-  height: 240px;
-  margin-bottom: 10px;
-  float: right;
-  background-color: gray;
+#map-canvas {
+    width: 450px;
+    height: 240px;
+    margin-bottom: 50px;
+    display: block;
 }
 
 #user-photo-list {
-  float: right;
-  overflow: auto;
-  width: 300px;
-  height: 400px;
+    overflow: auto;
+    display: block;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    width: 450px;
+    height: 400px;
 }
 
 .user-photo {
-  margin: 10px;
-  padding: 5px;
-  text-align: center;
+    margin: 10px;
+    padding: 5px;
+    float: left;
 }
 
 .user-photo img {
-  max-width: 200px;
-  max-height: 200px;
+    max-width: 200px;
+    max-height: 200px;
 }

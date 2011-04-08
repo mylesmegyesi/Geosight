@@ -1,0 +1,92 @@
+<% content_for :css do %>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
+    <%= stylesheet_link_tag("new_sight") %>
+<% end %>
+
+<% content_for :javascript do %>
+    <%= javascript_include_tag("https://maps-api-ssl.google.com/maps/api/js?sensor=false") %>
+<% end %>
+
+<% content_for :body do %>
+
+    <script type="text/javascript">
+    
+        var marker;
+        var radius;
+    
+        $(document).ready(function() {
+            
+            var champaign = new google.maps.LatLng(40.114044, -88.22485);
+            
+            map = new google.maps.Map(document.getElementById("map-canvas"), {
+                zoom: 18,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                center: champaign
+            });
+            
+            marker = new google.maps.Marker({
+                map: map,
+                draggable: true,
+                animation: google.maps.Animation.DROP,
+                position: champaign
+            });
+            
+            radius = new google.maps.Circle({
+                radius: parseInt(document.getElementById("sight_radius").value),
+                center: champaign,
+                map: map,
+                strokeWeight: 1
+            });
+            
+            google.maps.event.addListener(marker, "position_changed", function() {
+                $("#sight_latitude").val(marker.getPosition().lat());
+                $("#sight_longitude").val(marker.getPosition().lng());
+                radius.setCenter(marker.getPosition());
+            });
+            
+            $("#sight_radius").change(function() {
+                radius.setRadius(parseInt(document.getElementById("sight_radius").value));
+            });
+            $("#sight_latitude").val(marker.getPosition().lat());
+            $("#sight_longitude").val(marker.getPosition().lng());
+        });
+    </script>
+    
+    <div id="sight-form">
+        <% form_for(@sight) do |f| %>
+            <% if @sight.errors.any? %>
+            <div id="error_explanation">
+                <ul>
+                    <% @sight.errors.each do |attr, msg| %>
+                    <li><%= msg %></li>
+                    <% end %>
+                </ul>
+            </div>
+            <% end %>
+
+            <%= f.hidden_field(:user_id, {:value => current_user.id}) %>
+            <div class="field">
+                <%= f.label(:name) %>
+                <%= f.text_field(:name, :size => 20) %>
+            </div>
+            <div class="field">
+                <%= f.label(:latitude) %>
+                <%= f.text_field(:latitude, :size => 20) %>
+            </div>
+            <div class="field">
+                <%= f.label(:longitude) %>
+                <%= f.text_field(:longitude, :size => 20) %>
+            </div>
+            <div class="field">
+                <%= f.label(:radius) %>
+                <%= f.range_field(:radius, :value => 100, :min => 1, :max => 200) %>
+            </div>
+            <div class="actions">
+                <%= f.submit(:value => "Create Sight") %>
+            </div>
+        <% end %>
+    </div>
+    <div id="map-canvas">
+    </div>
+    
+    <% end %>

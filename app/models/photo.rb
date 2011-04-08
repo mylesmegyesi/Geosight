@@ -8,9 +8,9 @@ class Photo < ActiveRecord::Base
     validate :gps_data
     has_attached_file :file, {
         :styles => {
-            :medium => "x450>",
-            :small => "x300>",
-            :thumb => "x100>"
+            :medium => "500x500>",
+            :small => "300x300>",
+            :thumb => "100x100>"
         }
     }.merge(PAPERCLIP_STORAGE_OPTIONS)
     

@@ -1,0 +1,15 @@
+#sight-form {
+    position: relative;
+    display: inline-block;
+    float: left;
+    height: 100%;
+    width: 40%;
+}
+
+#map-canvas {
+    position: relative;
+    display: inline-block;
+    float: right;
+    height: 100%;
+    width: 60%;
+}

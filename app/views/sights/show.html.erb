@@ -1,7 +1,6 @@
 <% content_for :css do %>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
-	<%= stylesheet_link_tag "photo" %>
-    <%= stylesheet_link_tag("map") %>
+    <%= stylesheet_link_tag("sight") %>
 <% end %>
 
 <% content_for :javascript do %>
@@ -26,17 +25,18 @@
 		*/
 	
         // adds photo markers to the map
-        function add_marker(map, bounds, lat, lng, i, cent, contentString) { 
+        function add_marker(map, lat, lng, cent, contentString) { 
           var latlng = new google.maps.LatLng(lat, lng);
 
           bounds.extend(latlng);
 
           var marker = new google.maps.Marker({
               position: latlng,
-              title:'Photo '+i, map: map
+              map: map
           });
           marker.infowindow = new google.maps.InfoWindow({
-            content: contentString, maxWidth: 200 
+            content: contentString,
+            maxWidth: 200 
           });
 
           // pops up an infowindow when you click on a marker
@@ -53,63 +53,33 @@
         }
 
         $(document).ready(function() {
-            var bounds = new google.maps.LatLngBounds ();
             var cent = new google.maps.LatLng(<%= @sight.latitude %>, <%= @sight.longitude %>);
-            var myOptions = { zoom: 19, center: cent, mapTypeId: google.maps.MapTypeId.HYBRID };
-            var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-            var circle = new google.maps.Circle({
-                radius: <%= @sight.radius %>, center: cent, map: map, strokeWeight: 1
+            var map = new google.maps.Map(document.getElementById("map-canvas"), {
+                zoom: 18,
+                center: cent,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
             });
-            var contentString = null;
-            <% @sight.photos.each_with_index do |photo, i| %>
-              contentString = 
-              '<b>Photo <%= i+1 %></b>'+
-              '<div id="infoWindowDiv">'+
+            var circle = new google.maps.Circle({
+                radius: <%= @sight.radius %>,
+                center: cent,
+                map: map,
+                strokeWeight: 1
+            });
+            var contentString;
+            <% @sight.photos.each do |photo| %>
+              contentString = '<div id="infoWindowDiv">'+
                 '<%= link_to image_tag(photo.file.url(:thumb)), photo_path(photo) %>'+
-                'Tags: '+
-                <% first = true %>
-                <% photo.tags.collect do |ptag| %>
-                  <% if first == false %>
-                      '<%= ", " %>'+
-                  <% else %>
-                      <% first = false %>
-                  <% end %>
-                  '<%= link_to(ptag.tag, tag_path(ptag)) %>'+
-                <% end %>
-              '</div>';
-              add_marker( map, bounds,
-                <%= photo.latitude %>, <%= photo.longitude %>,
-                <%= i+1 %>, cent, contentString);
+                '</div>';
+              add_marker( map, bounds, <%= photo.latitude %>, <%= photo.longitude %>, cent, contentString);
             <% end%>
         });
-    </script>
-    
-    <div id="map_canvas"></div>
-    
-    <p>
-        <b>Latitude:</b>
-        <%= @sight.latitude %>
-    </p>
-    
-    <p>
-        <b>Longitude:</b>
-        <%= @sight.longitude %>
-    </p>
-    
-    <p>
-        <b>Name:</b>
-        <%= @sight.name %>
-    </p>
-    
-    <p>
-        <b>Radius:</b>
-        <%= @sight.radius %>
-    </p>
+    </script>   
 	
-	<div id = content>
-		<div id="photo-info">
+	<div id="content">
+        <div id="map-canvas"></div> 
+		<div id="sight-info">
             
-            <div id="photo-tags">
+            <div id="sight-tags">
                 Tags:
                 <% @sight.tags.each do |tag| %>
                     <%= link_to(tag.tag, tag_path(tag)) %>
@@ -133,8 +103,5 @@
             </div>
 		</div>
 	</div>
-    
-    <%= link_to 'Photos', photos_path({:sight_id => @sight.id}) %> |
-    <%= link_to 'Back to Sights', sights_path %>
 
 <% end %>

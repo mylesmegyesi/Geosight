@@ -21,7 +21,6 @@ class SightsController < ApplicationController
 
     def new
         @sight = Sight.new
-        respond_with(@sight)
     end
 
     def edit
