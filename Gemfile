@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-gem "rails", "3.0.4"
+gem "rails", "3.0.6"
 gem "paperclip"
 gem "authlogic", :git => "git://github.com/jjb/authlogic.git"
 gem "exifr"
