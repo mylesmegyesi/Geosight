@@ -39,6 +39,7 @@ class Sight < ActiveRecord::Base
         {
             :id => id,
             :user_id => user_id,
+            :name => name,
             :radius => radius,
             :latitude => latitude,
             :longitude => longitude
