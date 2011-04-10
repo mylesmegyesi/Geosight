@@ -31,7 +31,7 @@ class PhotosController < ApplicationController
             # Add sights to photo
             @photo.sights.concat(Sight.find_sights(@photo.latitude, @photo.longitude))
         else
-            logger.debug @photo.errors.to_s
+            puts @photo.errors.to_s
             flash[:error] = "There was a problem saving your Photo"
         end
         respond_with(@photo)
