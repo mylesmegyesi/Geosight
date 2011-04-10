@@ -43,7 +43,7 @@ class Photo < ActiveRecord::Base
     def gps_data
         if (latitude.nil? or longitude.nil?)
             if file.queued_for_write[:original].nil?
-                errors.add(:file, "not selected")
+                errors.add(:file, " not selected")
                 return
             end
             # Extract meta data as a hash

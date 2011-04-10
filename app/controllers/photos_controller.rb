@@ -26,6 +26,9 @@ class PhotosController < ApplicationController
     end
     
     def create 
+        if not params[:photo].nil?
+            params[:photo][:user_id] = current_user.id
+        end
         @photo = Photo.new(params[:photo])
         if @photo.save
             # Add sights to photo
