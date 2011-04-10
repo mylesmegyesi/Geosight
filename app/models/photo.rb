@@ -4,6 +4,7 @@ class Photo < ActiveRecord::Base
     has_many :ratings, :dependent => :destroy
     has_and_belongs_to_many :sights
     has_and_belongs_to_many :tags
+    validates_presence_of :user_id
     validates_associated :user
     validate :gps_data
     has_attached_file :file, {
