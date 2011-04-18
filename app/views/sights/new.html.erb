@@ -13,6 +13,7 @@
         
         var geocoder = new google.maps.Geocoder();
         var champaign = new google.maps.LatLng(40.114044, -88.22485);
+        var map;
         var marker;
         var radius;
     
@@ -112,7 +113,7 @@
         <% end %>
     </div>
     <div id="map">
-        <div id="search-box">
+        <div id="jump-to-box">
             <label>Jump to</label>
             <input id="jump-to" size="40" type="text">
             <input id="jump-submit" type="submit" value="Go">

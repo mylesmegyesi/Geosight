@@ -11,7 +11,11 @@
 <% content_for :body do %>
 
     <script type="text/javascript">
+    
         var lastOpened = null; // the last infowindow opened
+        var geocoder = new google.maps.Geocoder();
+        var champaign = new google.maps.LatLng(40.114044, -88.22485);
+        var map;
 
         // adds sight markers to the map
         function add_marker(map, lat, lng, rad, title, contentString) { 
@@ -37,12 +41,15 @@
         }
         
         $(document).ready(function() {
-            // there are no sights, set the center to Champaign, IL
-            var map = new google.maps.Map(document.getElementById("map-canvas"), {
+            
+            // set the center to Champaign, IL
+            map = new google.maps.Map(document.getElementById("map-canvas"), {
                 zoom: 3,
-                center: new google.maps.LatLng(40.114044, -88.22485), 
+                center: champaign, 
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
+            
+            // Add markers for sights
             <% if @sights.length != 0 %>            
             var contentString;
             <% @sights.each do |sight| %>
@@ -64,9 +71,35 @@
             });
             <% end %>
             <% end %>
+            
+            // Set up the search box
+            $("#jump-submit").click(function() {
+                var query = $("#jump-to").val();
+                if (query == "") {
+                    return;
+                }
+                
+                $("#spinner").show();
+                geocoder.geocode({"address": query}, function(results, status) {
+                    $("#spinner").hide();
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        var location = results[0].geometry.location;
+                        map.setCenter(location);
+                        map.setZoom(15);
+                    } else {
+                        alert("Could not find the given location");
+                    }
+                });
+            });
         });
     </script>
     
+    <div id="jump-to-box">
+        <label>Jump to</label>
+        <input id="jump-to" size="40" type="text">
+        <input id="jump-submit" type="submit" value="Go">
+        <img id="spinner" src="/images/spinner.gif" />
+    </div>
     <div id="map-canvas"></div>
 
 <% end %>

@@ -2,6 +2,17 @@
     text-align: center;
 }
 
+#jump-to-box {
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+#spinner {
+    border: none;
+    display: none;
+    margin-left: 5px;
+}
+
 #map-canvas {
     border: #DDD 1px solid;
     box-shadow: 3px 3px 3px #888;
