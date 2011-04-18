@@ -18,11 +18,6 @@ class TagsController < ApplicationController
 
     def create        
         
-        if params[:tag].nil?
-            redirect_to not_found_path
-            return
-        end
-        
         if not params[:photo_id].nil?
             @parent = Photo.find_by_id(params[:photo_id])
         elsif not params[:sight_id].nil?
@@ -32,37 +27,38 @@ class TagsController < ApplicationController
             return
         end
         
-        if params[:tag][:tag].nil?
-            redirect_to not_found_path
+        if params[:tag].nil? || params[:tag][:tag].nil?
+            respond_to do |format|
+                format.html { respond_with(@parent) }
+                format.json { render :json => "Tag cannot be blank", :status => :unprocessable_entity }
+            end
             return
         end
         
-        is_tagged = false
-        @parent.tags.each do |tag|
-            if tag.tag == params[:tag][:tag]
-                is_tagged = true
-                flash[:error] = "Photo already has that tag!"
+        params[:tag][:user_id] = current_user.id
+        
+        @tag = Tag.find_by_tag(params[:tag][:tag])
+        
+        if @tag.nil?
+            @tag = Tag.new(params[:tag])
+            if @tag.save
+                @parent.tags << @tag
+            else
+                flash[:error] = "There was a problem creating your Tag"
+            end
+        else
+            tagged = false
+            @parent.tags.each do |tag|
+                if tag.tag == @tag.tag
+                    tagged = true
+                end
+            end
+            
+            if not tagged
+                @parent.tags << @tag
             end
         end
-        if not is_tagged
-            params[:tag][:user_id] = current_user.id
-            
-            @tag = Tag.find_by_tag(params[:tag][:tag])
-            
-            if @tag.nil?
-                @tag = Tag.new(params[:tag])
-                if @tag.save
-                    flash[:notice] = "Tag successfully created"
-                    @parent.tags << @tag
-                else
-                    flash[:error] = "There was a problem creating your Tag"
-                end 
-            else
-               @parent.tags << @tag  
-            end               
-            
-        end
-        
+    
         respond_with(@tag) do |format|
             format.html { respond_with(@parent) }
         end
@@ -95,7 +91,7 @@ class TagsController < ApplicationController
         
         @parent.tags.delete(@tag)
         
-        if @tag.photos.nil? && @tag.sights.nil?
+        if @tag.photos.empty? && @tag.sights.empty?
             @tag.destroy
         end
         

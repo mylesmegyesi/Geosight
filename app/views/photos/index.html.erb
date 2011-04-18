@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for :body do %>
-    <% @user.photos.each do |photo| %>
+    <% @photos.each do |photo| %>
         <div class="user-photo">
             <div class="user-photo-image">
                 <%= link_to(image_tag(photo.file.url(:small)), photo_path(photo)) %>

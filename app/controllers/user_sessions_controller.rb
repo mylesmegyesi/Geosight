@@ -5,7 +5,7 @@ class UserSessionsController < ApplicationController
     def new
         if current_user
             respond_with(current_session) do |format|
-                format.html { redirect_to user_path(current_user.id) }
+                format.html { redirect_to user_path }
             end
         else
             @user_session = UserSession.new
@@ -16,7 +16,7 @@ class UserSessionsController < ApplicationController
         @user_session = UserSession.new(params[:user_session])
         if @user_session.save
             respond_with(@user_session) do |format|
-                format.html { redirect_to user_path(@user_session.user) }
+                format.html { redirect_to user_path }
             end
         else
             respond_with(@user_session) do |format|

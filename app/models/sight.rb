@@ -4,13 +4,13 @@ class Sight < ActiveRecord::Base
     has_many :ratings, :dependent => :destroy
     has_and_belongs_to_many :photos
     has_and_belongs_to_many :tags
-    validates_associated :user
     validates_length_of :name, :minimum => 1, :maximum => 20, :if => :name?
     validates_numericality_of :latitude, :if => :latitude?
     validates_numericality_of :longitude, :if => :longitude?
     validates_numericality_of :radius, :less_than_or_equal_to => 200, :if => :radius?
     after_save :update_photos
     before_destroy :remove_photos
+    before_save :set_user_id
     
     def rating
         Rating.average(:rating, :condtions => ["sight_id = ?", self.id])
@@ -40,6 +40,7 @@ class Sight < ActiveRecord::Base
             pics = {
                 :thumbnail => photo.file.url(:thumb),
                 :small => photo.file.url(:small),
+				:smaller => photo.file.url(:smaller),
                 :medium => photo.file.url(:medium),
                 :original => photo.file.url
             }
@@ -57,6 +58,10 @@ class Sight < ActiveRecord::Base
     end
     
     private
+    
+    def set_user_id
+        self.user_id = User.current_user.id
+    end
     
     # Add photos to this sight
     def update_photos

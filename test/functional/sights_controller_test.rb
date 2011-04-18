@@ -62,17 +62,11 @@ class SightsControllerTest < ActionController::TestCase
         assert_no_difference("Sight.count") do
             post :create
         end
-        assert_redirected_to new_sight_path
     end
     
     test "should update sight" do
         post :update, :id => @sight, :sight => {}
         assert_response :found
-    end
-    
-    test "should not update sight" do
-        post :update, :id => @sight
-        assert_redirected_to edit_sight_path
     end
     
     test "update cannot find sight" do
