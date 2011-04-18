@@ -57,12 +57,16 @@
                 <% @sight.tags.each do |tag| %>
                     <%= link_to(tag.tag, tag_path(tag)) %>
                 <% end %>
+                <% if current_user %>
                 <%= render 'tags/form' %>
+                <% end %>
             </div>
         </div>
 		<div id="comment-container">
             <div id="comment-box">
+                <% if current_user %>
                 <%= render 'comments/form' %>
+                <% end %>
             </div>
             <div id="comment-list">
                 <% @sight.comments.each do |comment| %>

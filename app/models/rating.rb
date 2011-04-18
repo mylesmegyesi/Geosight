@@ -3,10 +3,10 @@ class Rating < ActiveRecord::Base
     belongs_to :sight
     belongs_to :user
     validate :parent?
-    validates_associated :user, :if => :user?
     validates_numericality_of :rating, :only_integer => true,
         :greater_than_or_equal_to => 1,
         :less_than_or_equal_to => 5, :if => :rating?
+    before_save :set_user_id
         
     def parent
         if not sight_id.nil?
@@ -18,12 +18,8 @@ class Rating < ActiveRecord::Base
         
     private 
     
-    def user?
-        if self.user.nil?
-            errors.add(:user, "not present")
-            return false
-        end
-        return true
+    def set_user_id
+        self.user_id = User.current_user.id
     end
     
     def rating?

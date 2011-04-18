@@ -2,9 +2,9 @@ class Comment < ActiveRecord::Base
     belongs_to :photo
     belongs_to :sight
     belongs_to :user
-    validates_presence_of :comment, :user_id
-    validates_associated :user
+    validates_presence_of :comment
     validate :parent?
+    before_save :set_user_id
     
     def date
         created_at.strftime("%B %e, %Y")
@@ -22,7 +22,12 @@ class Comment < ActiveRecord::Base
         end
     end
     
-    protected
+    private
+    
+    def set_user_id
+        self.user_id = User.current_user.id
+    end
+    
     def parent?
         if not sight_id.nil?
             if Sight.find_by_id(sight_id).nil?

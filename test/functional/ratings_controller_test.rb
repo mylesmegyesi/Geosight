@@ -13,14 +13,14 @@ class RatingsControllerTest < ActionController::TestCase
     end
     
     test "should create sight rating" do
-        assert_difference('Rating.count') do
+        assert_difference("Rating.count", 1) do
             post :create, :rating => {:sight_id => @sight.id, :rating => 4}
         end
         assert_response :found
     end
     
     test "should create photo rating" do
-        assert_difference('Rating.count') do
+        assert_difference("Rating.count", 1) do
             post :create, :rating => {:photo_id => @photo.id, :rating => 4}
         end
         assert_response :found

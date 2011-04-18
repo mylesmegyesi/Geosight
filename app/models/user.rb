@@ -9,4 +9,8 @@ class User < ActiveRecord::Base
     def user_name
       self.first_name + " " + self.last_name
     end
+    
+    def self.current_user
+        UserSession.find.user
+    end
 end

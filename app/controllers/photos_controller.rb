@@ -25,16 +25,7 @@ class PhotosController < ApplicationController
         @photo = Photo.new
     end
     
-    def create 
-        if params[:photo].nil?
-            respond_to do |format|
-                format.html { redirect_to new_photo_path }
-                format.json { render :json => "Photo cannot be blank", :status => :unprocessable_entity }
-            end
-            return
-        end
-        
-        params[:photo][:user_id] = current_user.id
+    def create
         @photo = Photo.new(params[:photo])
         if not @photo.save
             flash[:error] = "There was a problem saving your Photo"

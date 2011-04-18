@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
             redirect_to not_found_path
             return
         end
-        params[:comment][:user_id] = current_user.id
+        
         @comment = Comment.new(params[:comment])
         if not @comment.save
             flash[:error] = "There was a problem posting your comment"

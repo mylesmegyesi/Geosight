@@ -4,9 +4,8 @@ class Photo < ActiveRecord::Base
     has_many :ratings, :dependent => :destroy
     has_and_belongs_to_many :sights
     has_and_belongs_to_many :tags
-    validates_presence_of :user_id
-    validates_associated :user
     validate :gps_data
+    before_save :set_user_id
     after_save :update_sights
     before_destroy :remove_sights
     has_attached_file :file, {
@@ -43,6 +42,10 @@ class Photo < ActiveRecord::Base
     end
     
     private
+    
+    def set_user_id
+        self.user_id = User.current_user.id
+    end
     
     def remove_sights
         self.sights.clear

@@ -36,8 +36,9 @@ class PhotosControllerTest < ActionController::TestCase
     end
     
     test "create - no photo parameter" do
-        post :create
-        assert_redirected_to new_photo_path
+        assert_no_difference("Photo.count") do
+            post :create
+        end
     end
     
     test "should destroy photo" do
