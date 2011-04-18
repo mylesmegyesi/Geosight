@@ -21,6 +21,12 @@ class PhotosControllerTest < ActionController::TestCase
         assert_response :success
     end
     
+    test "should not show photo" do
+        id = Photo.all.last.id + 1
+        get :show, :id => id
+        assert_redirected_to not_found_path
+    end
+    
     test "should destroy photo" do
         assert_difference('Photo.count', -1) do
             delete :destroy, :id => @photo.id
