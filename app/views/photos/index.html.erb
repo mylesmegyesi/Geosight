@@ -1,18 +1,32 @@
+<% content_for :css do %>
+    <%= stylesheet_link_tag "photos" %>
+<% end %>
+
 <% content_for :body do %>
-
-    <table>
-        <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
-    
-        <% @photos.each do |photo| %>
-            <tr>
-                <td><%= link_to (image_tag(photo.file.url(:thumb))), photo_path(photo) %></td>
-                <td>by <%= photo.user.user_name %></td>
-            </tr>
-        <% end %>
-    </table>
-
+    <% @user.photos.each do |photo| %>
+        <div class="user-photo">
+            <div class="user-photo-image">
+                <%= link_to(image_tag(photo.file.url(:small)), photo_path(photo)) %>
+            </div>
+            <div class="user-photo-info">
+                Tags:
+                <% if photo.tags.length == 0 %>
+                    None
+                    <% else %>
+                        <% photo.tags.each do |tag| %>
+                        <%= link_to (tag.tag, tag_path(tag)) %>
+                    <% end %>
+                <% end %>
+                <br />
+                Sights:
+                <% if photo.sights.length == 0 %>
+                    None
+                    <% else %>
+                        <% photo.sights.each do |sight| %>
+                        <%= link_to (sight.name, sight_path(sight)) %> 
+                    <% end %>
+                <% end %>
+            </div>
+        </div>
+    <% end %>
 <% end %>

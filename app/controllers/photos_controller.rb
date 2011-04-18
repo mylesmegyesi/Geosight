@@ -3,8 +3,8 @@ class PhotosController < ApplicationController
     respond_to :html, :json
     
     def index
-        @photos = current_user.photos
-        respond_with(@photos)
+        @user = current_user
+        respond_with(@user)
     end
 
     def show
