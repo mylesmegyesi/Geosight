@@ -40,6 +40,15 @@ class Photo < ActiveRecord::Base
             end
         }
     end
+	
+	def average_rating
+		@value = 0
+		self.ratings.each do |rating|
+			@value = @value + rating.rating
+		end
+		@total = self.ratings.size
+		@value.to_f / @total.to_f
+	end
     
     private
     
@@ -97,4 +106,5 @@ class Photo < ActiveRecord::Base
             end
         end
     end
+
 end
