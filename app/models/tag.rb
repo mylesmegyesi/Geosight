@@ -12,5 +12,13 @@ class Tag < ActiveRecord::Base
         end
         return true
     end
-    
+
+    def self.search(search)
+    	if search
+			find(:all, :conditions => ['tag LIKE ?', "%#{search}%"])
+	  	else
+			find(:all)
+	  	end
+	end
+
 end
