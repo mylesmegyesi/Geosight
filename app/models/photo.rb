@@ -60,7 +60,14 @@ class Photo < ActiveRecord::Base
         self.sights = Sight.find_sights(latitude, longitude)
     end
     
+=begin
+	extracts the gps data from a photo
+	called when a photo is uploaded to the website
+=end
     def gps_data
+		conversion_factor = 60.0
+		lat_multiplier = 1.0
+		long_multiplier = 1.0
         if (latitude.nil? or longitude.nil?)
             if file.queued_for_write[:original].nil?
                 errors.add(:file, " not selected")
@@ -78,19 +85,19 @@ class Photo < ActiveRecord::Base
                     
                 # Correct references
                 if exif[:gps_latitude_ref] == 'N'
-    			lat = 1.0
+					lat = lat_multiplier
                 else 
-                    lat = -1.0
+                    lat = -lat_multiplier
                 end
                 
                 if exif[:gps_longitude_ref] == 'W'
-        			lng = -1.0
+        			lng = -long_multiplier
                 else 
-        			lng = 1.0
+        			lng = long_multiplier
                 end
                 
-        		lat *= (ndeg + (nmin + (nsec/60.0))/60.0)
-        		lng *= (edeg + (emin + (esec/60.0))/60.0)
+        		lat *= (ndeg + (nmin + (nsec/conversion_factor))/conversion_factor)
+        		lng *= (edeg + (emin + (esec/conversion_factor))/conversion_factor)
                 
         		# Extract GPS data from picture or access coordinates
         		# given to us in params[:latitude] and params[:longitude]
