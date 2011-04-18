@@ -17,6 +17,7 @@ class PhotosController < ApplicationController
         
         @tag = Tag.new
         @comment = Comment.new
+		@rating = Rating.new
         
         respond_with(@photo)
     end
