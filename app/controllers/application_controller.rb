@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
     helper :all # include all helpers, all the time
     protect_from_forgery # See ActionController::RequestForgeryProtection for details
-    helper_method :current_session, :current_user, :respond_with_parent, :add_urls_to_photo, :add_urls_to_sight
+    helper_method :current_session, :current_user, :require_user, :store_location
     
     private
     def current_session

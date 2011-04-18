@@ -4,6 +4,7 @@ class Sight < ActiveRecord::Base
     has_many :ratings, :dependent => :destroy
     has_and_belongs_to_many :photos
     has_and_belongs_to_many :tags
+    validates_presence_of :user_id
     validates_associated :user
     validates_length_of :name, :minimum => 1, :maximum => 20, :if => :name?
     validates_numericality_of :latitude, :if => :latitude?

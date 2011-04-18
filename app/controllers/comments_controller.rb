@@ -37,11 +37,11 @@ class CommentsController < ApplicationController
             redirect_to not_found_path
             return
         end
-        @sight = @comment.sight
-        @photo = @comment.photo
+        
         if not @comment.destroy
             flash[:error] = "There was a problem deleting your Comment"
         end
+        
         respond_with(@comment) do |format|
             format.html {respond_with(@comment.parent) }
         end

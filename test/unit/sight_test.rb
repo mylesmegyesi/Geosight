@@ -19,7 +19,6 @@ class SightTest < ActiveSupport::TestCase
     end
     
     # test validations
-    
     test "no user" do
         sight = Sight.new(:name => "new sight", :radius => 10,
             :latitude => 10, :longitude => 10)
@@ -76,7 +75,7 @@ class SightTest < ActiveSupport::TestCase
     
     test "radius too big" do
         sight = Sight.new(:user_id => @user.id, :name => "new sight",
-            :radius => 101, :latitude => 10, :longitude => 10)
+            :radius => 201, :latitude => 10, :longitude => 10)
         assert !sight.save, "Sight saved with radius greater than 100"
     end
 

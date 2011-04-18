@@ -9,22 +9,22 @@ class CommentsControllerTest < ActionController::TestCase
         UserSession.create(@user)
     end
     
-    teardown do
-        @photo.destroy
-    end
-    
     test "should create sight comment" do
-        assert_difference('Comment.count') do
+        assert_difference("Comment.count", 1) do
             post :create, :comment => {:sight_id => @sight.id, :comment => "comment"}
         end
-        assert_response :found
     end
     
     test "should create photo comment" do
-        assert_difference('Comment.count') do
+        assert_difference("Comment.count", 1) do
             post :create, :comment => {:photo_id => @photo.id, :comment => "comment"}
         end
-        assert_response :found
+    end
+    
+    test "create - no comment parameter" do
+        assert_no_difference("Comment.count", 1) do
+            post :create
+        end
     end
     
     test "should update comment" do
@@ -32,9 +32,21 @@ class CommentsControllerTest < ActionController::TestCase
         assert_response :found
     end
     
+    test "update - bad id" do
+        id = Comment.all.last.id + 1
+        put :update, :id => id, :comment => {:comment => "comment"}
+        assert_redirected_to not_found_path
+    end
+    
     test "should destroy sight_comment" do
         assert_difference('Comment.count', -1) do
             delete :destroy, :id => @comment.id
         end
+    end
+    
+    test "destroy - bad id" do
+        id = Comment.all.last.id + 1
+        delete :destroy, :id => id
+        assert_redirected_to not_found_path
     end
 end
