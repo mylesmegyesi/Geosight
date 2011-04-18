@@ -26,6 +26,7 @@ class Photo < ActiveRecord::Base
             :longitude => longitude,
             :thumbnail => file.url(:thumb),
             :small => file.url(:small),
+			:smaller => file.url(:smaller),
             :medium => file.url(:medium),
             :original => file.url
         }

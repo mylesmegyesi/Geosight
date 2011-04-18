@@ -29,7 +29,6 @@
 		  
             marker.infowindow = new google.maps.InfoWindow({
                 content: contentString,
-                maxWidth: 200
             });
     
             // makes clicking on a marker popup the infowindow associated with it
@@ -48,36 +47,32 @@
                 center: champaign, 
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
-            
-            // Add markers for sights
-            <% if @sights.length != 0 %>            
-            var contentString;
-            <% @sights.each do |sight| %>
-            contentString = null;
-            <% if sight.photos.length != 0 %>
-            contentString = 
-                '<b><%= sight.name %></b>' +
-                '<div id="infoWindowDiv">' +
-                  '<%= link_to(image_tag(sight.photos[0].file.url(:thumb)), sight_path(sight)) %>' +
-                '</div>';
-			<% else %>
-			contentString = 
-                '<b><%= sight.name %></b>' +
-                '<div id="infoWindowDiv">' +
-					'<%= link_to("No Photos Yet", sight_path(sight)) %>' +
-                '</div>';
-            <% end %>
-            add_marker(map, <%= sight.latitude %>, <%= sight.longitude %>, <%= sight.radius %>,
-                "<%= sight.name %>", contentString);
-            var circle = new google.maps.Circle({
-                radius: <%= sight.radius %>,
-                center: new google.maps.LatLng(<%= sight.latitude %>, <%= sight.longitude %>),
-                map: map,
-                strokeWeight: 1
-            });
-            <% end %>
-            <% end %>
-            
+            		
+			<% @sights.each do |sight| %>
+			$.getJSON("/sights/"+<%= sight.id %>, function(json) {
+				var contentString = "<b>"+json.name+"</b>" +
+					"<div id= 'infoWindowDiv'>" +
+						"<a href=/sights/"+json.id+">";
+							if (json.small != null) {
+								contentString += "<img src="+json.small+">";
+							} else {
+								contentString += "No Photos Yet";
+							} contentString +=
+						"</a>" +
+					"</div>"; 
+
+   				add_marker(map, json.latitude, json.longitude, json.radius,
+                  json.name, contentString);
+            	
+				var circle = new google.maps.Circle({
+		            radius: json.radius,
+		            center: new google.maps.LatLng(json.latitude, json.longitude),
+			        map: map,
+			        strokeWeight: 1
+            		});
+			});
+			<% end %>
+
             // Set up the search box
             $("#jump-submit").click(function() {
                 var query = $("#jump-to").val();

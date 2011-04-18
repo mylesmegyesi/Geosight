@@ -40,6 +40,7 @@ class Sight < ActiveRecord::Base
             pics = {
                 :thumbnail => photo.file.url(:thumb),
                 :small => photo.file.url(:small),
+				:smaller => photo.file.url(:smaller),
                 :medium => photo.file.url(:medium),
                 :original => photo.file.url
             }
