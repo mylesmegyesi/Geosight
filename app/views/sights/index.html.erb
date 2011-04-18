@@ -41,14 +41,9 @@
 					"</div>"; 
 
    				add_sight_marker(map, json.latitude, json.longitude, json.radius,
-                  json.name, contentString);
+                  json.name, contentString, lastOpened);
             	
-				var circle = new google.maps.Circle({
-		            radius: json.radius,
-		            center: new google.maps.LatLng(json.latitude, json.longitude),
-			        map: map,
-			        strokeWeight: 1
-            		});
+				
 			});
 			<% end %>
 
