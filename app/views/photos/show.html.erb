@@ -97,7 +97,7 @@
                         <%= render 'tags/form' %>                    
                     </div>
 					<div>
-						Rating:
+						Your Rating:
 						<%= form_for(rating_ballot, :html => { :class => 'rating_ballot' }) do |f| %>
 							<%= f.label("value_1", content_tag(:span, '1'), {:class=>"rating", :id=>"1"}) %>
 							<%= radio_button_tag("rating[rating]", 1, current_user_rating == 1, :class => 'rating_button') %>
@@ -113,6 +113,7 @@
 							<%= f.hidden_field(:photo_id, {:value =>@photo.id}) %>
 							<%= f.submit :Submit %>
 						<% end %>
+						Average Rating:
 						<%= @photo.average_rating %>
 					</div>
                 </div>
