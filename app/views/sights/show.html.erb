@@ -28,8 +28,6 @@
         function add_marker(map, lat, lng, cent, contentString) { 
           var latlng = new google.maps.LatLng(lat, lng);
 
-          bounds.extend(latlng);
-
           var marker = new google.maps.Marker({
               position: latlng,
               map: map
@@ -55,7 +53,7 @@
         $(document).ready(function() {
             var cent = new google.maps.LatLng(<%= @sight.latitude %>, <%= @sight.longitude %>);
             var map = new google.maps.Map(document.getElementById("map-canvas"), {
-                zoom: 18,
+                zoom: 16,
                 center: cent,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
@@ -70,7 +68,7 @@
               contentString = '<div id="infoWindowDiv">'+
                 '<%= link_to image_tag(photo.file.url(:thumb)), photo_path(photo) %>'+
                 '</div>';
-              add_marker( map, bounds, <%= photo.latitude %>, <%= photo.longitude %>, cent, contentString);
+              add_marker(map, <%= photo.latitude %>, <%= photo.longitude %>, cent, contentString);
             <% end%>
         });
     </script>   

@@ -54,8 +54,8 @@
             $("#sight_longitude").val(marker.getPosition().lng());
             
             // Set up the search box
-            $("#search-submit").click(function() {
-                var query = $("#search").val();
+            $("#jump-submit").click(function() {
+                var query = $("#jump-to").val();
                 if (query == "") {
                     return;
                 }
@@ -114,8 +114,8 @@
     <div id="map">
         <div id="search-box">
             <label>Jump to</label>
-            <input id="search" size="40" type="text">
-            <input id="search-submit" type="submit" value="Go">
+            <input id="jump-to" size="40" type="text">
+            <input id="jump-submit" type="submit" value="Go">
             <img id="spinner" src="/images/spinner.gif" />
         </div>
         <div id="map-canvas">

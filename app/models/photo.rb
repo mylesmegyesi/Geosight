@@ -33,7 +33,7 @@ class Photo < ActiveRecord::Base
         Photo.all.select { |photo|
             from = GeoKit::LatLng.new(photo.latitude, photo.longitude)
             if (from.distance_to(to)*1000) < radius
-                sight
+                photo
             end
         }
     end

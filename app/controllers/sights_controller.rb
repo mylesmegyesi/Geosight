@@ -42,7 +42,9 @@ class SightsController < ApplicationController
         @sight = Sight.new(params[:sight])
         if @sight.save
             # Add photos to Sight
-            @sight.photos.concat(Photo.find_photos(@sight.latitude, @sight.longitude, @sight.radius))
+            possible = Photo.find_photos(@sight.latitude, @sight.longitude, @sight.radius)
+            debugger
+            #@sight.photos.concat()
         else
             flash[:error] = "There was a problem saving your Sight"
         end
