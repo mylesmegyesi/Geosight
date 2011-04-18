@@ -7,7 +7,7 @@ class RatingsController < ApplicationController
             redirect_to not_found_path
             return
         end
-        params[:rating][:user_id] = current_user.id
+        
         @rating = Rating.new(params[:rating])
         if @rating.save
             flash[:notice] = "Rating successfully created"
@@ -41,8 +41,7 @@ class RatingsController < ApplicationController
             redirect_to not_found_path
             return
         end
-        @sight = @rating.sight
-        @photo = @rating.photo
+        
         if @rating.destroy
             flash[:notice] = "Rating successfully deleted"
         else

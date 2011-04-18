@@ -39,13 +39,6 @@ class SightsController < ApplicationController
     end
 
     def create
-        if not params[:sight]
-            redirect_to new_sight_path
-            return
-        end
-        
-        params[:sight][:user_id] = current_user.id
-        
         @sight = Sight.new(params[:sight])
         if not @sight.save
             flash[:error] = "There was a problem saving your Sight"
@@ -53,14 +46,7 @@ class SightsController < ApplicationController
         respond_with(@sight)
     end
 
-    def update
-        if not params[:sight]
-            redirect_to edit_sight_path
-            return
-        end
-        
-        params[:sight][:user_id] = current_user.id
-        
+    def update        
         @sight = Sight.find_by_id(params[:id])
         if @sight.nil?
             flash[:error] = "Sight not found"

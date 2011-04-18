@@ -6,6 +6,7 @@
 
 <% content_for :javascript do %>
     <%= javascript_include_tag("https://maps-api-ssl.google.com/maps/api/js?sensor=false") %>
+	<%= javascript_include_tag("maps") %>
 <% end %>
 
 <% content_for :body do %>
@@ -16,30 +17,7 @@
         var geocoder = new google.maps.Geocoder();
         var champaign = new google.maps.LatLng(40.114044, -88.22485);
         var map;
-
-        // adds sight markers to the map
-        function add_marker(map, lat, lng, rad, title, contentString) { 
-            var latlng = new google.maps.LatLng(lat, lng);
-            
-            var marker = new google.maps.Marker({
-                position: latlng,
-                title: title,
-                map: map
-            });
-		  
-            marker.infowindow = new google.maps.InfoWindow({
-                content: contentString,
-                maxWidth: 200
-            });
     
-            // makes clicking on a marker popup the infowindow associated with it
-            google.maps.event.addListener(marker, 'click', function() {
-                if(lastOpened != null) lastOpened.infowindow.close();
-                marker.infowindow.open(map,marker);
-                lastOpened = marker;
-            });  
-        }
-        
         $(document).ready(function() {
             
             // set the center to Champaign, IL
@@ -48,36 +26,27 @@
                 center: champaign, 
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
-            
-            // Add markers for sights
-            <% if @sights.length != 0 %>            
-            var contentString;
-            <% @sights.each do |sight| %>
-            contentString = null;
-            <% if sight.photos.length != 0 %>
-            contentString = 
-                '<b><%= sight.name %></b>' +
-                '<div id="infoWindowDiv">' +
-                  '<%= link_to(image_tag(sight.photos[0].file.url(:thumb)), sight_path(sight)) %>' +
-                '</div>';
-			<% else %>
-			contentString = 
-                '<b><%= sight.name %></b>' +
-                '<div id="infoWindowDiv">' +
-					'<%= link_to("No Photos Yet", sight_path(sight)) %>' +
-                '</div>';
-            <% end %>
-            add_marker(map, <%= sight.latitude %>, <%= sight.longitude %>, <%= sight.radius %>,
-                "<%= sight.name %>", contentString);
-            var circle = new google.maps.Circle({
-                radius: <%= sight.radius %>,
-                center: new google.maps.LatLng(<%= sight.latitude %>, <%= sight.longitude %>),
-                map: map,
-                strokeWeight: 1
-            });
-            <% end %>
-            <% end %>
-            
+            		
+			<% @sights.each do |sight| %>
+			$.getJSON("/sights/"+<%= sight.id %>, function(json) {
+				var contentString = "<b>"+json.name+"</b>" +
+					"<div id= 'infoWindowDiv'>" +
+						"<a href=/sights/"+json.id+">";
+							if (json.small != null) {
+								contentString += "<img src="+json.small+">";
+							} else {
+								contentString += "No Photos Yet";
+							} contentString +=
+						"</a>" +
+					"</div>"; 
+
+   				add_sight_marker(map, json.latitude, json.longitude, json.radius,
+                  json.name, contentString, lastOpened);
+            	
+				
+			});
+			<% end %>
+
             // Set up the search box
             $("#jump-submit").click(function() {
                 var query = $("#jump-to").val();

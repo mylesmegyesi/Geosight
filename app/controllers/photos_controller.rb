@@ -3,8 +3,8 @@ class PhotosController < ApplicationController
     respond_to :html, :json
     
     def index
-        @user = current_user
-        respond_with(@user)
+        @photos = Photo.where(:user_id => current_user.id)
+        respond_with(@photos)
     end
 
     def show
@@ -26,10 +26,7 @@ class PhotosController < ApplicationController
         @photo = Photo.new
     end
     
-    def create 
-        if not params[:photo].nil?
-            params[:photo][:user_id] = current_user.id
-        end
+    def create
         @photo = Photo.new(params[:photo])
         if not @photo.save
             flash[:error] = "There was a problem saving your Photo"
