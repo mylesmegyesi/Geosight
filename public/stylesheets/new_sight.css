@@ -1,13 +1,9 @@
-#content-block {
+#sight-form {
     position: relative;
     display: inline-block;
     float: left;
     height: 100%;
     width: 25%;
-}
-
-#sight-form {
-
 }
 
 #map {

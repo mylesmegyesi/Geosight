@@ -75,7 +75,7 @@
     </script>
 
     <div id="align-container">
-        <div id="content">
+        <div id="content" class="content-block">
             <div id="photo-container">
                 <div id="photo">
                     <%= image_tag(@photo.file.url(:medium)) %>
@@ -138,7 +138,7 @@
             
         <div id="sidebar">
             <div id="map-canvas"></div>            
-                <div id="user-photo-list">
+                <div id="user-photo-list" class="content-block">
                 <h1>Other Photos by <%= @photo.user.user_name %></h1>
                     <% @photo.user.photos.each do |photo| %>
                         <div class="user-photo-row">

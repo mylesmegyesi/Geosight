@@ -2,7 +2,7 @@
     display: table-row;
 }
 
-#content-block {
+#content {
     display: table-cell;
     float: left;
     height: 100%;
@@ -38,17 +38,6 @@
     display: table;
     width: 500px;
     height: auto;
-    padding: 20px 20px 20px 20px;
-    
-    border: #DDD 1px solid;
-    border-top-left-radius: 10px 10px;
-    border-top-right-radius: 10px 10px;
-    border-bottom-left-radius: 10px 10px;
-    border-bottom-right-radius: 10px 10px;
-
-    box-shadow: 3px 3px 3px #888;
-    
-    background-color: #fff;
 }
 
 .user-photo-row {
