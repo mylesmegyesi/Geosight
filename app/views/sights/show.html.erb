@@ -34,7 +34,6 @@
           });
           marker.infowindow = new google.maps.InfoWindow({
             content: contentString,
-            maxWidth: 200 
           });
 
           // pops up an infowindow when you click on a marker
@@ -64,12 +63,23 @@
                 strokeWeight: 1
             });
             var contentString;
-            <% @sight.photos.each do |photo| %>
-              contentString = '<div id="infoWindowDiv">'+
-                '<%= link_to image_tag(photo.file.url(:thumb)), photo_path(photo) %>'+
-                '</div>';
-              add_marker(map, <%= photo.latitude %>, <%= photo.longitude %>, cent, contentString);
-            <% end%>
+
+			<% @sight.photos.each do |photo| %>
+				$.getJSON("/photos/"+<%= photo.id %>, function(json) {
+
+				var contentString = "<b>Photo "+json.id+"</b>" +
+					"<div id= 'infoWindowDiv'>" +
+						"<a href=/photos/"+json.id+">";
+							if (json.thumbnail != null) {
+								contentString += "<img src="+json.thumbnail+">";
+							} else {
+								contentString += "Photo Unavailable";
+							} contentString +=
+						"</a>" +
+					"</div>"; 
+				add_marker(map, json.latitude, json.longitude, cent, contentString);
+				});
+			<% end %>
         });
     </script>   
 	
