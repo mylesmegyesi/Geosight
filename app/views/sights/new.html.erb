@@ -77,40 +77,42 @@
         });
     </script>
     
-    <div id="sight-form">
-        <h1>Create a New Sight</h1>
-        <%= form_for(@sight) do |f| %>
-            <% if @sight.errors.any? %>
-            <div id="error_explanation">
-                <ul>
-                    <% @sight.errors.each do |attr, msg| %>
-                    <li><%= msg %></li>
-                    <% end %>
-                </ul>
-            </div>
-            <% end %>
+    <div id="content-block">
+        <div id="sight-form">
+            <h1>Create a New Sight</h1>
+            <%= form_for(@sight) do |f| %>
+                <% if @sight.errors.any? %>
+                <div id="error_explanation">
+                    <ul>
+                        <% @sight.errors.each do |attr, msg| %>
+                        <li><%= msg %></li>
+                        <% end %>
+                    </ul>
+                </div>
+                <% end %>
 
-            <%= f.hidden_field(:user_id, {:value => current_user.id}) %>
-            <div class="field">
-                <%= f.label(:name) %>
-                <%= f.text_field(:name, :size => 20) %>
-            </div>
-            <div class="field">
-                <%= f.label(:latitude) %>
-                <%= f.text_field(:latitude, :size => 20) %>
-            </div>
-            <div class="field">
-                <%= f.label(:longitude) %>
-                <%= f.text_field(:longitude, :size => 20) %>
-            </div>
-            <div class="field">
-                <%= f.label(:radius) %>
-                <%= f.range_field(:radius, :value => 100, :min => 1, :max => 200) %>
-            </div>
-            <div class="actions">
-                <%= f.submit(:value => "Create Sight") %>
-            </div>
-        <% end %>
+                <%= f.hidden_field(:user_id, {:value => current_user.id}) %>
+                <div class="field">
+                    <%= f.label(:name) %>
+                    <%= f.text_field(:name, :size => 20) %>
+                </div>
+                <div class="field">
+                    <%= f.label(:latitude) %>
+                    <%= f.text_field(:latitude, :size => 20) %>
+                </div>
+                <div class="field">
+                    <%= f.label(:longitude) %>
+                    <%= f.text_field(:longitude, :size => 20) %>
+                </div>
+                <div class="field">
+                    <%= f.label(:radius) %>
+                    <%= f.range_field(:radius, :value => 100, :min => 1, :max => 200) %>
+                </div>
+                <div class="actions">
+                    <%= f.submit(:value => "Create Sight") %>
+                </div>
+            <% end %>
+        </div>
     </div>
     <div id="map">
         <div id="jump-to-box">
