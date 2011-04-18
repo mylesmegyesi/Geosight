@@ -10,7 +10,7 @@ Geosight::Application.routes.draw do
     
     resources :comments, :only => [:create, :update, :destroy]
     
-    resources :tags, :only => [:show, :create, :destroy]
+    resources :tags, :only => [:show, :create, :destroy, :index]
     
     resources :photos, :except => [:edit, :update]
     

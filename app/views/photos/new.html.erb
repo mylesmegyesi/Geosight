@@ -1,10 +1,16 @@
+<% content_for :css do %>
+    <%= stylesheet_link_tag "new_photo" %>
+<% end %>
+
 <% content_for :body do %>
     
-    <h1>Upload a Photo</h1>
-    <h3>The photo must have GPS coordinates embedded in its EXIF data.</h3>
-    
-    <%= render 'new' %>
+    <div id="content">
+        <h1>Upload a Photo</h1>
+        <h3>The photo must have GPS coordinates embedded in its EXIF data.</h3>
+        
+        <%= render 'new' %>
 
-    <%= link_to 'Return to Home', home_path %>
+        <%= link_to 'Return to Home', home_path %>
+    </div>
     
 <% end %>

@@ -1,0 +1,27 @@
+<% content_for :css do %>
+    <%= stylesheet_link_tag "tags" %>
+<% end %>
+
+<% content_for :body do %>
+    <% @tags.each do |tag| %>
+        <div class="tag-row">
+            <h1><%= link_to(tag.tag, tag_path(tag)) %></h1>
+            Sights:
+            <% if tag.sights.length == 0 %>
+                None
+                <% else %>
+                    <% tag.sights.each do |sight| %>
+                    <%= link_to (sight.name, sight_path(sight)) %> 
+                <% end %>
+            <% end %>
+            <div style="clear:both"></div>
+            <% tag.photos.each do |photo| %>
+                <div class="user-photo">
+                    <div class="user-photo-image">
+                        <%= link_to(image_tag(photo.file.url(:small)), photo_path(photo)) %>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    <% end %>
+<% end %>

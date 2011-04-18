@@ -81,11 +81,22 @@
                     <li>
                         <%= link_to 'Upload a Photo', new_photo_path %>
                     </li>
+					<li>
+						<% form_tag sights_path, :method => 'get' ,:style => "display:inline" do %>
+						  	<%= text_field_tag :search, params[:search] %>
+							<%= submit_tag "Search", :name => nil %>
+							<%= check_box_tag(:tag_search, 1) %>
+							<%= label_tag(:tag_search, "by Tags") %>
+						<% end %>
+					</li>
                 </ul>
             </div>
         </div>
         <div id="main-content">
-            <%= yield :body %>
+            <div id="table-container">
+              <%= yield :body %>
+              <div style="clear:both;"></div>
+            </div>
         </div>
         <div id="footer">
             <div id="footer-bar">

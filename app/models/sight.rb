@@ -13,7 +13,15 @@ class Sight < ActiveRecord::Base
     def rating
         Rating.average(:rating, :condtions => ["sight_id = ?", self.id])
     end
-    
+
+	def self.search(search)
+    	if search
+			find(:all, :conditions => ['name LIKE ?', "%#{search}%"])
+		else
+			find(:all)
+	  	end
+	end
+
     def self.find_sights(latitude, longitude)
         to = GeoKit::LatLng.new(latitude, longitude)
         Sight.all.select { |sight|

@@ -1,6 +1,11 @@
 class TagsController < ApplicationController
     before_filter :require_user, :except => [:show]
     respond_to :html, :json    
+	
+	def index
+        @tags = Tag.search(params[:search])
+        respond_with(@tags)        
+    end
 
     def show
         @tag = Tag.find_by_id(params[:id])

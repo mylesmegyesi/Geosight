@@ -1,42 +1,42 @@
 <% content_for :css do %>
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
-    <%= stylesheet_link_tag("map") %>
-    <%= stylesheet_link_tag "photo" %>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
+<%= stylesheet_link_tag("map") %>
+<%= stylesheet_link_tag "photo" %>
 <% end %>
 
 <% content_for :javascript do %>
-    <%= javascript_include_tag("https://maps-api-ssl.google.com/maps/api/js?sensor=false") %>
+<%= javascript_include_tag("https://maps-api-ssl.google.com/maps/api/js?sensor=false") %>
 <% end %>
 
 <% content_for :body do %>
-    <script type="text/javascript">
-        var lastOpened = null; // the last opened infowindow
-        // adds photo markers to the map
-        function add_marker(map, lat, lng, contentString) {
-            var latlng = new google.maps.LatLng(lat, lng);
+<script type="text/javascript">
+  var lastOpened = null; // the last opened infowindow
+  // adds photo markers to the map
+  function add_marker(map, lat, lng, contentString) {
+    var latlng = new google.maps.LatLng(lat, lng);
 
-            var marker = new google.maps.Marker({
-                position: latlng,
-                map: map
-            });
-            
-            marker.infowindow = new google.maps.InfoWindow({
-                content: contentString, maxWidth: 200
-            });
+var marker = new google.maps.Marker({
+  position: latlng,
+  map: map
+});
 
-            // pops up an infowindow when you click on a marker
-            google.maps.event.addListener(marker, 'click', function() {
-                if(lastOpened != null) {
-                    lastOpened.infowindow.close();
-                    marker.infowindow.open(map,marker);
-                    lastOpened = marker;
-                }
-            });
-            // recenters map when you close an infowindow
-            google.maps.event.addListener(marker.infowindow,'closeclick', function() {
-                map.setCenter(new google.maps.LatLng(lat, lng));
-                lastOpened = null;
-            });
+marker.infowindow = new google.maps.InfoWindow({
+  content: contentString, maxWidth: 200
+});
+
+// pops up an infowindow when you click on a marker
+google.maps.event.addListener(marker, 'click', function() {
+  if(lastOpened != null) {
+    lastOpened.infowindow.close();
+    marker.infowindow.open(map,marker);
+    lastOpened = marker;
+  }
+});
+// recenters map when you close an infowindow
+google.maps.event.addListener(marker.infowindow,'closeclick', function() {
+  map.setCenter(new google.maps.LatLng(lat, lng));
+  lastOpened = null;
+});
         }
 
         $(document).ready(function() {
@@ -47,7 +47,7 @@
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
             <% if @photo.sights.length == 0 %>
-            contentString =
+            var contentString =
             '<div id="infoWindowDiv">'+
             '<%= link_to image_tag(@photo.file.url(:thumb)), photo_path(@photo) %>'+
             '</div>';
@@ -58,7 +58,7 @@
             var circle = new google.maps.Circle({
                 radius: <%= sight.radius %>, center: center, map: map, strokeWeight: 1
             });
-                <% @photos = @photos | sight.photos %>
+            <% photos = photos | sight.photos %>
             <% end %>
             var contentString = "";
             <% photos.each_with_index do |photo, i| %>
@@ -84,7 +84,7 @@
                     <div id="photo-sights">
                         Sights:
                         <% @photo.sights.each do |sight| %>
-                        <%= link_to(sight.sight, sight_path(sight)) %>
+                        <%= link_to(sight.name, sight_path(sight)) %>
                         <% end %>
                     </div>
                     <div id="photo-tags">
@@ -115,17 +115,37 @@
             </div>
             
         <div id="sidebar">
-            <div id="map-canvas"></div>         
-            <div style="other-photos">
-                <h3>Other Photos by <%= @photo.user.user_name %></h3>
+            <div id="map-canvas"></div>            
                 <div id="user-photo-list">
+                <h1>Other Photos by <%= @photo.user.user_name %></h1>
                     <% @photo.user.photos.each do |photo| %>
-                    <div class="user-photo">
-                        <%= link_to(image_tag(photo.file.url(:thumb)), photo_path(photo)) %>
-                    </div>
+                        <div class="user-photo-row">
+                            <div class="user-photo">
+                                <%= link_to(image_tag(photo.file.url(:small)), photo_path(photo)) %>
+                            </div>                      
+                            <div class="user-photo-info">
+                            Tags:
+                            <% if photo.tags.length == 0 %>
+                                None
+                                <% else %>
+                                    <% photo.tags.each do |tag| %>
+                                    <%= link_to (tag.tag, tag_path(tag)) %>
+                                <% end %>
+                            <% end %>
+                            <br />
+                            Sights:
+                            <% if photo.sights.length == 0 %>
+                                None
+                                <% else %>
+                                    <% photo.sights.each do |sight| %>
+                                    <%= link_to (sight.name, sight_path(sight)) %> 
+                                <% end %>
+                            <% end %>
+                            </div>
+                        </div>
                     <% end %>
-                </div>
-            </div>
+                <div style="clear:both;"></div>
+                </div>          
         </div>
     </div>
 <% end %>

@@ -6,16 +6,27 @@
     display: table-cell;
     float: left;
     height: 100%;
+    padding: 20px;
+    
+	border-top-left-radius: 10px 10px;
+    border-top-right-radius: 10px 10px;
+    border-bottom-left-radius: 10px 10px;
+    border-bottom-right-radius: 10px 10px;
+    background-color: #fff;
+    
+    border: #DDD 1px solid;
+    box-shadow: 3px 3px 3px #888;
 }
 
 #sidebar {
     display: table-cell;
     float: right;
     height: 100%;
+    width: 500px;
 }
 
 #photo img {
-    max-width: 500px;
+    width: 500px;
 }
 
 .comment {
@@ -24,29 +35,47 @@
 }
 
 #map-canvas {
-    width: 450px;
-    height: 240px;
+    width: 100%;
+    height: 300px;
     margin-bottom: 50px;
     display: block;
+
+    border: #DDD 1px solid;
+    box-shadow: 3px 3px 3px #888;
 }
 
 #user-photo-list {
-    overflow: auto;
-    display: block;
-    border-style: solid;
-    border-width: 1px;
-    border-color: black;
-    width: 450px;
-    height: 400px;
+    display: table;
+    width: 500px;
+    height: auto;
+    padding: 20px 20px 20px 20px;
+    
+    border: #DDD 1px solid;
+    border-top-left-radius: 10px 10px;
+    border-top-right-radius: 10px 10px;
+    border-bottom-left-radius: 10px 10px;
+    border-bottom-right-radius: 10px 10px;
+
+    box-shadow: 3px 3px 3px #888;
+    
+    background-color: #fff;
+}
+
+.user-photo-row {
+    display: table-row;
 }
 
 .user-photo {
-    margin: 10px;
-    padding: 5px;
-    float: left;
+    display: table-cell;
+    padding: 10px;
 }
 
 .user-photo img {
     max-width: 200px;
     max-height: 200px;
+    vertical-align:middle;
+}
+
+.user-photo-info {
+    display: table-cell;
 }

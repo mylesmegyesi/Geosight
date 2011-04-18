@@ -3,8 +3,14 @@ class SightsController < ApplicationController
     respond_to :html, :json
 
     def index
-        @sights = Sight.all
-        respond_with(@sights)        
+
+		if params[:tag_search] && params[:tag_search] == "1"
+			redirect_to :controller => :tags, :action => :index, :utf8 => params[:utf8], :search => params[:search] 
+		else        	
+			@sights = Sight.search(params[:search])
+			respond_with(@sights)
+		end
+		     
     end
 
     def show
