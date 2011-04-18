@@ -10,16 +10,18 @@
 <% content_for :body do %>
 
     <script type="text/javascript">
-    
+        
+        var geocoder = new google.maps.Geocoder();
+        var champaign = new google.maps.LatLng(40.114044, -88.22485);
         var marker;
         var radius;
     
         $(document).ready(function() {
             
-            var champaign = new google.maps.LatLng(40.114044, -88.22485);
+            // Set up the map
             
             map = new google.maps.Map(document.getElementById("map-canvas"), {
-                zoom: 18,
+                zoom: 16,
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 center: champaign
             });
@@ -44,11 +46,33 @@
                 radius.setCenter(marker.getPosition());
             });
             
+            // Change the map based on the form
             $("#sight_radius").change(function() {
                 radius.setRadius(parseInt(document.getElementById("sight_radius").value));
             });
             $("#sight_latitude").val(marker.getPosition().lat());
             $("#sight_longitude").val(marker.getPosition().lng());
+            
+            // Set up the search box
+            $("#search-submit").click(function() {
+                var query = $("#search").val();
+                if (query == "") {
+                    return;
+                }
+                
+                $("#spinner").show();
+                geocoder.geocode({"address": query}, function(results, status) {
+                    $("#spinner").hide();
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        var location = results[0].geometry.location;
+                        map.setCenter(location);
+                        marker.setPosition(location);
+                        radius.setCenter(location);
+                    } else {
+                        alert("Could not find the given location");
+                    }
+                });
+            });
         });
     </script>
     
@@ -86,7 +110,15 @@
             </div>
         <% end %>
     </div>
-    <div id="map-canvas">
+    <div id="map">
+        <div id="search-box">
+            <label>Jump to</label>
+            <input id="search" size="40" type="text">
+            <input id="search-submit" type="submit" value="Go">
+            <img id="spinner" src="/images/spinner.gif" />
+        </div>
+        <div id="map-canvas">
+        </div>
     </div>
     
     <% end %>

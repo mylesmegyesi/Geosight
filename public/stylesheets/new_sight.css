@@ -6,10 +6,25 @@
     width: 40%;
 }
 
-#map-canvas {
+#map {
     position: relative;
     display: inline-block;
     float: right;
-    height: 100%;
     width: 60%;
+}
+
+#search-box {
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+#spinner {
+    border: none;
+    display: none;
+    margin-left: 5px;
+}
+
+#map-canvas {
+    height: 500px;
+    width: 100%;
 }
