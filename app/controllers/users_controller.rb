@@ -1,11 +1,6 @@
 class UsersController < ApplicationController
     before_filter :require_user, :except => [:new, :create]
     respond_to :html, :json
-    
-    def index
-        @users = User.all
-        respond_with(@users)
-    end 
 
     def show
         @user = current_user
@@ -23,15 +18,13 @@ class UsersController < ApplicationController
 
     def create
         @user = User.new(params[:user])
-        @user.save
+        @user.save    
         respond_with(@user)
     end
 
     def update
         @user = current_user
-        if @user.update_attributes(params[:user])
-            flash[:notice] = "Settings successfully updated"
-        else
+        if not @user.update_attributes(params[:user])
             flash[:error] = "There was a problem updating your Settings"
         end
         respond_with(@user)
@@ -39,9 +32,7 @@ class UsersController < ApplicationController
 
     def destroy
         @user = current_user
-        if @user.destroy
-            flash[:notice] = "Account successfully deleted"
-        else
+        if not @user.destroy
             flash[:error] = "There was a problem deleting your account"
         end
         respond_with(@user) do |format|

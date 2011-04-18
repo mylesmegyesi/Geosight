@@ -25,19 +25,5 @@ class ApplicationController < ActionController::Base
     def store_location
         session[:return_to] = request.fullpath
     end
-    
-    def respond_with_parent(obj, photo, sight)
-        if not sight.nil?
-            respond_with(obj) do |format|
-                format.html { respond_with(sight) }
-            end
-        elsif not photo.nil?
-            respond_with(obj) do |format|
-                format.html { respond_with(photo) }
-            end
-        else
-            flash[:error] = "Parent not specified"
-            redirect_to home_path
-        end
-    end
+
 end

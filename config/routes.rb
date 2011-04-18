@@ -1,6 +1,6 @@
 Geosight::Application.routes.draw do
     
-    resources :users, :except => [:index], :path_names => {:edit => "settings", :new => "register"}
+    resource :user, :path_names => {:edit => "settings", :new => "register"}
     
     resources :user_sessions, :only => [:new, :create, :destroy]
     match "login" => "user_sessions#new", :via => "get"

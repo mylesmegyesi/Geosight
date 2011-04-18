@@ -7,10 +7,13 @@ class Photo < ActiveRecord::Base
     validates_presence_of :user_id
     validates_associated :user
     validate :gps_data
+    after_save :update_sights
+    before_destroy :remove_sights
     has_attached_file :file, {
         :styles => {
             :medium => "500x500>",
             :small => "300x300>",
+            :smaller => "250x250>",
             :thumb => "100x100>"
         }
     }.merge(PAPERCLIP_STORAGE_OPTIONS)
@@ -39,6 +42,14 @@ class Photo < ActiveRecord::Base
     end
     
     private
+    
+    def remove_sights
+        self.sights.clear
+    end
+    
+    def update_sights
+        self.sights = Sight.find_sights(latitude, longitude)
+    end
     
     def gps_data
         if (latitude.nil? or longitude.nil?)

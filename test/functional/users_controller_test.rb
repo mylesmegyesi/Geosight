@@ -22,23 +22,23 @@ class UsersControllerTest < ActionController::TestCase
     end
     
     test "should show user" do
-        get :show, :id => @user.id
+        get :show
         assert_response :success
     end
     
     test "should get edit" do
-        get :edit, :id => @user.id
+        get :edit
         assert_response :success
     end
     
     test "should update user" do
-        put :update, :id => @user.id, :user => {}
+        put :update, :user => {}
         assert_response :found
     end
     
     test "should destroy user" do
         assert_difference('User.count', -1) do
-            delete :destroy, :id => @user.id
+            delete :destroy
         end
     end
 end

@@ -30,7 +30,7 @@ class SightsController < ApplicationController
     end
 
     def edit
-        @sight = Sight.find_by_ids(params[:id])
+        @sight = Sight.find_by_id(params[:id])
         if @sight.nil?
             flash[:error] = "Sight not found"
             redirect_to not_found_path
@@ -39,18 +39,29 @@ class SightsController < ApplicationController
     end
 
     def create
+        if not params[:sight]
+            redirect_to new_sight_path
+            return
+        end
+        
+        params[:sight][:user_id] = current_user.id
+        
         @sight = Sight.new(params[:sight])
-        if @sight.save
-            # Add photos to Sight
-            @sight.photos.concat(Photo.find_photos(@sight.latitude, @sight.longitude, @sight.radius))
-        else
+        if not @sight.save
             flash[:error] = "There was a problem saving your Sight"
         end
         respond_with(@sight)
     end
 
     def update
-        @sight = Sight.find_by_ids(params[:id])
+        if not params[:sight]
+            redirect_to edit_sight_path
+            return
+        end
+        
+        params[:sight][:user_id] = current_user.id
+        
+        @sight = Sight.find_by_id(params[:id])
         if @sight.nil?
             flash[:error] = "Sight not found"
             redirect_to not_found_path
@@ -63,16 +74,15 @@ class SightsController < ApplicationController
     end
 
     def destroy
-        @sight = Sight.find(params[:id])
+        @sight = Sight.find_by_id(params[:id])
         if @sight.nil?
             flash[:error] = "Sight not found"
             redirect_to not_found_path
             return
         end
-        @sight.photos.each do |photo|
-            photo.update_attribute(:sight_id, nil)
+        if not @sight.destroy
+            flash[:error] = "There was a problem deleting your Sight"
         end
-        @sight.destroy
         respond_with(@sight)
     end
 end

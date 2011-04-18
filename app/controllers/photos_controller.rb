@@ -30,11 +30,7 @@ class PhotosController < ApplicationController
             params[:photo][:user_id] = current_user.id
         end
         @photo = Photo.new(params[:photo])
-        if @photo.save
-            # Add sights to photo
-            @photo.sights.concat(Sight.find_sights(@photo.latitude, @photo.longitude))
-        else
-            puts @photo.errors.to_s
+        if not @photo.save
             flash[:error] = "There was a problem saving your Photo"
         end
         respond_with(@photo)
@@ -47,8 +43,6 @@ class PhotosController < ApplicationController
             redirect_to not_found_path
             return
         end
-        
-        @photo.sights.clear
         
         if not @photo.destroy
             flash[:error] = "There was a problem deleting your Photo"

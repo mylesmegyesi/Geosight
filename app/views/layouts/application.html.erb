@@ -52,7 +52,7 @@
                 <ul>
                     <% if current_user %>
                     <li class="first">
-                        <%= link_to 'My Account', user_path(current_user) %>
+                        <%= link_to 'My Account', user_path %>
                     </li>
                     <li>
                         <%= link_to 'Logout', logout_path, :confirm => 'Are you sure?', :method => :delete %>

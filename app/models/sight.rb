@@ -9,6 +9,8 @@ class Sight < ActiveRecord::Base
     validates_numericality_of :latitude, :if => :latitude?
     validates_numericality_of :longitude, :if => :longitude?
     validates_numericality_of :radius, :less_than_or_equal_to => 200, :if => :radius?
+    after_save :update_photos
+    before_destroy :remove_photos
     
     def rating
         Rating.average(:rating, :condtions => ["sight_id = ?", self.id])
@@ -55,6 +57,15 @@ class Sight < ActiveRecord::Base
     end
     
     private
+    
+    # Add photos to this sight
+    def update_photos
+        self.photos = Photo.find_photos(latitude, longitude, radius)
+    end
+    
+    def remove_photos
+        self.photos.clear
+    end
     
     def name?
         if name.nil?
