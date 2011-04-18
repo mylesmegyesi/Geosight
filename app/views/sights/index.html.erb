@@ -6,6 +6,7 @@
 
 <% content_for :javascript do %>
     <%= javascript_include_tag("https://maps-api-ssl.google.com/maps/api/js?sensor=false") %>
+	<%= javascript_include_tag("maps") %>
 <% end %>
 
 <% content_for :body do %>
@@ -16,29 +17,7 @@
         var geocoder = new google.maps.Geocoder();
         var champaign = new google.maps.LatLng(40.114044, -88.22485);
         var map;
-
-        // adds sight markers to the map
-        function add_marker(map, lat, lng, rad, title, contentString) { 
-            var latlng = new google.maps.LatLng(lat, lng);
-            
-            var marker = new google.maps.Marker({
-                position: latlng,
-                title: title,
-                map: map
-            });
-		  
-            marker.infowindow = new google.maps.InfoWindow({
-                content: contentString,
-            });
     
-            // makes clicking on a marker popup the infowindow associated with it
-            google.maps.event.addListener(marker, 'click', function() {
-                if(lastOpened != null) lastOpened.infowindow.close();
-                marker.infowindow.open(map,marker);
-                lastOpened = marker;
-            });  
-        }
-        
         $(document).ready(function() {
             
             // set the center to Champaign, IL
@@ -61,7 +40,7 @@
 						"</a>" +
 					"</div>"; 
 
-   				add_marker(map, json.latitude, json.longitude, json.radius,
+   				add_sight_marker(map, json.latitude, json.longitude, json.radius,
                   json.name, contentString);
             	
 				var circle = new google.maps.Circle({
