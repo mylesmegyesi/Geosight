@@ -47,7 +47,7 @@
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
             <% if @photo.sights.length == 0 %>
-            contentString =
+            var contentString =
             '<div id="infoWindowDiv">'+
             '<%= link_to image_tag(@photo.file.url(:thumb)), photo_path(@photo) %>'+
             '</div>';
@@ -58,7 +58,7 @@
             var circle = new google.maps.Circle({
                 radius: <%= sight.radius %>, center: center, map: map, strokeWeight: 1
             });
-                <% @photos = @photos | sight.photos %>
+            <% photos = photos | sight.photos %>
             <% end %>
             var contentString = "";
             <% photos.each_with_index do |photo, i| %>
@@ -117,13 +117,14 @@
         <div id="sidebar">
             <div id="map-canvas"></div>         
             <div style="other-photos">
-                <h3>Other Photos by <%= @photo.user.user_name %></h3>
                 <div id="user-photo-list">
+                    <h3>Other Photos by <%= @photo.user.user_name %></h3>
                     <% @photo.user.photos.each do |photo| %>
                     <div class="user-photo">
                         <%= link_to(image_tag(photo.file.url(:thumb)), photo_path(photo)) %>
                     </div>
                     <% end %>
+                    <div style="clear:both;"></div>
                 </div>
             </div>
         </div>

@@ -93,7 +93,10 @@
             </div>
         </div>
         <div id="main-content">
-            <%= yield :body %>
+            <div id="table-container">
+              <%= yield :body %>
+              <div style="clear:both;"></div>
+            </div>
         </div>
         <div id="footer">
             <div id="footer-bar">

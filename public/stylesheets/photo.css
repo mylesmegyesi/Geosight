@@ -6,6 +6,16 @@
     display: table-cell;
     float: left;
     height: 100%;
+    padding: 20px;
+    
+	  border-top-left-radius: 10px 10px;
+    border-top-right-radius: 10px 10px;
+    border-bottom-left-radius: 10px 10px;
+    border-bottom-right-radius: 10px 10px;
+    background-color: #fff;
+    
+    border: #DDD 1px solid;
+    box-shadow: 3px 3px 3px #888;
 }
 
 #sidebar {
@@ -24,26 +34,36 @@
 }
 
 #map-canvas {
-    width: 450px;
+    width: 400px;
     height: 240px;
     margin-bottom: 50px;
     display: block;
+
+    border: #DDD 1px solid;
+    box-shadow: 3px 3px 3px #888;
 }
 
 #user-photo-list {
-    overflow: auto;
     display: block;
-    border-style: solid;
-    border-width: 1px;
-    border-color: black;
-    width: 450px;
-    height: 400px;
+    width: 360px;
+    height: auto;
+    padding: 10px 20px 20px 20px;
+    
+    border: #DDD 1px solid;
+    border-top-left-radius: 10px 10px;
+    border-top-right-radius: 10px 10px;
+    border-bottom-left-radius: 10px 10px;
+    border-bottom-right-radius: 10px 10px;
+
+    box-shadow: 3px 3px 3px #888;
+    
+    background-color: #fff;
 }
 
 .user-photo {
     margin: 10px;
-    padding: 5px;
     float: left;
+    clear: both;
 }
 
 .user-photo img {
