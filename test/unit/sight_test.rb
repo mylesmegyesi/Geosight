@@ -79,15 +79,5 @@ class SightTest < ActiveSupport::TestCase
             :radius => 101, :latitude => 10, :longitude => 10)
         assert !sight.save, "Sight saved with radius greater than 100"
     end
-    
-    # test possible sights
-    test "inside sight" do
-        ps = Sight.possible_sights(@sight.latitude, @sight.longitude)
-        assert ps.include?(@sight), "Does not include the sight"
-    end
-    
-    test "outside sight" do
-        ps = Sight.possible_sights(@sight.latitude, @sight.longitude + 1) # add a 101 meters
-        assert !ps.include?(@sight), "Includes the sight when it should not"
-    end
+
 end

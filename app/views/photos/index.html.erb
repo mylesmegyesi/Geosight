@@ -14,7 +14,7 @@
                     None
                     <% else %>
                         <% photo.tags.each do |tag| %>
-                        <%= link_to (tag.tag, tag_path(tag)) %>
+                        <%= link_to(tag.tag, tag_path(tag)) %>
                     <% end %>
                 <% end %>
                 <br />
@@ -23,7 +23,7 @@
                     None
                     <% else %>
                         <% photo.sights.each do |sight| %>
-                        <%= link_to (sight.name, sight_path(sight)) %> 
+                        <%= link_to(sight.name, sight_path(sight)) %> 
                     <% end %>
                 <% end %>
             </div>

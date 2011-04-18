@@ -82,7 +82,7 @@
                         <%= link_to 'Upload a Photo', new_photo_path %>
                     </li>
 					<li>
-						<% form_tag sights_path, :method => 'get' ,:style => "display:inline" do %>
+						<%= form_tag sights_path, :method => 'get' ,:style => "display:inline" do %>
 						  	<%= text_field_tag :search, params[:search] %>
 							<%= submit_tag "Search", :name => nil %>
 							<%= check_box_tag(:tag_search, 1) %>

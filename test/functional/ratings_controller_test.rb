@@ -3,16 +3,13 @@ require 'test_helper'
 class RatingsControllerTest < ActionController::TestCase
     setup do
         @rating = ratings(:one)
-        @sight = sights(:one)        
+        @sight = sights(:one)     
+        @photo = photos(:one)
         @user = users(:one)
         UserSession.create(@user)
-        @photo = Photo.create(:user_id => @user.id, :sight_id => @sight.id,
-            :file => File.open(File.join(Rails.root, "test", "fixtures", "IMAG0091.jpg")),
-            :latitude => 10, :longitude => 10)
     end
     
     teardown do
-        @photo.destroy
     end
     
     test "should create sight rating" do

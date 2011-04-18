@@ -32,7 +32,7 @@ class UsersControllerTest < ActionController::TestCase
     end
     
     test "should update user" do
-        put :update, :id => @user.id, :user => { }
+        put :update, :id => @user.id, :user => {}
         assert_response :found
     end
     

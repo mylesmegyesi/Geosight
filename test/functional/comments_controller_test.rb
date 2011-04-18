@@ -4,11 +4,9 @@ class CommentsControllerTest < ActionController::TestCase
     setup do
         @comment = comments(:one)
         @sight = sights(:one)        
+        @photo = photos(:one)
         @user = users(:one)
         UserSession.create(@user)
-        @photo = Photo.create(:user_id => @user.id, :sight_id => @sight.id,
-            :file => File.open(File.join(Rails.root, "test", "fixtures", "IMAG0091.jpg")),
-            :latitude => 10, :longitude => 10)
     end
     
     teardown do
@@ -17,20 +15,20 @@ class CommentsControllerTest < ActionController::TestCase
     
     test "should create sight comment" do
         assert_difference('Comment.count') do
-            post :create, :comment => {:sight_id => @sight.id, :comment => 4}
+            post :create, :comment => {:sight_id => @sight.id, :comment => "comment"}
         end
         assert_response :found
     end
     
     test "should create photo comment" do
         assert_difference('Comment.count') do
-            post :create, :comment => {:photo_id => @photo.id, :comment => 4}
+            post :create, :comment => {:photo_id => @photo.id, :comment => "comment"}
         end
         assert_response :found
     end
     
     test "should update comment" do
-        put :update, :id => @comment.id, :comment => {:comment => 3}
+        put :update, :id => @comment.id, :comment => {:comment => "comment"}
         assert_response :found
     end
     
