@@ -24,6 +24,11 @@
     padding: 5px;
 }
 
+#comment-box textarea {
+    resize: none;
+    width: 400px;
+}
+
 #map-canvas {
     width: 100%;
     height: 300px;
