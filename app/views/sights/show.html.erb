@@ -11,7 +11,6 @@
 <% content_for :body do %>
 
     <script type="text/javascript">
-        var lastOpened = null; // the last opened infowindow
 		
         $(document).ready(function() {
             var cent = new google.maps.LatLng(<%= @sight.latitude %>, <%= @sight.longitude %>);
@@ -29,20 +28,7 @@
             var contentString;
 
 			<% @sight.photos.each do |photo| %>
-				$.getJSON("/photos/"+<%= photo.id %>, function(json) {
-
-				var contentString = "<b>Photo "+json.id+"</b>" +
-					"<div id= 'infoWindowDiv'>" +
-						"<a href=/photos/"+json.id+">";
-							if (json.thumbnail != null) {
-								contentString += "<img src="+json.thumbnail+">";
-							} else {
-								contentString += "Photo Unavailable";
-							} contentString +=
-						"</a>" +
-					"</div>"; 
-				add_photo_marker(map, json.latitude, json.longitude, cent, contentString, lastOpened);
-				});
+				add_photo_marker(<%= photo.id %>, map, cent);
 			<% end %>
         });
     </script>   
