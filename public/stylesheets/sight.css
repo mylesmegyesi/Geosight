@@ -1,9 +1,65 @@
-#map-canvas {
-    height: 300px;
+#align-container {
+    display: table-row;
+}
+
+#content {
+    display: table-cell;
+    float: left;
+    height: 100%;
+}
+
+#sidebar {
+    display: table-cell;
+    float: right;
+    height: 100%;
+    width: 500px;
+}
+
+#photo img {
     width: 500px;
 }
 
 .comment {
-  margin: 10px;
-  padding: 5px;
+    margin: 10px;
+    padding: 5px;
+}
+
+#comment-box textarea {
+    resize: none;
+    width: 400px;
+}
+
+#map-canvas {
+    height: 300px;
+    width: 500px;
+    margin-bottom: 25px;
+    display: block;
+
+    border: #DDD 1px solid;
+    box-shadow: 3px 3px 3px #888;
+}
+
+#user-photo-list {
+    display: table;
+    width: 460px;
+    height: auto;
+}
+
+.user-photo-row {
+    display: table-row;
+}
+
+.user-photo {
+    display: table-cell;
+    padding: 10px;
+}
+
+.user-photo img {
+    max-width: 200px;
+    max-height: 200px;
+    vertical-align:middle;
+}
+
+.user-photo-info {
+    display: table-cell;
 }
