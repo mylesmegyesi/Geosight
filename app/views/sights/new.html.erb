@@ -51,6 +51,27 @@
             $("#sight_radius").change(function() {
                 radius.setRadius(parseInt(document.getElementById("sight_radius").value));
             });
+
+            $("#sight_latitude").change(function() {
+                var lat = parseFloat(document.getElementById("sight_latitude").value);
+                var lng = marker.getPosition().lng();
+                var location = new google.maps.LatLng(lat, lng);
+
+                map.setCenter(location);
+                marker.setPosition(location);
+                radius.setCenter(location);
+            });
+
+            $("#sight_longitude").change(function() {
+                var lat = marker.getPosition().lat();
+                var lng = parseFloat(document.getElementById("sight_longitude").value);
+                var location = new google.maps.LatLng(lat, lng);
+
+                map.setCenter(location);
+                marker.setPosition(location);
+                radius.setCenter(location);
+            });
+
             $("#sight_latitude").val(marker.getPosition().lat());
             $("#sight_longitude").val(marker.getPosition().lng());
             
