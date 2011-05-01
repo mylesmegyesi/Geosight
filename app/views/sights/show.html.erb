@@ -33,38 +33,71 @@
         });
     </script>   
 	
-	<div id="content">
-        <div id="map-canvas"></div>
-      
-		<div id="sight-info">
+    <div id="align-container">
+        <div id="content">
+            <div id="map-block">
+                <h1>Sight: <%= @sight.name %></h1>
+                <div id="map-canvas"></div>
+            </div>
             
-            <div id="sight-tags">
-                Tags:
-                <% @sight.tags.each do |tag| %>
-                    <%= link_to(tag.tag, tag_path(tag)) %>
-                <% end %>
-                <% if current_user %>
-                <%= render 'tags/form' %>
-                <% end %>
+            <div id="sight-info-comments-block" class="content-block">
+	            <div id="sight-info">
+                    
+                    <div id="sight-tags">
+                        Tags:
+                        <% @sight.tags.each do |tag| %>
+                            <%= link_to(tag.tag, tag_path(tag)) %>
+                        <% end %>
+                        <% if current_user %>
+                        <%= render 'tags/form' %>
+                        <% end %>
+                    </div>
+                </div>
+	            <div id="comment-container">
+                    <div id="comment-box">
+                        <% if current_user %>
+                        <%= render 'comments/form' %>
+                        <% end %>
+                    </div>
+                    <div id="comment-list">
+                        <% @sight.comments.each do |comment| %>
+                            <div class="comment">
+                                <%= comment.comment %>
+                                <br>
+                                    <%= link_to(comment.user.user_name, user_path(comment.user)) %> on <%= comment.date %> at <%= comment.time %>
+                                <br>
+                            </div>
+                        <% end %>
+                    </div>
+	            </div>
             </div>
         </div>
-		<div id="comment-container">
-            <div id="comment-box">
-                <% if current_user %>
-                <%= render 'comments/form' %>
-                <% end %>
-            </div>
-            <div id="comment-list">
-                <% @sight.comments.each do |comment| %>
-                    <div class="comment">
-                        <%= comment.comment %>
+        <div id="sidebar">       
+            <div id="user-photo-list" class="content-block">
+            <h1>Photos in <%= @sight.name %>:</h1>
+                <% @sight.photos.each do |photo| %>
+                    <div class="user-photo-row">
+                        <div class="user-photo">
+                            <%= link_to(image_tag(photo.file.url(:small)), photo_path(photo)) %>
+                        </div>                      
+                        <div class="user-photo-info">
+                        Uploaded by:
+                        <%= photo.user.user_name %>
                         <br>
-                            <%= link_to(comment.user.user_name, user_path(comment.user)) %> on <%= comment.date %> at <%= comment.time %>
-                        <br>
+                        Tags:
+                        <% if photo.tags.length == 0 %>
+                            None
+                            <% else %>
+                                <% photo.tags.each do |tag| %>
+                                <%= link_to(tag.tag, tag_path(tag)) %>
+                            <% end %>
+                        <% end %>
+                        </div>
                     </div>
                 <% end %>
-            </div>
-		</div>
-	</div>
+            <div style="clear:both;"></div>
+            </div>          
+        </div>
+    </div>
 
 <% end %>
