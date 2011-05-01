@@ -97,6 +97,37 @@ function add_sight_marker(sid, map, lastOpened) {
 }
 
 
+// adds photo markers to the map
+function add_marker(pid, map, contentString) {
+	$.getJSON("/photos/"+pid, function(json) {
+     var lastOpened = null;
+
+     var latlng = new google.maps.LatLng(json.latitude, json.longitude);
+    
+     var marker = new google.maps.Marker({
+       position: latlng,
+       map: map
+     });
+       
+     marker.infowindow = new google.maps.InfoWindow({
+       content: contentString,
+     });
+    
+     // pops up an infowindow when you click on a marker
+     google.maps.event.addListener(marker, 'click', function() {
+        if(lastOpened != null) lastOpened.infowindow.close();
+        marker.infowindow.open(map,marker);
+        lastOpened = marker;
+        
+     });
+    
+     // recenters map when you close an infowindow
+     google.maps.event.addListener(marker.infowindow,'closeclick', function() {
+       map.setCenter(new google.maps.LatLng(json.latitude, json.longitude));
+       lastOpened = null;
+     });
+  });
+}
 
 
 
