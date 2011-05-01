@@ -4,24 +4,26 @@
 
 <% content_for :body do %>
 <div id="content" class="content-block">
-    <h1>Welcome to Geosight!</h1>
-    <p>
-    Geosight combines the adventure of geocaching with the art of photography using upcoming photo geotagging technology. Traditional geocaching involves writing in a log book at each cache location. Geosight involves taking a photo at each 'sight' location, encouraging interesting and beautiful 'sights'. Geosight will harness EXIF GPS data included in photos taken by modern digitial cameras and mobile phones.
-    </p>
-    <h1>Get Started:</h1>
-    <p>
-    <% if not current_user %>
-    <h2 style="text-align:center"><%= link_to 'Register an Account', new_user_path %></h2>
-    <% end %>
-    <h2 style="text-align:center"><%= link_to 'Upload a Photo', new_photo_path %></h2>
-    <h2 style="text-align:center"><%= link_to 'View the Sights Map', sights_path %></h2>
-    </p>
-    <div id="left-image">
-        <%= image_tag('Windows_Phone_7_logo.png') %>
+    <div id="center-block">
+        <h1>Welcome to Geosight!</h1>
+        <p>
+        Geosight combines the adventure of geocaching with the art of photography using upcoming photo geotagging technology. Traditional geocaching involves writing in a log book at each cache location. Geosight involves taking a photo at each 'sight' location, encouraging interesting and beautiful 'sights'. Geosight will harness EXIF GPS data included in photos taken by modern digitial cameras and mobile phones.
+        </p>
+        <h1>Get Started:</h1>
+        <p>
+        <% if not current_user %>
+        <h2 style="text-align:center"><%= link_to 'Register an Account', new_user_path %></h2>
+        <% end %>
+        <h2 style="text-align:center"><%= link_to 'Upload a Photo', new_photo_path %></h2>
+        <h2 style="text-align:center"><%= link_to 'View the Sights Map', sights_path %></h2>
+        </p>
+        <div id="left-image">
+            <%= image_tag('Windows_Phone_7_logo.png') %>
+        </div>
+        <div id="right-image">
+            <%= image_tag('android-logo.png') %>
+        </div>
+        <div style="clear:both"></div>
     </div>
-    <div id="right-image">
-        <%= image_tag('android-logo.png') %>
-    </div>
-    <div style="clear:both"></div>
 </div>
 <% end %>
