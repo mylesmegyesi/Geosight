@@ -97,10 +97,10 @@ class Photo < ActiveRecord::Base
                     lat = -lat_multiplier
                 end
                 
-                if exif[:gps_longitude_ref] == 'W'
-                    lng = -long_multiplier
-                else 
+                if exif[:gps_longitude_ref] == 'E'
                     lng = long_multiplier
+                else 
+                    lng = -long_multiplier
                 end
                 
                 lat *= (north_degree + (north_minute + (north_second/conversion_factor))/conversion_factor)
