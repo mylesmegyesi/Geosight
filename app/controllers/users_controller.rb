@@ -18,8 +18,11 @@ class UsersController < ApplicationController
 
     def create
         @user = User.new(params[:user])
-        @user.save    
-        respond_with(@user)
+        if @user.save    
+            redirect_to user_path
+        else
+            respond_with(@user)
+        end
     end
 
     def update
