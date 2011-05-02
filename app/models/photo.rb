@@ -17,6 +17,8 @@ class Photo < ActiveRecord::Base
         }
     }.merge(PAPERCLIP_STORAGE_OPTIONS)
     
+    # This overwrites a built in Rails function. Changes the way
+    # this object is rendered as JSON.
     def as_json(options = {})
         {
             :id => id,
@@ -31,6 +33,7 @@ class Photo < ActiveRecord::Base
         }
     end
      
+    # Finds all photos that fit into the given radius at the given location
     def self.find_photos(latitude, longitude, radius)
         to = GeoKit::LatLng.new(latitude, longitude)
         Photo.all.select { |photo|
@@ -40,15 +43,6 @@ class Photo < ActiveRecord::Base
             end
         }
     end
-	
-	def average_rating
-		@value = 0
-		self.ratings.each do |rating|
-			@value = @value + rating.rating
-		end
-		@total = self.ratings.size
-		@value.to_f / @total.to_f
-	end
     
     private
     
@@ -64,49 +58,44 @@ class Photo < ActiveRecord::Base
         self.sights = Sight.find_sights(latitude, longitude)
     end
     
-=begin
-	extracts the gps data from a photo
-	called when a photo is uploaded to the website
-=end
+    # Extracts the gps data from a photo
     def gps_data
-		conversion_factor = 60.0
-		lat_multiplier = 1.0
-		long_multiplier = 1.0
+	conversion_factor = 60.0
+	lat_multiplier = 1.0
+	long_multiplier = 1.0
         if (latitude.nil? or longitude.nil?)
             if file.queued_for_write[:original].nil?
                 errors.add(:file, " not selected")
                 return
             end
+            
             # Extract meta data as a hash
             exif = EXIFR::JPEG.new(file.queued_for_write[:original].path).to_hash
             if not exif[:gps_longitude].nil? # GPS Data Exists
-        		ndeg = exif[:gps_latitude][0].to_f
+        	ndeg = exif[:gps_latitude][0].to_f
                 nmin = exif[:gps_latitude][1].to_f
-        		nsec = exif[:gps_latitude][2].to_f
-        		edeg = exif[:gps_longitude][0].to_f
-        		emin = exif[:gps_longitude][1].to_f
-        		esec = exif[:gps_longitude][2].to_f
+        	nsec = exif[:gps_latitude][2].to_f
+        	edeg = exif[:gps_longitude][0].to_f
+        	emin = exif[:gps_longitude][1].to_f
+        	esec = exif[:gps_longitude][2].to_f
                     
                 # Correct references
                 if exif[:gps_latitude_ref] == 'N'
-					lat = lat_multiplier
-                else 
+		    lat = lat_multiplier
+                else
                     lat = -lat_multiplier
                 end
                 
                 if exif[:gps_longitude_ref] == 'W'
-        			lng = -long_multiplier
+                    lng = -long_multiplier
                 else 
-        			lng = long_multiplier
+                    lng = long_multiplier
                 end
                 
-        		lat *= (ndeg + (nmin + (nsec/conversion_factor))/conversion_factor)
-        		lng *= (edeg + (emin + (esec/conversion_factor))/conversion_factor)
+                lat *= (ndeg + (nmin + (nsec/conversion_factor))/conversion_factor)
+        	lng *= (edeg + (emin + (esec/conversion_factor))/conversion_factor)
                 
-        		# Extract GPS data from picture or access coordinates
-        		# given to us in params[:latitude] and params[:longitude]
-                
-        		self.latitude = lat
+        	self.latitude = lat
                 self.longitude = lng
             else
                 errors.add(:base, "GPS data not present in file")
