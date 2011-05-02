@@ -85,7 +85,12 @@
 							<%= f.hidden_field(:photo_id, {:value =>@photo.id}) %>
 							<%= f.submit :Rate %>
 						<% end %>
-                        Average Rating: <%= @photo.rating %>
+                        Average Rating: 
+                        <% if @photo.rating == 0 %>
+                            Not yet rated
+                        <% else %>                     
+                            <%= @photo.rating %>
+                        <% end %>
 					</div>
                 </div>
             </div>
@@ -114,7 +119,7 @@
             <div id="map-canvas"></div>            
                 <div id="user-photo-list" class="content-block">
                 <h1>Other Photos by <%= @photo.user.user_name %></h1>
-                    <% @photo.user.photos.sort{|p1,p2|p1.rating <=> p2.rating}.each do |photo| %>
+                    <% @photo.user.photos.sort{|p1,p2|p2.rating <=> p1.rating}.each do |photo| %>
                         <div class="user-photo-row">
                             <div class="user-photo">
                                 <%= link_to(image_tag(photo.file.url(:small)), photo_path(photo)) %>
@@ -136,6 +141,13 @@
                                     <% photo.sights.each do |sight| %>
                                     <%= link_to(sight.name, sight_path(sight)) %> 
                                 <% end %>
+                            <% end %>
+                            <br />
+                            Rating: 
+                            <% if photo.rating == 0 %>
+                                Not yet rated
+                            <% else %>                     
+                                <%= photo.rating %>
                             <% end %>
                             </div>
                         </div>
