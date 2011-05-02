@@ -6,7 +6,6 @@
 
 <% content_for :javascript do %>
 <%= javascript_include_tag("https://maps-api-ssl.google.com/maps/api/js?sensor=false") %>
-<%= javascript_include_tag 'rating_ballot' %>
 <%= javascript_include_tag("maps") %>
 <% end %>
 
@@ -71,7 +70,7 @@
                         <% end %>
                     </div>
 					<div>
-						<%= form_for(rating_ballot, :remote => true, :html => { :id => "rating_ballot", :class => 'rating_ballot' }) do |f| %>
+						<%= form_for(rating_ballot, :html => { :id => "rating_ballot", :class => 'rating_ballot' }) do |f| %>
 							<%= f.label("value_1", content_tag(:span, '1'), {:class=>"rating", :id=>"1"}) %>
 							<%= radio_button_tag("rating[rating]", 1, current_user_rating == 1, :class => 'rating_button') %>
 							<%= f.label("value_2", content_tag(:span, '2'), {:class=>"rating", :id=>"2"}) %>
