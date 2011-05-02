@@ -138,20 +138,3 @@ function add_marker(pid, map, contentString) {
      });
   });
 }
-
-
-
-
-
-
-/*
-// to preload images in infowindows
-function swapsource_and_dosomething(url,handler,element){
-  var img=new Image();
-  img.onload=function(){
-    element.src= url;
-    return handler(element);
-  }
-  img.src=url;
-}
-*/
