@@ -1,6 +1,6 @@
 class PhotosController < ApplicationController
     before_filter :require_user, :except => [:index, :show]
-    respond_to :html, :json
+    respond_to :html, :json, :js
     
     def index
         @photos = Photo.where(:user_id => current_user.id)

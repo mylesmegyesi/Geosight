@@ -6,6 +6,8 @@
 
 <% content_for :javascript do %>
 <%= javascript_include_tag("https://maps-api-ssl.google.com/maps/api/js?sensor=false") %>
+<%= javascript_include_tag 'rating_ballot' %>
+<%= yield :scripts %>
 <% end %>
 
 <% content_for :body do %>
@@ -97,8 +99,8 @@
                         <%= render 'tags/form' %>                    
                     </div>
 					<div>
-						Your Rating:
-						<%= form_for(rating_ballot, :html => { :class => 'rating_ballot' }) do |f| %>
+						
+						<%= form_for(rating_ballot, :remote => true, :html => { :id => "rating_ballot", :class => 'rating_ballot' }) do |f| %>
 							<%= f.label("value_1", content_tag(:span, '1'), {:class=>"rating", :id=>"1"}) %>
 							<%= radio_button_tag("rating[rating]", 1, current_user_rating == 1, :class => 'rating_button') %>
 							<%= f.label("value_2", content_tag(:span, '2'), {:class=>"rating", :id=>"2"}) %>
@@ -109,12 +111,13 @@
 							<%= radio_button_tag("rating[rating]", 4, current_user_rating == 4, :class => 'rating_button') %>
 							<%= f.label("value_5", content_tag(:span, '5'), {:class=>"rating", :id=>"5"}) %>
 							<%= radio_button_tag("rating[rating]", 5, current_user_rating == 5, :class => 'rating_button') %>
-							
+						
 							<%= f.hidden_field(:photo_id, {:value =>@photo.id}) %>
 							<%= f.submit :Submit %>
 						<% end %>
-						Average Rating:
-						<%= @photo.average_rating %>
+
+						<br>
+						<%= render :partial => 'photos/rating' %>
 					</div>
                 </div>
             </div>
