@@ -5,7 +5,7 @@
     
             <ul>
                 <% @photo_tag.errors.full_messages.each do |msg| %>
-                    <li><%= msg %></li>
+                    <li><span class="attr"><%= attr %></span> <%= msg %></li>
                 <% end %>
             </ul>
         </div>

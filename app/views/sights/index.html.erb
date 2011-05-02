@@ -6,14 +6,14 @@
 
 <% content_for :javascript do %>
     <%= javascript_include_tag("https://maps-api-ssl.google.com/maps/api/js?sensor=false") %>
-	<%= javascript_include_tag("maps") %>
+ 	 <%= javascript_include_tag("maps") %>
+	 <%= javascript_include_tag("misc") %>
 <% end %>
 
 <% content_for :body do %>
 
     <script type="text/javascript">
     
-        var geocoder = new google.maps.Geocoder();
         var champaign = new google.maps.LatLng(40.114044, -88.22485);
         var map;
     
@@ -30,25 +30,8 @@
    			add_sight_marker(<%= sight.id %>, map);
 			<% end %>
 
-            // Set up the search box
-            $("#jump-submit").click(function() {
-                var query = $("#jump-to").val();
-                if (query == "") {
-                    return;
-                }
-                
-                $("#spinner").show();
-                geocoder.geocode({"address": query}, function(results, status) {
-                    $("#spinner").hide();
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        var location = results[0].geometry.location;
-                        map.setCenter(location);
-                        map.setZoom(15);
-                    } else {
-                        alert("Could not find the given location");
-                    }
-                });
-            });
+         setUpJumpBox(map);
+
         });
     </script>
     

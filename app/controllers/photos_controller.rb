@@ -1,5 +1,5 @@
 class PhotosController < ApplicationController
-    before_filter :require_user, :except => [:index, :show]
+    before_filter :require_user, :except => [:show]
     respond_to :html, :json, :js
     
     def index
