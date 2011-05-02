@@ -1,6 +1,6 @@
 class RatingsController < ApplicationController
     before_filter :require_user
-    respond_to :html, :json
+    respond_to :html, :json, :js
 
     def create
         if params[:rating].nil?
@@ -16,6 +16,7 @@ class RatingsController < ApplicationController
         end
         respond_with(@rating) do |format|
             format.html { respond_with(@rating.parent) }
+			format.js
         end
     end
 
@@ -32,6 +33,7 @@ class RatingsController < ApplicationController
         end
         respond_with(@rating) do |format|
             format.html { respond_with(@rating.parent) }
+			format.js
         end
     end
 
@@ -49,6 +51,7 @@ class RatingsController < ApplicationController
         end
         respond_with(@rating) do |format|
             format.html { respond_with(@rating.parent) }
+			format.js
         end
     end
 end
