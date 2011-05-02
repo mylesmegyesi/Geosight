@@ -16,6 +16,11 @@ class Photo < ActiveRecord::Base
             :thumb => "100x100>"
         }
     }.merge(PAPERCLIP_STORAGE_OPTIONS)
+
+    # Finds the average rating
+    def rating
+        Rating.average(:rating, :condtions => ["photo_id = ?", self.id])
+    end
     
     # This overwrites a built in Rails function. Changes the way
     # this object is rendered as JSON.
