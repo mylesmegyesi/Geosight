@@ -12,18 +12,21 @@ class Sight < ActiveRecord::Base
     before_destroy :remove_photos
     before_save :set_user_id
     
+    # Finds the average rating
     def rating
-        Rating.average(:rating, :condtions => ["sight_id = ?", self.id])
+        Rating.average(:rating, :conditions => ["sight_id = ?", self.id])
     end
 
-	def self.search(search)
+    # Given a string, searches for sight names like it
+    def self.search(search)
     	if search
-			find(:all, :conditions => ['name LIKE ?', "%#{search}%"])
-		else
-			find(:all)
-	  	end
-	end
+            find(:all, :conditions => ['name LIKE ?', "%#{search}%"])
+        else
+            find(:all)
+        end
+    end
 
+    # Given a location, finds Sights that encompass it.
     def self.find_sights(latitude, longitude)
         to = GeoKit::LatLng.new(latitude, longitude)
         Sight.all.select { |sight|
@@ -34,6 +37,8 @@ class Sight < ActiveRecord::Base
         }
     end
     
+    # Overwrites a built in Rails method to change the way
+    # the Sights are rendered as JSON.
     def as_json(options = {})
         if (photos.length > 0)
             photo = photos.at(0)
@@ -59,6 +64,8 @@ class Sight < ActiveRecord::Base
     
     private
     
+    # Finds the current user from the cookies and sets it to the
+    # user id of this instance.
     def set_user_id
         self.user_id = User.current_user.id
     end
@@ -68,10 +75,12 @@ class Sight < ActiveRecord::Base
         self.photos = Photo.find_photos(latitude, longitude, radius)
     end
     
+    # Removes all photos from this sight
     def remove_photos
         self.photos.clear
     end
     
+    # Validates that a name is present, if not the sight is rejected
     def name?
         if name.nil?
             errors.add(:name, "can't be blank")
@@ -80,6 +89,7 @@ class Sight < ActiveRecord::Base
         return true
     end
     
+    # Validates that a latitude is given
     def latitude?
         if latitude.nil?
             errors.add(:base, "GPS location not present")
@@ -87,7 +97,8 @@ class Sight < ActiveRecord::Base
         end
         return true
     end
-      
+    
+    # Validates that a longitude is given
     def longitude?
         if longitude.nil?
             errors.add(:base, "GPS location not present")
@@ -96,6 +107,7 @@ class Sight < ActiveRecord::Base
         return true
     end
     
+    # Validates that a radius is given
     def radius?
         if radius.nil?
             errors.add(:radius, "can't be blank")

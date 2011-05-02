@@ -8,6 +8,7 @@ class Rating < ActiveRecord::Base
         :less_than_or_equal_to => 5, :if => :rating?
     before_save :set_user_id
         
+    # A virtual accessor to given the parent of this instance
     def parent
         if not sight_id.nil?
             Sight.find_by_id(sight_id)
@@ -22,6 +23,7 @@ class Rating < ActiveRecord::Base
         self.user_id = User.current_user.id
     end
     
+    # Validates that a rating is present
     def rating?
         if self.rating.nil?
             errors.add(:rating, "not present")
@@ -30,6 +32,7 @@ class Rating < ActiveRecord::Base
         return true
     end
     
+    # Validates that a parent is given
     def parent?
         if not self.sight_id.nil?
             if Sight.find_by_id(self.sight_id).nil?

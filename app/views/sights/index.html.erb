@@ -13,7 +13,6 @@
 
     <script type="text/javascript">
     
-        var lastOpened = null; // the last infowindow opened
         var geocoder = new google.maps.Geocoder();
         var champaign = new google.maps.LatLng(40.114044, -88.22485);
         var map;
@@ -28,23 +27,7 @@
             });
             		
 			<% @sights.each do |sight| %>
-			$.getJSON("/sights/"+<%= sight.id %>, function(json) {
-				var contentString = "<b>"+json.name+"</b>" +
-					"<div id= 'infoWindowDiv'>" +
-						"<a href=/sights/"+json.id+">";
-							if (json.small != null) {
-								contentString += "<img src="+json.small+">";
-							} else {
-								contentString += "No Photos Yet";
-							} contentString +=
-						"</a>" +
-					"</div>"; 
-
-   				add_sight_marker(map, json.latitude, json.longitude, json.radius,
-                  json.name, contentString, lastOpened);
-            	
-				
-			});
+   			add_sight_marker(<%= sight.id %>, map);
 			<% end %>
 
             // Set up the search box

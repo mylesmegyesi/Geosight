@@ -1,5 +1,5 @@
 <% content_for :body do %>
-
+    <div class="content-block">
     <p>
         <h3>First Name:</h3>
         <%= @user.first_name %>
@@ -18,5 +18,5 @@
     <br />
     <%= link_to 'Account Settings', edit_user_path %> |
     <%= link_to 'My Photos', photos_path %>
-
+    </div>
 <% end %>
