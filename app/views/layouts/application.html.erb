@@ -102,13 +102,16 @@
             <div id="footer-bar">
                 <ul>
                     <li class="first">
-                        <%= link_to 'About Us', home_path %>
+                        <%= link_to 'About Us', 'https://github.com/mylesmegyesi/Geosight', :target => '_blank' %>
                     </li>
                     <li>
-                        <%= link_to 'Contact Us', home_path %>
+                        <%= mail_to 'myles.megyesi@gmail.com', 'Contact Us' %>
                     </li>
                     <li>
-                        <%= link_to 'Geosight Mobile', home_path %>
+                        <%= link_to 'Geosight Android', 'https://github.com/yohanko1/Geosight-mobile-android', :target => '_blank' %>
+                    </li>
+                    <li>
+                        <%= link_to 'Geosight Windows Phone', 'https://github.com/andabereczky/GeoSightWinPhone7', :target => '_blank' %>
                     </li>
                 </ul>
             </div>
