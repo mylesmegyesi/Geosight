@@ -116,7 +116,7 @@
             <div id="map-canvas"></div>            
                 <div id="user-photo-list" class="content-block">
                 <h1>Other Photos by <%= @photo.user.user_name %></h1>
-                    <% @photo.user.photos.each do |photo| %>
+                    <% @photo.user.photos.sort{|p1,p2|p1.rating <=> p2.rating}.each do |photo| %>
                         <div class="user-photo-row">
                             <div class="user-photo">
                                 <%= link_to(image_tag(photo.file.url(:small)), photo_path(photo)) %>

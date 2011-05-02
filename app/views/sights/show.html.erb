@@ -74,7 +74,7 @@
         <div id="sidebar">       
             <div id="user-photo-list" class="content-block">
             <h1>Photos in <%= @sight.name %>:</h1>
-                <% @sight.photos.each do |photo| %>
+                <% @sight.photos.sort{|p1,p2|p1.rating <=> p2.rating}.each do |photo| %>
                     <div class="user-photo-row">
                         <div class="user-photo">
                             <%= link_to(image_tag(photo.file.url(:small)), photo_path(photo)) %>
