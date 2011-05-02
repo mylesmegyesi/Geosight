@@ -105,7 +105,7 @@
             <div id="error_explanation">
                 <ul>
                     <% @sight.errors.each do |attr, msg| %>
-                    <li><%= msg %></li>
+                    <li><span class="attr"><%= attr %></span> <%= msg %></li>
                     <% end %>
                 </ul>
             </div>

@@ -84,9 +84,8 @@ div.field, div.actions {
 }
 
 .field_with_errors {
-    padding: 2px;
-    background-color: red;
-    display: table;
+    color: red;
+    display: inline;
 }
 
 #header {
@@ -227,10 +226,9 @@ div.field, div.actions {
 }
 
 #error_explanation {
-    width: 450px;
-    border: 2px solid red;
+    width: 90%;
+    border: 1px solid red;
     padding: 7px;
-    padding-bottom: 0;
     margin-bottom: 20px;
     background-color: #f0f0f0;
 }
@@ -248,5 +246,10 @@ div.field, div.actions {
 
 #error_explanation ul li {
     font-size: 12px;
-    list-style: square;
+    list-style: none;
+}
+
+.attr {
+    text-transform:capitalize;
+    color: red;
 }
