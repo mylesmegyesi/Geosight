@@ -26,6 +26,13 @@
                         <%= link_to(sight.name, sight_path(sight)) %> 
                     <% end %>
                 <% end %>
+                <br />
+                Rating: 
+                <% if photo.rating == 0 %>
+                    Not yet rated
+                <% else %>                     
+                    <%= photo.rating %>
+                <% end %>
             </div>
         </div>
     <% end %>

@@ -74,7 +74,7 @@
         <div id="sidebar">       
             <div id="user-photo-list" class="content-block">
             <h1>Photos in <%= @sight.name %>:</h1>
-                <% @sight.photos.sort{|p1,p2|p1.rating <=> p2.rating}.each do |photo| %>
+                <% @sight.photos.sort{|p1,p2|p2.rating <=> p1.rating}.each do |photo| %>
                     <div class="user-photo-row">
                         <div class="user-photo">
                             <%= link_to(image_tag(photo.file.url(:small)), photo_path(photo)) %>
@@ -90,6 +90,13 @@
                                 <% photo.tags.each do |tag| %>
                                 <%= link_to(tag.tag, tag_path(tag)) %>
                             <% end %>
+                        <% end %>
+                        <br />
+                        Rating: 
+                        <% if photo.rating == 0 %>
+                            Not yet rated
+                        <% else %>                     
+                            <%= photo.rating %>
                         <% end %>
                         </div>
                     </div>
