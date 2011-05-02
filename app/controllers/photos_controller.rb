@@ -4,6 +4,7 @@ class PhotosController < ApplicationController
     
     def index
         @photos = Photo.where(:user_id => current_user.id)
+        @photos = @photos.sort{|p1,p2|p1.rating <=> p2.rating}
         respond_with(@photos)
     end
 

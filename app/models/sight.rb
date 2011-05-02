@@ -41,7 +41,7 @@ class Sight < ActiveRecord::Base
     # the Sights are rendered as JSON.
     def as_json(options = {})
         if (photos.length > 0)
-            photo = photos.at(0)
+            photo = photos.max_by{|a| a.rating}
             pics = {
                 :thumbnail => photo.file.url(:thumb),
                 :small => photo.file.url(:small),
