@@ -3,6 +3,9 @@
 <% end %>
 
 <% content_for :body do %>
+    <% if @tags.length == 0 %>
+      <h3>Your search did not match any Tags.</h3>
+    <% end %>
     <% @tags.each do |tag| %>
         <div class="tag-row">
             <h1><%= link_to(tag.tag, tag_path(tag)) %></h1>
@@ -16,7 +19,7 @@
             <% end %>
             <div style="clear:both"></div>
             <% if tag.photos.length == 0 %>
-                None
+                Photos: None
             <% end %>
             <% tag.photos.each do |photo| %>
                 <div class="user-photo">
