@@ -3,7 +3,7 @@ class PhotosController < ApplicationController
     respond_to :html, :json, :js
     
     def index
-        @photos = Photo.where(:user_id => current_user.id)
+        @photos = Photo.where(:user_id => current_user.id).sort!{|p1,p2|p1.rating <=> p2.rating}
         respond_with(@photos)
     end
 
