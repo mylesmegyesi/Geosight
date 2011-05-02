@@ -1,7 +1,9 @@
 <% content_for :body do %>
-    <h1>Account Settings</h1>
-    
-    <%= render 'edit' %>
-    
-    <%= link_to 'Return to user page', user_path(@user) %>
+    <div class="content-block">
+        <h1>Account Settings</h1>
+        
+        <%= render 'edit' %>
+        
+        <%= link_to 'Return to user page', user_path %>
+    </div>
 <% end %>
