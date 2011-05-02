@@ -70,9 +70,10 @@ class Photo < ActiveRecord::Base
     
     # Extracts the gps data from a photo
     def gps_data
-	conversion_factor = 60.0
-	lat_multiplier = 1.0
-	long_multiplier = 1.0
+	    conversion_factor = 60.0
+	    lat_multiplier = 1.0
+	    long_multiplier = 1.0
+
         if (latitude.nil? or longitude.nil?)
             if file.queued_for_write[:original].nil?
                 errors.add(:file, " not selected")
@@ -82,16 +83,16 @@ class Photo < ActiveRecord::Base
             # Extract meta data as a hash
             exif = EXIFR::JPEG.new(file.queued_for_write[:original].path).to_hash
             if not exif[:gps_longitude].nil? # GPS Data Exists
-        	ndeg = exif[:gps_latitude][0].to_f
-                nmin = exif[:gps_latitude][1].to_f
-        	nsec = exif[:gps_latitude][2].to_f
-        	edeg = exif[:gps_longitude][0].to_f
-        	emin = exif[:gps_longitude][1].to_f
-        	esec = exif[:gps_longitude][2].to_f
+            	north_degree = exif[:gps_latitude][0].to_f
+                north_minute = exif[:gps_latitude][1].to_f
+            	north_second = exif[:gps_latitude][2].to_f
+            	east_degree = exif[:gps_longitude][0].to_f
+            	east_minute = exif[:gps_longitude][1].to_f
+            	east_second = exif[:gps_longitude][2].to_f
                     
                 # Correct references
                 if exif[:gps_latitude_ref] == 'N'
-		    lat = lat_multiplier
+	                lat = lat_multiplier
                 else
                     lat = -lat_multiplier
                 end
@@ -102,10 +103,10 @@ class Photo < ActiveRecord::Base
                     lng = long_multiplier
                 end
                 
-                lat *= (ndeg + (nmin + (nsec/conversion_factor))/conversion_factor)
-        	lng *= (edeg + (emin + (esec/conversion_factor))/conversion_factor)
+                lat *= (north_degree + (north_minute + (north_second/conversion_factor))/conversion_factor)
+        	    lng *= (east_degree + (east_minute + (east_second/conversion_factor))/conversion_factor)
                 
-        	self.latitude = lat
+        	    self.latitude = lat
                 self.longitude = lng
             else
                 errors.add(:base, "GPS data not present in file")
