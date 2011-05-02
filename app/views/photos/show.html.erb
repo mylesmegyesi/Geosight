@@ -34,7 +34,7 @@
                     });
                     <% photos = photos | sight.photos %>
                 <% end %>
-                <% photos.each_with_index do |photo, i| %>
+                <% photos.each do |photo| %>
                     contentString = '<b>Photo '+<%= photo.id %> + '</b>'+
                         '<div id="infoWindowDiv">'+
                           '<%= link_to image_tag(photo.file.url(:thumb)), photo_path(photo) %>'+

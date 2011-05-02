@@ -14,7 +14,7 @@ class Sight < ActiveRecord::Base
     
     # Finds the average rating
     def rating
-        Rating.average(:rating, :condtions => ["sight_id = ?", self.id])
+        Rating.average(:rating, :conditions => ["sight_id = ?", self.id])
     end
 
     # Given a string, searches for sight names like it

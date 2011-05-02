@@ -19,7 +19,7 @@ class Photo < ActiveRecord::Base
 
     # Finds the average rating
     def rating
-        Rating.average(:rating, :condtions => ["photo_id = ?", self.id])
+        Rating.average(:rating, :conditions => ["photo_id = ?", self.id])
     end
     
     # This overwrites a built in Rails function. Changes the way
