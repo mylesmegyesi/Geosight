@@ -87,8 +87,7 @@
 							<%= f.submit :Submit %>
 						<% end %>
 						<br>
-						<%= render :partial => 'photos/rating' %>
-						<% end %>
+						<%= render :partial => 'photos/rating', :locals => {:photo => @photo} %>
 					</div>
                 </div>
             </div>
@@ -108,7 +107,7 @@
                             <%= link_to(comment.user.user_name, user_path(comment.user)) %> on <%= comment.date %> at <%= comment.time %>
                             <br>
                         </div>
-                        <% end %>
+                    <% end %>
                     </div>
                 </div>
             </div>

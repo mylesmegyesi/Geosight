@@ -1,11 +1,6 @@
 class PhotosController < ApplicationController
-<<<<<<< HEAD
     before_filter :require_user, :except => [:index, :show]
     respond_to :html, :json, :js
-=======
-    before_filter :require_user, :except => [:show]
-    respond_to :html, :json
->>>>>>> ded6aa1dcc6267633608605da5d1cd40e5be5bf6
     
     def index
         @photos = Photo.where(:user_id => current_user.id)
@@ -26,6 +21,15 @@ class PhotosController < ApplicationController
         
         respond_with(@photo)
     end
+	
+	def edit
+		@photo = Photo.find_by_id(params[:id])
+        if @photo.nil?
+            flash[:error] = "Photo not found"
+            redirect_to not_found_path
+            return
+        end
+	end
     
     def new
         @photo = Photo.new
@@ -40,6 +44,7 @@ class PhotosController < ApplicationController
     end
 
     def destroy
+	
         @photo = Photo.find_by_id(params[:id])
         if @photo.nil?
             flash[:error] = "Photo not found"
