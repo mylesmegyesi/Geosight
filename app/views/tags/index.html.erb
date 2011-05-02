@@ -15,6 +15,9 @@
                 <% end %>
             <% end %>
             <div style="clear:both"></div>
+            <% if tag.photos.length == 0 %>
+                None
+            <% end %>
             <% tag.photos.each do |photo| %>
                 <div class="user-photo">
                     <div class="user-photo-image">
