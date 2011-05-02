@@ -6,14 +6,17 @@ class Comment < ActiveRecord::Base
     validate :parent?
     before_save :set_user_id
     
+    # Pretty format the date of creation
     def date
         created_at.strftime("%B %e, %Y")
     end
     
+    # Pretty format the time created
     def time
         created_at.strftime("%l:%M %P")
     end
     
+    # A virtual accessor to get the parent of this instance
     def parent
         if not sight_id.nil?
             Sight.find_by_id(sight_id)
@@ -28,6 +31,7 @@ class Comment < ActiveRecord::Base
         self.user_id = User.current_user.id
     end
     
+    # Validates whether a parent object was given
     def parent?
         if not sight_id.nil?
             if Sight.find_by_id(sight_id).nil?
