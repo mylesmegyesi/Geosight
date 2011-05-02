@@ -125,8 +125,8 @@
                 <%= f.text_field(:longitude, :size => 20) %>
             </div>
             <div class="field">
-                <%= f.label(:radius) %>
-                <%= f.range_field(:radius, :value => 100, :min => 1, :max => 200, :size => 20) %> meters
+                <%= f.label(:radius) %> (meters)
+                <%= f.range_field(:radius, :value => 100, :min => 1, :max => 200, :size => 20) %>
             </div>
             <div class="actions">
                 <%= f.submit(:value => "Create Sight") %>
