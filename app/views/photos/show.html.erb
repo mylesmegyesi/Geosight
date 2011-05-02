@@ -70,21 +70,23 @@
                         <% end %>
                     </div>
 					<div>
-						<%= form_for(rating_ballot, :html => { :id => "rating_ballot", :class => 'rating_ballot' }) do |f| %>
-							<%= radio_button_tag("rating[rating]", 1, current_user_rating == 1, :class => 'rating_button') %>
-							<%= f.label("value_1", content_tag(:span, '1'), {:class=>"rating", :id=>"1"}) %>
-							<%= radio_button_tag("rating[rating]", 2, current_user_rating == 2, :class => 'rating_button') %>
-							<%= f.label("value_2", content_tag(:span, '2'), {:class=>"rating", :id=>"2"}) %>
-							<%= radio_button_tag("rating[rating]", 3, current_user_rating == 3, :class => 'rating_button') %>
-							<%= f.label("value_3", content_tag(:span, '3'), {:class=>"rating", :id=>"3"}) %>
-							<%= radio_button_tag("rating[rating]", 4, current_user_rating == 4, :class => 'rating_button') %>
-							<%= f.label("value_4", content_tag(:span, '4'), {:class=>"rating", :id=>"4"}) %>
-							<%= radio_button_tag("rating[rating]", 5, current_user_rating == 5, :class => 'rating_button') %>
-							<%= f.label("value_5", content_tag(:span, '5'), {:class=>"rating", :id=>"5"}) %>
+                        <% if current_user %>
+						    <%= form_for(rating_ballot, :html => { :id => "rating_ballot", :class => 'rating_ballot' }) do |f| %>
+							    <%= radio_button_tag("rating[rating]", 1, current_user_rating == 1, :class => 'rating_button') %>
+							    <%= f.label("value_1", content_tag(:span, '1'), {:class=>"rating", :id=>"1"}) %>
+							    <%= radio_button_tag("rating[rating]", 2, current_user_rating == 2, :class => 'rating_button') %>
+							    <%= f.label("value_2", content_tag(:span, '2'), {:class=>"rating", :id=>"2"}) %>
+							    <%= radio_button_tag("rating[rating]", 3, current_user_rating == 3, :class => 'rating_button') %>
+							    <%= f.label("value_3", content_tag(:span, '3'), {:class=>"rating", :id=>"3"}) %>
+							    <%= radio_button_tag("rating[rating]", 4, current_user_rating == 4, :class => 'rating_button') %>
+							    <%= f.label("value_4", content_tag(:span, '4'), {:class=>"rating", :id=>"4"}) %>
+							    <%= radio_button_tag("rating[rating]", 5, current_user_rating == 5, :class => 'rating_button') %>
+							    <%= f.label("value_5", content_tag(:span, '5'), {:class=>"rating", :id=>"5"}) %>
 						
-							<%= f.hidden_field(:photo_id, {:value =>@photo.id}) %>
-							<%= f.submit :Rate %>
-						<% end %>
+							    <%= f.hidden_field(:photo_id, {:value =>@photo.id}) %>
+							    <%= f.submit :Rate %>
+						    <% end %>
+                        <% end %>
                         Average Rating: 
                         <% if @photo.rating == 0 %>
                             Not yet rated
